@@ -39,4 +39,13 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * フルネームを取得
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return $this->getAttribute("last_name") . " " . $this->getAttribute("first_name");
+    }
 }

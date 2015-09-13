@@ -6,6 +6,7 @@
     <h3><i class="glyphicon glyphicon-home"></i> {{trans('labels.home')}}</h3>
 
     <hr>
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -15,7 +16,8 @@
                 <ul class="list-group information">
                     <li class="list-group-item list-group-item-info">
                         <a href="#" class="show"
-                           data-message="使用言語:PHP5.6&#10;フレームワーク:Laravel5.1&#10;データベース:MySQL&#10;CSS:Bootstrap3">
+                           data-message="使用言語:PHP5.6
+フレームワーク:Laravel5.1&#10;データベース:MySQL&#10;CSS:Bootstrap3">
                             <i class="glyphicon glyphicon-info-sign"></i>
                             <small>2015/09/12</small>
                             <span class="title">開発環境について</span>

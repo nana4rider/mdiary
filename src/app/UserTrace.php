@@ -8,6 +8,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -17,9 +18,9 @@ use Illuminate\Support\Facades\Auth;
  */
 trait UserTrace
 {
-    private static function setUserId($model, $key)
+    private static function setUserId(Model $model, $key)
     {
-        $model->$key = Auth::check() ? Auth::User()->id : null;
+        $model->setAttribute($key, Auth::check() ? Auth::User()->id : null);
     }
 
     public static function bootUserTrace()
