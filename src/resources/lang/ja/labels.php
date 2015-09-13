@@ -6,4 +6,7 @@ return [
     'logout' => 'ログアウト',
     'email' => 'メールアドレス',
     'password' => 'パスワード',
+    'menu' => 'メニュー',
+    'home' => 'ホーム',
+    'information' => 'お知らせ',
 ];

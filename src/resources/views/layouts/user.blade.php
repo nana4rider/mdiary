@@ -25,14 +25,12 @@
 @section('content')
     <div class="row">
         {{-- メニュー --}}
-
-        <div class="col-sm-3 sidebar">
-
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> メニュー</h3>
+        <nav class="col-sm-3 sidebar">
+            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{trans('labels.menu')}}</h3>
             <hr>
             <ul class="nav nav-stacked">
                 <li class="active">
-                    <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> ホーム</a>
+                    <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> {{trans('labels.home')}}</a>
                 </li>
             </ul>
 
@@ -59,7 +57,7 @@
                 </li>
             </ul>
             <hr>
-        </div>
+        </nav>
 
         {{-- メインコンテンツ --}}
         <div class="col-sm-9 main">
