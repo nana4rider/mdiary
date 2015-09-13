@@ -26,34 +26,34 @@
     <div class="row">
         {{-- メニュー --}}
 
-
         <div class="col-sm-3 sidebar">
-            <h3><i class="glyphicon glyphicon glyphicon-home"></i> <a href="{{url('/home')}}">ホーム</a></h3>
-            <hr>
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> 日記</h3>
-            <hr>
-            <ul class="nav nav-stacked">
-                <li class="active">
-                    <a href="#"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
-                </li>
-                <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> 日記を見る</a></li>
-            </ul>
-            <hr>
+            <div data-spy="affix">
+                <h3><i class="glyphicon glyphicon-home"></i> <a href="{{url('/home')}}">ホーム</a></h3>
+                <hr>
+                <h3><i class="glyphicon glyphicon-menu-hamburger"></i> 日記</h3>
+                <hr>
+                <ul class="nav nav-stacked">
+                    <li class="active">
+                        <a href="#"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
+                    </li>
+                    <li><a href="#"><i class="glyphicon glyphicon-list-alt"></i> 日記を見る</a></li>
+                </ul>
+                <hr>
 
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> 集計</h3>
-            <hr>
-            <ul class="nav nav-stacked">
-                <li class="active">
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 月次集計</a>
-                </li>
-                <li><a href="#"><i class="glyphicon glyphicon-book"></i> 年次集計</a></li>
-            </ul>
-            <hr>
-
+                <h3><i class="glyphicon glyphicon-menu-hamburger"></i> 集計</h3>
+                <hr>
+                <ul class="nav nav-stacked">
+                    <li class="active">
+                        <a href="#"><i class="glyphicon glyphicon-book"></i> 月次集計</a>
+                    </li>
+                    <li><a href="#"><i class="glyphicon glyphicon-book"></i> 年次集計</a></li>
+                </ul>
+                <hr>
+            </div>
         </div>
 
         {{-- メインコンテンツ --}}
-        <div class="col-sm-9 col-sm-offset-3 main">
+        <div class="col-sm-9 main">
             @yield('content')
         </div>
     </div>

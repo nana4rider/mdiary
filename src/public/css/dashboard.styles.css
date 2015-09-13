@@ -21,8 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-.navbar-static-top {
-    margin-bottom: 20px;
+
+body {
+    padding-top: 75px;
+}
+
+@media (max-width: 767px) {
+    .affix {
+        position: static;
+    }
+}
+
+@media (min-width: 768px) {
+    .main {
+        min-height: 500px;
+    }
+}
+
+.navbar {
+    min-height: 55px;
 }
 
 i {
