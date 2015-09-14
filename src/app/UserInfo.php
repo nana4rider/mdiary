@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Auth;
 
 /**
  * 登録、更新、削除時に認証ユーザIDを追加します
- * Class UserTrace
+ * Class UserInfo
  * @package App
  */
-trait UserTrace
+trait UserInfo
 {
     private static function setUserId(Model $model, $key)
     {
         $model->setAttribute($key, Auth::check() ? Auth::User()->id : null);
     }
 
-    public static function bootUserTrace()
+    public static function bootUserInfo()
     {
         static::creating(function ($model) {
             static::setUserId($model, 'created_user_id');

@@ -17,7 +17,7 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use SoftDeletes;
-    use UserTrace;
+    use UserInfo;
 
     /**
      * The database table used by the model.
@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['last_name', 'first_name', 'email', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -42,9 +42,10 @@ class User extends Model implements AuthenticatableContract,
 
     /**
      * フルネームを取得
+     *
      * @return string
      */
-    public function getFullNameAttribute()
+    public function getNameAttribute()
     {
         return $this->getAttribute("last_name") . " " . $this->getAttribute("first_name");
     }

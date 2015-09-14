@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Information extends Model
 {
     use SoftDeletes;
-    use UserTrace;
+    use UserInfo;
 
+    //
 }
