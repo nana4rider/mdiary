@@ -4,7 +4,7 @@ $(function () {
         var $this = $(this);
         BootstrapDialog.show({
             title: $this.find('.title').text(),
-            message: $this.attr('data-message').replace(/\n/g, '<br>')
+            message: $this.attr('data-message')
         });
 
         return false;

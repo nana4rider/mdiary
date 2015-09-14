@@ -14,6 +14,7 @@
                     <i class="glyphicon glyphicon-user"></i> {{Auth::user()->name}} <span
                             class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                    <li><a href="#">{{trans('labels.my_profile')}}</a></li>
                     <li><a href="{{url('/auth/logout')}}"><i
                                     class="glyphicon glyphicon-lock"></i> {{trans('labels.logout')}}</a></li>
                 </ul>

@@ -11,28 +11,28 @@
 |
 */
 
-// 認証のルート定義
+/*
+ * ユーザ認証
+ */
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-// 登録のルート定義
+/*
+ * ユーザ登録
+ */
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+/**
+ * ログイン中
+ */
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return Redirect::to('/home');
     });
 
-    Route::get('/home', function () {
-        return view('home');
-    });
-});
-
-Route::get('/logout', function () {
-    Auth::logout();
-    return Redirect::to('/');
+    Route::get('/home', 'HomeController@showHome');
 });
 
 // TODO: sample

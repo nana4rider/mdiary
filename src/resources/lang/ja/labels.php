@@ -9,4 +9,5 @@ return [
     'menu' => 'メニュー',
     'home' => 'ホーム',
     'information' => 'お知らせ',
+    'my_profile' => 'プロフィール',
 ];

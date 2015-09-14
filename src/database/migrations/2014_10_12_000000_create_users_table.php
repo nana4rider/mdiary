@@ -29,7 +29,6 @@ class CreateUsersTable extends Migration
 
         // わたしです
         $user = new User;
-        $user->id = null;
         $user->email = 'kernel@nana4.net';
         $user->password = '$2y$10$nq.hRc4PEeCc3Ux5QURzFOKsQ6P/i2LEA3rLK6W5YF/FSHUM03Dze';
         $user->last_name = '安喜';
