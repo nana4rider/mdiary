@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
         return Redirect::to('/home');
     });
 
-    Route::get('/home', 'HomeController@showHome');
+    Route::get('/home', 'HomeController@index');
 });
 
 // TODO: sample

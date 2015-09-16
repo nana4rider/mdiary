@@ -12,7 +12,7 @@ use App\Information;
 
 class HomeController extends Controller
 {
-    public function showHome()
+    public function index()
     {
         $maxInformation = config('const.max_home_information');
         $informations = Information::orderBy('time', 'desc')->limit($maxInformation)->get();

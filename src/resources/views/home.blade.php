@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.auth')
 
 @section('title', 'Welcome')
 
