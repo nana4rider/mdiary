@@ -14,7 +14,8 @@ class HomeController extends Controller
 {
     public function showHome()
     {
-        $informations = Information::orderBy('time', 'desc')->get();
+        $maxInformation = config('const.max_home_information');
+        $informations = Information::orderBy('time', 'desc')->limit($maxInformation)->get();
 
         return view('home', compact('informations'));
     }

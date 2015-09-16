@@ -19,7 +19,7 @@
                             <a href="#" class="show"
                                data-message="{{$information->message}}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
-                                <small>{{$information->time}}</small>
+                                <small>{{$information->formatTime}}</small>
                                 <span class="title">{{$information->title}}</span>
                             </a>
                         </li>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a47c5429d3d4bace07abb0087b67a51f",
+    "hash": "3f116cf006a2ea62e6ee13f7f229a40a",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -684,6 +684,68 @@
                 "storage"
             ],
             "time": "2015-09-05 12:06:41"
+        },
+        {
+            "name": "mccool/laravel-auto-presenter",
+            "version": "4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-auto-presenter/laravel-auto-presenter.git",
+                "reference": "62078f0779436e3cc9106f84e1c9cf1e02188af9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-auto-presenter/laravel-auto-presenter/zipball/62078f0779436e3cc9106f84e1c9cf1e02188af9",
+                "reference": "62078f0779436e3cc9106f84e1c9cf1e02188af9",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/container": "5.1.*",
+                "illuminate/contracts": "5.1.*",
+                "illuminate/events": "5.1.*",
+                "illuminate/pagination": "5.1.*",
+                "illuminate/support": "5.1.*",
+                "illuminate/view": "5.1.*",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "graham-campbell/testbench": "~3.0",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "^4.7.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "McCool\\LaravelAutoPresenter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shawn McCool",
+                    "email": "shawn@heybigname.com"
+                },
+                {
+                    "name": "Graham Campbell",
+                    "email": "graham@alt-three.com"
+                }
+            ],
+            "description": "A system for auto-decorating models with presenter objects.",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "lpm",
+                "presenter"
+            ],
+            "time": "2015-06-26 18:05:45"
         },
         {
             "name": "monolog/monolog",

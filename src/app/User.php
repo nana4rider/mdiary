@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Presenters\UserPresenter;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -10,43 +11,39 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\Access\Authorizable;
+use McCool\LaravelAutoPresenter\HasPresenter;
 
 class User extends Model implements AuthenticatableContract,
     AuthorizableContract,
-    CanResetPasswordContract
+    CanResetPasswordContract, HasPresenter
 {
     use Authenticatable, Authorizable, CanResetPassword;
     use SoftDeletes;
     use UserInfo;
 
     /**
-     * The database table used by the model.
+     * モデルで使用するデータベーステーブル
      *
      * @var string
      */
     protected $table = 'users';
 
     /**
-     * The attributes that are mass assignable.
+     * 複数代入を行う属性
      *
      * @var array
      */
     protected $fillable = ['last_name', 'first_name', 'email', 'password'];
 
     /**
-     * The attributes excluded from the model's JSON form.
+     * モデルのJSON形式に含めない属性
      *
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * フルネームを取得
-     *
-     * @return string
-     */
-    public function getNameAttribute()
+    public function getPresenterClass()
     {
-        return $this->getAttribute("last_name") . " " . $this->getAttribute("first_name");
+        return UserPresenter::class;
     }
 }

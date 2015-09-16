@@ -2,14 +2,16 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| アプリケーションのルート
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| ここでアプリケーションのルートを全て登録することが可能です。
+| 簡単です。ただ、Laravelへ対応するURIと、そのURIがリクエスト
+| されたときに呼び出されるコントローラーを指定してください。
 |
 */
+
+use Illuminate\Support\Facades\Auth;
 
 /*
  * ユーザ認証
@@ -28,6 +30,10 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
  * ログイン中
  */
 Route::group(['middleware' => 'auth'], function () {
+    view()->composer('*', function ($view) {
+        $view->with('currentUser', Auth::user());
+    });
+
     Route::get('/', function () {
         return Redirect::to('/home');
     });

@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                    <i class="glyphicon glyphicon-user"></i> {{Auth::user()->name}} <span
+                    <i class="glyphicon glyphicon-user"></i> {{$currentUser->name}} <span
                             class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
                     <li><a href="#">{{trans('labels.my_profile')}}</a></li>
@@ -30,7 +30,7 @@
             <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{trans('labels.menu')}}</h3>
             <hr>
             <ul class="nav nav-stacked">
-                <li class="active">
+                <li>
                     <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> {{trans('labels.home')}}</a>
                 </li>
             </ul>
@@ -38,7 +38,7 @@
             <hr>
             <h4>日記</h4>
             <ul class="nav nav-stacked">
-                <li class="active">
+                <li>
                     <a href="#"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
                 </li>
                 <li>
@@ -48,8 +48,8 @@
 
             <hr>
 
+            <h4>集計</h4>
             <ul class="nav nav-stacked">
-                <h4>集計</h4>
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-book"></i> 月次集計</a>
                 </li>
