@@ -29,7 +29,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 /**
  * ログイン中
  */
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     view()->composer('*', function ($view) {
         $view->with('currentUser', Auth::user());
     });

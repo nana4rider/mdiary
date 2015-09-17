@@ -14,36 +14,33 @@
                 </div>
                 <div class="panel-body">
 
-                    <form method="POST" action="{{url('/auth/login')}}" class="form form-vertical">
-                        {!! csrf_field() !!}
-
-
+                    <form action="{{url('/auth/login')}}" class="form form-vertical" data-method="post">
                         <div class="control-group{{$errors->has() ? " has-error" : ""}}">
                             <p class="text-danger">{{$errors->first()}}</p>
 
-                            <label class="control-label">{{trans('labels.email')}}</label>
+                            <label class="control-label" for="email">{{trans('labels.email')}}</label>
 
                             <div class="controls">
-                                <input type="text" name="email" class="form-control"
+                                <input type="text" name="email" class="form-control" id="email"
                                        placeholder="{{trans("messages.input", ['name' => trans('labels.email')])}}"
                                        value="{{ old('email') }}">
                             </div>
 
-                            <label class="control-label">{{trans('labels.password')}}</label>
+                            <label class="control-label" for="password">{{trans('labels.password')}}</label>
 
                             <div class="controls">
-                                <input type="password" name="password" class="form-control"
+                                <input type="password" name="password" class="form-control" id="password"
                                        placeholder="{{trans("messages.input", ['name' => trans('labels.password')])}}">
 
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="rememberme"></label>
+                            <label class="control-label" for="remember"></label>
 
                             <div class="controls">
                                 <label class="inline">
-                                    <input type="checkbox" name="remember">
+                                    <input type="checkbox" name="remember" id="remember">
                                     {{trans('messages.remember_auth')}}
                                 </label>
                             </div>
