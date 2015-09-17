@@ -11,12 +11,11 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                    <i class="glyphicon glyphicon-user"></i> {{$currentUser->name}} <span
-                            class="caret"></span></a>
+                    <i class="glyphicon glyphicon-user"></i> {{$currentUser->name}} <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
                     <li><a href="#">{{trans('labels.my_profile')}}</a></li>
-                    <li><a href="{{url('/auth/logout')}}"><i
-                                    class="glyphicon glyphicon-lock"></i> {{trans('labels.logout')}}</a></li>
+                    <li><a href="{{url('/auth/logout')}}">
+                            <i class="glyphicon glyphicon-lock"></i> {{trans('labels.logout')}}</a></li>
                 </ul>
             </li>
         </ul>

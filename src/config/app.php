@@ -145,11 +145,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        /*
-         * third party Facade
-         */
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'McCool\LaravelAutoPresenter\AutoPresenterServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
     ],
 
     /*
@@ -199,6 +197,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
     ],
 
 ];
