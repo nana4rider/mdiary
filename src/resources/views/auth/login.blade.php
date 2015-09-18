@@ -1,10 +1,10 @@
 @extends('layouts.guest')
 
-@section('title', trans('labels.login'))
+@section('title', label('login'))
 
 @section('content')
     <div class="row sidebar">
-        <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-md-4 col-md-offset-4">
 
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -15,9 +15,13 @@
                 <div class="panel-body">
 
                     <form action="{{url('/auth/login')}}" class="form form-vertical" data-method="post">
-                        <div class="control-group{{$errors->has() ? " has-error" : ""}}">
-                            <p class="text-danger">{{$errors->first()}}</p>
+                        @if ($errors->has())
+                            @foreach ($errors->all() as $error)
+                                <p class="text-danger">{{$error}}</p>
+                            @endforeach
+                        @endif
 
+                        <div class="form-group{{$errors->has('email') ? " has-error" : ""}}">
                             <label class="control-label" for="email">{{label('email')}}</label>
 
                             <div class="controls">
@@ -25,7 +29,9 @@
                                        placeholder="{{message('input', ['name' => 'email'])}}"
                                        value="{{old('email')}}">
                             </div>
+                        </div>
 
+                        <div class="form-group{{$errors->has('password') ? " has-error" : ""}}">
                             <label class="control-label" for="password">{{label('password')}}</label>
 
                             <div class="controls">
@@ -35,9 +41,7 @@
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label class="control-label" for="remember"></label>
-
+                        <div class="form-group">
                             <div class="controls">
                                 <label class="inline">
                                     <input type="checkbox" name="remember" id="remember">
@@ -46,9 +50,7 @@
                             </div>
                         </div>
 
-                        <div class="control-group">
-                            <label></label>
-
+                        <div class="form-group">
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
                                     {{label('login')}}

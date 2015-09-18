@@ -20,4 +20,16 @@ $(function () {
             $this.append($('<input>').attr('type', 'hidden').attr('name', '_token').val(token));
         }
     });
+
+    /*
+     * 二重送信防止
+     */
+    var $forms = $('form');
+    $forms.on('submit', function () {
+        $forms.on('submit', function () {
+            return false;
+        });
+
+        return true;
+    });
 });
