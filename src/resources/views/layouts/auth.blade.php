@@ -5,7 +5,7 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-toggle"></span>
         </button>
-        <a class="navbar-brand" href="{{url()}}">{{trans('labels.app_name')}}</a>
+        <a class="navbar-brand" href="{{url()}}">{{label('app_name')}}</a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
@@ -13,9 +13,9 @@
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                     <i class="glyphicon glyphicon-user"></i> {{$currentUser->name}} <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    <li><a href="#">{{trans('labels.my_profile')}}</a></li>
+                    <li><a href="#">{{label('my_profile')}}</a></li>
                     <li><a href="{{url('/auth/logout')}}">
-                            <i class="glyphicon glyphicon-lock"></i> {{trans('labels.logout')}}</a></li>
+                            <i class="glyphicon glyphicon-lock"></i> {{label('logout')}}</a></li>
                 </ul>
             </li>
         </ul>
@@ -26,11 +26,11 @@
     <div class="row">
         {{-- メニュー --}}
         <nav class="col-sm-3 sidebar">
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{trans('labels.menu')}}</h3>
+            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{label('menu')}}</h3>
             <hr>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> {{trans('labels.home')}}</a>
+                    <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> {{label('home')}}</a>
                 </li>
             </ul>
 

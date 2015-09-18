@@ -18,7 +18,7 @@
                         <div class="control-group{{$errors->has() ? " has-error" : ""}}">
                             <p class="text-danger">{{$errors->first()}}</p>
 
-                            <label class="control-label" for="email">{{trans('labels.email')}}</label>
+                            <label class="control-label" for="email">{{label('email')}}</label>
 
                             <div class="controls">
                                 <input type="text" name="email" class="form-control" id="email"
@@ -26,7 +26,7 @@
                                        value="{{old('email')}}">
                             </div>
 
-                            <label class="control-label" for="password">{{trans('labels.password')}}</label>
+                            <label class="control-label" for="password">{{label('password')}}</label>
 
                             <div class="controls">
                                 <input type="password" name="password" class="form-control" id="password"
