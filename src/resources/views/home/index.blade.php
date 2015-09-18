@@ -3,7 +3,7 @@
 @section('title', 'Welcome')
 
 @section('content')
-    <h3><i class="glyphicon glyphicon-home"></i> {{trans('labels.home')}}</h3>
+    <h3><i class="glyphicon glyphicon-home"></i> {{label('home')}}</h3>
 
     <hr>
 
@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{trans('labels.information')}}
+                    {{label('information')}}
                 </div>
                 <ul class="list-group information">
                     @foreach($informations as $information)

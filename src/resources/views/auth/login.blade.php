@@ -9,7 +9,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="panel-title">
-                        <h4>{{trans('labels.app_name')}}</h4>
+                        <h4>{{label('app_name')}}</h4>
                     </div>
                 </div>
                 <div class="panel-body">
@@ -22,15 +22,15 @@
 
                             <div class="controls">
                                 <input type="text" name="email" class="form-control" id="email"
-                                       placeholder="{{trans("messages.input", ['name' => trans('labels.email')])}}"
-                                       value="{{ old('email') }}">
+                                       placeholder="{{message('input', ['name' => 'email'])}}"
+                                       value="{{old('email')}}">
                             </div>
 
                             <label class="control-label" for="password">{{trans('labels.password')}}</label>
 
                             <div class="controls">
                                 <input type="password" name="password" class="form-control" id="password"
-                                       placeholder="{{trans("messages.input", ['name' => trans('labels.password')])}}">
+                                       placeholder="{{message('input', ['name' => 'password'])}}">
 
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                             <div class="controls">
                                 <label class="inline">
                                     <input type="checkbox" name="remember" id="remember">
-                                    {{trans('messages.remember_auth')}}
+                                    {{message('remember_auth')}}
                                 </label>
                             </div>
                         </div>

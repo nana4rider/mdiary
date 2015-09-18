@@ -12,17 +12,10 @@ use App\Services\InformationService;
 
 class HomeController extends Controller
 {
-    private $service;
-
-    function __construct(InformationService $service)
-    {
-        $this->service = $service;
-    }
-
-    public function index()
+    public function index(InformationService $service)
     {
         $maxInformation = config('const.max_home_information');
-        $informations = $this->service->findNewer($maxInformation);
+        $informations = $service->findNewer($maxInformation);
 
         return view('home.index', compact('informations'));
     }
