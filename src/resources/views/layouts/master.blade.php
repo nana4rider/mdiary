@@ -27,7 +27,10 @@
 </div>
 <!-- /Main -->
 
-<footer class="text-center">Copyright &copy; 2015 Shunichiro Aki</footer>
+<footer class="text-center">
+    Copyright <span class="glyphicon glyphicon-copyright-mark"></span>
+    2015 Shunichiro Aki.
+</footer>
 
 <!-- script references -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
