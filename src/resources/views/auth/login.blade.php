@@ -51,7 +51,7 @@
 
                             <div class="controls">
                                 <button type="submit" class="btn btn-primary">
-                                    {{trans('labels.login')}}
+                                    {{label('login')}}
                                 </button>
                             </div>
                         </div>
