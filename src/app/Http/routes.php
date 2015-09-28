@@ -17,14 +17,9 @@ use Illuminate\Support\Facades\Auth;
  * ユーザ認証
  */
 Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
-
-/*
- * ユーザ登録
- */
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/{provider}', 'Auth\OAuthController@getAuthorize');
+Route::get('auth/{provider}/login', 'Auth\OAuthController@getLogin');
 
 /**
  * ログイン中

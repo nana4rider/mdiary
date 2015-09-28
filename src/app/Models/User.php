@@ -33,14 +33,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['last_name', 'first_name', 'email', 'password'];
+    protected $fillable = [];
 
     /**
      * モデルのJSON形式に含めない属性
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['remember_token'];
 
     public function getPresenterClass()
     {

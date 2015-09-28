@@ -3,7 +3,7 @@
 @section('title', 'Welcome')
 
 @section('content')
-    <h3><i class="glyphicon glyphicon-home"></i> {{label('home')}}</h3>
+    <h3><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</h3>
 
     <hr>
 
@@ -11,16 +11,16 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{label('information')}}
+                    {{ label('information') }}
                 </div>
                 <ul class="list-group information">
                     @foreach($informations as $information)
                         <li class="list-group-item">
                             <a href="#" class="show"
-                               data-message="{{$information->message}}">
+                               data-message="{{ $information->message }}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
-                                <small>{{$information->formatTime}}</small>
-                                <span class="title">{{$information->title}}</span>
+                                <small>{{ $information->formatTime }}</small>
+                                <span class="title">{{ $information->title }}</span>
                             </a>
                         </li>
                     @endforeach
@@ -32,5 +32,5 @@
 @endsection
 
 @section('js')
-    <script src="{{url('/js/home.js')}}"></script>
+    <script src="{{ url('/js/home.js') }}"></script>
 @endsection

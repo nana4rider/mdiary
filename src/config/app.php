@@ -148,6 +148,8 @@ return [
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
         'McCool\LaravelAutoPresenter\AutoPresenterServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
+        'AdamWathan\BootForms\BootFormsServiceProvider',
+        'AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider',
     ],
 
     /*
@@ -198,6 +200,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        'BootForm' => 'AdamWathan\BootForms\Facades\BootForm',
+        'OAuth' => 'AdamWathan\EloquentOAuth\Facades\OAuth',
     ],
 
 ];

@@ -5,17 +5,16 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-toggle"></span>
         </button>
-        <a class="navbar-brand" href="{{url()}}">{{label('app_name')}}</a>
+        <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
     </div>
     <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-                    <i class="glyphicon glyphicon-user"></i> {{$currentUser->name}} <span class="caret"></span></a>
+                    <i class="glyphicon glyphicon-user"></i> {{ $currentUser->name }} <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    <li><a href="#">{{label('my_profile')}}</a></li>
-                    <li><a href="{{url('/auth/logout')}}">
-                            <i class="glyphicon glyphicon-lock"></i> {{label('logout')}}</a></li>
+                    <li><a href="{{ url('/auth/logout') }}">
+                            <i class="glyphicon glyphicon-lock"></i> {{ label('logout') }}</a></li>
                 </ul>
             </li>
         </ul>
@@ -26,11 +25,11 @@
     <div class="row">
         {{-- メニュー --}}
         <nav class="col-sm-3 sidebar">
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{label('menu')}}</h3>
+            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{ label('menu') }}</h3>
             <hr>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{url('/home')}}"><i class="glyphicon glyphicon-home"></i> {{label('home')}}</a>
+                    <a href="{{ url('/home') }}"><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</a>
                 </li>
             </ul>
 
@@ -47,13 +46,19 @@
 
             <hr>
 
-            <h4>集計</h4>
+            <h4>作業</h4>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 月次集計</a>
+                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業日誌を作成</a>
                 </li>
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 年次集計</a>
+                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業日誌を見る</a>
+                </li>
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業記録を追加</a>
+                </li>
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業記録を見る</a>
                 </li>
             </ul>
             <hr>

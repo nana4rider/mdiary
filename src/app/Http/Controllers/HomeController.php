@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\InformationService;
+use App\Services\Models\InformationService;
 
 class HomeController extends Controller
 {

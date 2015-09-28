@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Presenters;
+
 use McCool\LaravelAutoPresenter\BasePresenter;
 
 /**
@@ -11,13 +12,4 @@ use McCool\LaravelAutoPresenter\BasePresenter;
  */
 class UserPresenter extends BasePresenter
 {
-    /**
-     * フルネームを取得
-     *
-     * @return string
-     */
-    public function name()
-    {
-        return $this->last_name . " " . $this->first_name;
-    }
 }
