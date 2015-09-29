@@ -8,13 +8,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use AdamWathan\EloquentOAuth\Facades\OAuth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Redirect;
+use Redirect;
+use SocialAuth;
 use SocialNorm\Exceptions\ApplicationRejectedException;
 use SocialNorm\Exceptions\InvalidAuthorizationCodeException;
 
-class OAuthController extends Controller
+class SocialAuthController extends Controller
 {
     /**
      * @param $provider
@@ -26,7 +26,7 @@ class OAuthController extends Controller
             return Redirect::intended();
         }
 
-        return OAuth::authorize($provider);
+        return SocialAuth::authorize($provider);
     }
 
     /**
@@ -36,7 +36,7 @@ class OAuthController extends Controller
     public function getLogin($provider)
     {
         try {
-            OAuth::login($provider, function ($user, $details) {
+            SocialAuth::login($provider, function ($user, $details) {
                 $user->name = $details->full_name;
                 $user->email = $details->email;
                 $user->save();

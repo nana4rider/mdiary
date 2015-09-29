@@ -201,7 +201,7 @@ return [
 
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'BootForm' => 'AdamWathan\BootForms\Facades\BootForm',
-        'OAuth' => 'AdamWathan\EloquentOAuth\Facades\OAuth',
+        'SocialAuth' => 'AdamWathan\EloquentOAuth\Facades\OAuth',
     ],
 
 ];

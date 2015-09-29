@@ -13,10 +13,10 @@
                     </div>
                 </div>
                 <div class="panel-body text-center">
-                    <a href="{{ url('/auth/google') }}" class="btn btn-block btn-social btn-google">
+                    <a href="{{ url('auth/google') }}" class="btn btn-block btn-social btn-google">
                         <span class="fa fa-google-plus"></span> {{ message('sign_in_with', ['name' => 'google']) }}
                     </a>
-                    <a href="{{ url('/auth/facebook') }}" class="btn btn-block btn-social btn-facebook">
+                    <a href="{{ url('auth/facebook') }}" class="btn btn-block btn-social btn-facebook">
                         <span class="fa fa-facebook"></span> {{ message('sign_in_with', ['name' => 'facebook']) }}
                     </a>
                 </div>

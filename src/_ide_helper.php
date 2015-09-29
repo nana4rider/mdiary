@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.17 (LTS) on 2015-09-27.
+ * Generated for Laravel 5.1.17 (LTS) on 2015-09-29.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12512,6 +12512,38 @@ namespace {
          */
         public static function openHorizontal($columnSizes){
             return \AdamWathan\BootForms\BootForm::openHorizontal($columnSizes);
+        }
+        
+    }
+
+
+    class SocialAuth extends \AdamWathan\EloquentOAuth\Facades\OAuth{
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function authorize($providerAlias){
+            return \AdamWathan\EloquentOAuth\OAuthManager::authorize($providerAlias);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function login($providerAlias, $callback = null){
+            return \AdamWathan\EloquentOAuth\OAuthManager::login($providerAlias, $callback);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function registerProvider($alias, $provider){
+            return \AdamWathan\EloquentOAuth\OAuthManager::registerProvider($alias, $provider);
         }
         
     }

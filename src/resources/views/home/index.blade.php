@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Welcome')
+@section('title', label('home'))
 
 @section('content')
     <h3><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</h3>
@@ -32,5 +32,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ url('/js/home.js') }}"></script>
+    <script src="{{ url('js/home.js') }}"></script>
 @endsection

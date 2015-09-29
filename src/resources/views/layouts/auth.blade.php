@@ -13,7 +13,7 @@
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                     <i class="glyphicon glyphicon-user"></i> {{ $currentUser->name }} <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('/auth/logout') }}">
+                    <li><a href="{{ url('auth/logout') }}">
                             <i class="glyphicon glyphicon-lock"></i> {{ label('logout') }}</a></li>
                 </ul>
             </li>
@@ -25,11 +25,10 @@
     <div class="row">
         {{-- メニュー --}}
         <nav class="col-sm-3 sidebar">
-            <h3><i class="glyphicon glyphicon-menu-hamburger"></i> {{ label('menu') }}</h3>
             <hr>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{ url('/home') }}"><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</a>
+                    <a href="{{ url('home') }}"><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</a>
                 </li>
             </ul>
 
@@ -37,10 +36,10 @@
             <h4>日記</h4>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
+                    <a href="{{ url('textDiary/create') }}"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
                 </li>
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-list-alt"></i> 日記を見る</a>
+                    <a href="{{ url('textDiary') }}"><i class="glyphicon glyphicon-list-alt"></i> 日記を見る</a>
                 </li>
             </ul>
 
@@ -49,16 +48,20 @@
             <h4>作業</h4>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業日誌を作成</a>
+                    <a href="{{ url('workDiary/create') }}">
+                        <i class="glyphicon glyphicon-plus"></i> {{ label('workDiary.create') }}</a>
                 </li>
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業日誌を見る</a>
+                    <a href="{{ url('workDiary') }}">
+                        <i class="glyphicon glyphicon-book"></i> {{ label('workDiary.index') }}</a>
                 </li>
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業記録を追加</a>
+                    <a href="{{ url('workRecord/create') }}">
+                        <i class="glyphicon glyphicon-plus"></i> {{ label('workRecord.create') }}</a>
                 </li>
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-book"></i> 作業記録を見る</a>
+                    <a href="{{ url('workRecord') }}">
+                        <i class="glyphicon glyphicon-book"></i> {{ label('workRecord.index') }}</a>
                 </li>
             </ul>
             <hr>

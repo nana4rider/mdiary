@@ -10,4 +10,7 @@ $(function () {
 
         return true;
     });
-});
+
+    $('select').wrap('<div></div>').multiselect();
+})
+;
