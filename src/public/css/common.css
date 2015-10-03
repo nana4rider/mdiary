@@ -5,3 +5,17 @@ select[multiple] {
 select, input[type="file"] {
     visibility: hidden;
 }
+
+body {
+    padding-top: 80px;
+}
+
+footer {
+    padding: 40px 0;
+    color: #EEEEEE;
+    background-color: #333333;
+}
+
+.panel-login {
+    margin-top: 22px;
+}

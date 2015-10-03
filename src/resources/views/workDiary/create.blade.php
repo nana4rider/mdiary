@@ -3,9 +3,7 @@
 @section('title', label('workDiary.create'))
 
 @section('content')
-    <h3><i class="glyphicon glyphicon-plus"></i> {{ label('workDiary.create') }}</h3>
-
-    <hr>
+    <h1 class="page-header">@yield('title')</h1>
 
     <div class="row">
         <div class="col-md-12">

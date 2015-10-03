@@ -2,13 +2,41 @@
 
 @section('header')
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse,.sidebar">
-            <span class="glyphicon glyphicon-align-justify"></span>
-        </button>
         <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
-
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
     </div>
-    <div class="navbar-collapse collapse navbar-collapse2">
+    <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+            <li class="{{ Request::is('home') ? 'active' : null }}">
+                <a href="{{ url('home') }}">{{ label('home') }}</a>
+            </li>
+            <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ label('textDiary') }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url('textDiary/create') }}">{{ label('textDiary.create') }}</a></li>
+                    <li><a href="{{ url('textDiary') }}">{{ label('textDiary.index') }}</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown {{ Request::is('work*') ? 'active' : null }}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ label('work') }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url('workDiary/create') }}">{{ label('workDiary.create') }}</a></li>
+                    <li><a href="{{ url('workDiary') }}">{{ label('workDiary.index') }}</a></li>
+                    <li><a href="{{ url('workRecord/create') }}">{{ label('workRecord.create') }}</a></li>
+                    <li><a href="{{ url('workRecord') }}">{{ label('workRecord.index') }}</a></li>
+                </ul>
+            </li>
+
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
@@ -21,58 +49,3 @@
         </ul>
     </div>
 @endsection
-
-@section('content')
-    <div class="row">
-        {{-- メニュー --}}
-        <nav class="col-sm-3 sidebar">
-            <hr>
-            <ul class="nav nav-stacked">
-                <li>
-                    <a href="{{ url('home') }}"><i class="glyphicon glyphicon-home"></i> {{ label('home') }}</a>
-                </li>
-            </ul>
-
-            <hr>
-            <h4>日記</h4>
-            <ul class="nav nav-stacked">
-                <li>
-                    <a href="{{ url('textDiary/create') }}">
-                        <i class="glyphicon glyphicon-pencil"></i> {{ label('textDiary.create') }}</a>
-                </li>
-                <li>
-                    <a href="{{ url('textDiary') }}">
-                        <i class="glyphicon glyphicon-book"></i> {{ label('textDiary.index') }}</a>
-                </li>
-            </ul>
-
-            <hr>
-
-            <h4>作業</h4>
-            <ul class="nav nav-stacked">
-                <li>
-                    <a href="{{ url('workDiary/create') }}">
-                        <i class="glyphicon glyphicon-plus"></i> {{ label('workDiary.create') }}</a>
-                </li>
-                <li>
-                    <a href="{{ url('workDiary') }}">
-                        <i class="glyphicon glyphicon-book"></i> {{ label('workDiary.index') }}</a>
-                </li>
-                <li>
-                    <a href="{{ url('workRecord/create') }}">
-                        <i class="glyphicon glyphicon-plus"></i> {{ label('workRecord.create') }}</a>
-                </li>
-                <li>
-                    <a href="{{ url('workRecord') }}">
-                        <i class="glyphicon glyphicon-book"></i> {{ label('workRecord.index') }}</a>
-                </li>
-            </ul>
-            <hr>
-        </nav>
-
-        {{-- メインコンテンツ --}}
-        <div class="col-sm-9 main">
-            @yield('content')
-        </div>
-    </div>
-@overwrite

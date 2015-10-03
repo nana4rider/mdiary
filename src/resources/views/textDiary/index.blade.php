@@ -3,13 +3,10 @@
 @section('title', label('textDiary.index'))
 
 @section('content')
-    <h3><i class="glyphicon glyphicon-book"></i> {{ label('textDiary.index') }}</h3>
-
-    <hr>
+    <h1 class="page-header">@yield('title')</h1>
 
     <div class="row">
         <div class="col-md-12">
-
             <div class="panel-group">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -21,7 +18,7 @@
                     </div>
                     <div class="panel-collapse collapse" id="diaryCategory">
                         <div class="list-group">
-                            <a class="list-group-item" href="#">
+                            <a class="list-group-item active" href="#">
                                 整枝
                                 <span class="badge">0</span>
                             </a>

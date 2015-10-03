@@ -9,6 +9,8 @@ return [
     'facebook' => 'Facebook',
     'menu' => 'メニュー',
     'home' => 'ホーム',
+    'textDiary' => '日記',
+    'work' => '作業',
     'information' => 'お知らせ',
     'textDiary.create' => '日記を書く',
     'textDiary.index' => '日記を見る',
