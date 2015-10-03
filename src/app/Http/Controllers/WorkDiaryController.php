@@ -11,6 +11,11 @@ namespace App\Http\Controllers;
 
 class WorkDiaryController extends Controller
 {
+    public function index()
+    {
+        return view('workDiary.index');
+    }
+
     public function create()
     {
         return view('workDiary.create');

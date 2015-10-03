@@ -2,12 +2,13 @@
 
 @section('header')
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-toggle"></span>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse,.sidebar">
+            <span class="glyphicon glyphicon-align-justify"></span>
         </button>
         <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
+
     </div>
-    <div class="navbar-collapse collapse">
+    <div class="navbar-collapse collapse navbar-collapse2">
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
@@ -36,10 +37,12 @@
             <h4>日記</h4>
             <ul class="nav nav-stacked">
                 <li>
-                    <a href="{{ url('textDiary/create') }}"><i class="glyphicon glyphicon-pencil"></i> 日記を書く</a>
+                    <a href="{{ url('textDiary/create') }}">
+                        <i class="glyphicon glyphicon-pencil"></i> {{ label('textDiary.create') }}</a>
                 </li>
                 <li>
-                    <a href="{{ url('textDiary') }}"><i class="glyphicon glyphicon-list-alt"></i> 日記を見る</a>
+                    <a href="{{ url('textDiary') }}">
+                        <i class="glyphicon glyphicon-book"></i> {{ label('textDiary.index') }}</a>
                 </li>
             </ul>
 

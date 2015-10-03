@@ -1,0 +1,7 @@
+select[multiple] {
+    height: 34px;
+}
+
+select, input[type="file"] {
+    visibility: hidden;
+}

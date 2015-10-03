@@ -11,6 +11,11 @@ namespace App\Http\Controllers;
 
 class WorkRecordController extends Controller
 {
+    public function index()
+    {
+        return view('workRecord.index');
+    }
+
     public function create()
     {
         return view('workRecord.create');
