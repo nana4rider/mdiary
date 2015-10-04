@@ -8,14 +8,13 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <ul class="list-group information">
+                <ul class="list-group">
                     @foreach($informations as $information)
                         <li class="list-group-item">
-                            <a href="#" class="show"
-                               data-message="{{ $information->message }}">
+                            <a href="#" data-information="{{ $information->toJson() }}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
                                 <small>{{ $information->formatTime }}</small>
-                                <span class="title">{{ $information->title }}</span>
+                                {{ $information->title }}
                             </a>
                         </li>
                     @endforeach

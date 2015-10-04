@@ -12,9 +12,27 @@ $(function () {
     });
 
     /**
+     * リンクのタイトルをツールチップ化
+     */
+    $("a").tooltip();
+
+    /**
+     * multiselect日本語化
+     */
+    $.extend($.fn.multiselect.Constructor.prototype.defaults, {
+        selectAllText: ' 全選択',
+        filterPlaceholder: '検索',
+        nonSelectedText: '未選択',
+        nSelectedText: '件選択',
+        allSelectedText: '全選択'
+    });
+
+    /**
      * セレクトボックスのUI変更
      */
-    $('select').wrap('<div></div>').multiselect();
+    $('select').wrap('<div></div>').multiselect({
+        includeSelectAllOption: true
+    });
 
     /**
      * ファイルアップロードのUI変更
@@ -52,7 +70,7 @@ $(function () {
     $('input[data-datetimepicker]').each(function () {
         var $this = $(this);
         var format = {datetime: 'YYYY/MM/DD HH:mm', date: 'YYYY/MM/DD', time: 'HH:mm'}
-            [$this.attr('data-datetimepicker')];
+            [$this.data('datetimepicker')];
 
         $this.prop('readonly', 'readonly');
 
@@ -71,8 +89,8 @@ $(function () {
     /**
      * トグルメニューのアイコン
      */
-    $('a[data-toggle="collapse"]').on('click', function (event) {
-        $this = $(this);
+    $('a[data-toggle="collapse"]').on('click', function (e) {
+        var $this = $(this);
 
         var removeClass;
         var addClass;
@@ -85,5 +103,42 @@ $(function () {
         }
         $this.parent().find('.' + removeClass)
             .removeClass(removeClass).addClass(addClass);
+    });
+
+    /**
+     * テーブル表示ダイアログ
+     */
+    $('a.dialog-table').on('click', function () {
+        var $this = $(this);
+        var title = $this.data('original-title');
+        var header = $this.data('table-header');
+        var body = $this.data('table-body');
+
+        var $header = $('<tr>');
+        var $table = $('<table class="table table-bordered">');
+
+        $header.append('<th>#</th>');
+
+        Object.keys(header).forEach(function (key) {
+            $header.append('<th>' + header[key] + '</th>');
+        });
+        $table.append($header);
+
+        body.forEach(function (entry, idx) {
+            var $body = $('<tr>');
+
+            $body.append('<td>' + (idx + 1) + '</td>');
+            Object.keys(header).forEach(function (key) {
+                $body.append('<td>' + entry[key] + '</td>');
+            });
+            $table.append($body);
+        });
+
+        BootstrapDialog.show({
+            title: title,
+            message: $table
+        });
+
+        return false;
     });
 });

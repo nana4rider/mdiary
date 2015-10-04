@@ -4,21 +4,20 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-6 col-md-offset-3">
+            <h1 class="page-header">@yield('title')</h1>
 
-            <div class="panel panel-default panel-login">
-                <div class="panel-heading">
-                    <h4 class="panel-title"><i class="glyphicon glyphicon-lock"></i> {{ label('login') }}</h4>
-                </div>
-                <div class="panel-body text-center">
-                    <a href="{{ url('auth/google') }}" class="btn btn-block btn-social btn-google">
-                        <span class="fa fa-google-plus"></span> {{ message('sign_in_with', ['name' => 'google']) }}
-                    </a>
-                    <a href="{{ url('auth/facebook') }}" class="btn btn-block btn-social btn-facebook">
-                        <span class="fa fa-facebook"></span> {{ message('sign_in_with', ['name' => 'facebook']) }}
-                    </a>
-                </div>
-            </div>
+            <p>
+                <a href="{{ url('auth/google') }}" class="btn btn-social btn-google">
+                    <span class="fa fa-google-plus"></span> {{ message('sign_in_with', ['name' => 'google']) }}
+                </a>
+            </p>
+
+            <p>
+                <a href="{{ url('auth/facebook') }}" class="btn btn-social btn-facebook">
+                    <span class="fa fa-facebook"></span> {{ message('sign_in_with', ['name' => 'facebook']) }}
+                </a>
+            </p>
         </div>
     </div>
 @endsection

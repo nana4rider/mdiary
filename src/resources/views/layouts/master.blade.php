@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ url('css/common.css') }}">
     @yield('css')
 </head>
-<body>
+<body class="no-thank-yu">
 
 <header>
     <div class="navbar navbar-default navbar-fixed-top">

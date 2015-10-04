@@ -16,8 +16,15 @@ class Information extends Model implements HasPresenter
 
     protected $dates = ['time'];
 
+    protected $visible = ['title', 'message'];
+
     public function getPresenterClass()
     {
         return InformationPresenter::class;
+    }
+
+    public function getAbcAttribute()
+    {
+        return '123';
     }
 }

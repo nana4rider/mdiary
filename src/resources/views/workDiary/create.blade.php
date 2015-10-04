@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post() !!}
+                    {!! BootForm::open()->post()->action(url('workDiary')) !!}
 
                     {!! BootForm::select('作物', 'product')->options(['スイカ', 'ほうれん草', '小松菜']) !!}
 
@@ -19,7 +19,7 @@
 
                     {!! BootForm::textarea('備考', 'note')->rows(5) !!}
 
-                    {!! BootForm::submit('追加', 'btn-primary') !!}
+                    {!! BootForm::submit('作成', 'btn-primary') !!}
 
                     {!! BootForm::close() !!}
                 </div>

@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-
 class WorkRecordController extends Controller
 {
     public function index()

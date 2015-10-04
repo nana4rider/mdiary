@@ -11,11 +11,12 @@ body {
 }
 
 footer {
+    margin-top: 33px;
     padding: 40px 0;
     color: #EEEEEE;
     background-color: #333333;
 }
 
-.panel-login {
-    margin-top: 22px;
+.bootstrap-dialog-title {
+    font-size: 19px;
 }

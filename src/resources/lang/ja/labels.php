@@ -17,5 +17,5 @@ return [
     'workDiary.create' => '作業日誌を作成',
     'workDiary.index' => '作業日誌を見る',
     'workRecord.create' => '作業記録を作成',
-    'workRecord.index' => '作業日誌を見る',
+    'workRecord.index' => '作業記録を見る',
 ];

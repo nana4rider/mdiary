@@ -98,7 +98,7 @@
                     </div>
 
                     <div class="col-md-12">
-                        {!! BootForm::open() !!}
+                        {!! BootForm::open()->get()->action(url('textDiary/1/edit')) !!}
 
                         {!! BootForm::submit('編集', 'btn-primary') !!}
 
@@ -164,7 +164,7 @@
                 </div>
             </div>
 
-            <div align="center">
+            <nav class="text-center">
                 <ul class="pagination">
                     <li class="disabled"><span>«</span></li>
                     <li class="active"><span>1</span></li>
@@ -180,7 +180,7 @@
                     <li><a href="?page=14">14</a></li>
                     <li><a href="?page=2" rel="next">»</a></li>
                 </ul>
-            </div>
+            </nav>
         </div>
     </div>
 

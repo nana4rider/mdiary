@@ -51,8 +51,3 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
      */
     Route::resource('workRecord', 'WorkRecordController');
 });
-
-// TODO: sample
-Route::get('/sample', function () {
-    return view('sample');
-});

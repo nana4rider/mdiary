@@ -1,10 +1,10 @@
 $(function () {
     // お知らせの詳細を表示
-    $('.information a.show').on('click', function () {
-        var $this = $(this);
+    $('a[data-information]').on('click', function () {
+        var data = $(this).data('information');
         BootstrapDialog.show({
-            title: $this.find('.title').text(),
-            message: $this.attr('data-message')
+            title: data.title,
+            message: data.message
         });
 
         return false;

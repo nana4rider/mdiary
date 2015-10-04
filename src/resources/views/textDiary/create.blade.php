@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post() !!}
+                    {!! BootForm::open()->post()->action(url('textDiary')) !!}
 
                     {!! BootForm::text('日時', 'datetime')->data('datetimepicker', 'datetime') !!}
 
