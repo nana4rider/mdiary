@@ -50,4 +50,9 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
      * 作業記録
      */
     Route::resource('workRecord', 'WorkRecordController');
+
+    /**
+     * 状態管理
+     */
+    Route::get('stateManagement/place', 'StateManagementController@place');
 });

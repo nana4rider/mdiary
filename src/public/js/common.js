@@ -12,11 +12,6 @@ $(function () {
     });
 
     /**
-     * リンクのタイトルをツールチップ化
-     */
-    $("a").tooltip();
-
-    /**
      * multiselect日本語化
      */
     $.extend($.fn.multiselect.Constructor.prototype.defaults, {
@@ -40,15 +35,15 @@ $(function () {
     $('input[type="file"]').hide().each(function () {
         var $this = $(this);
 
-        var $button = $('<button class="btn btn-default" type="button">' +
+        var $button = $('<span class="input-group-addon">' +
             '<span class="glyphicon glyphicon-folder-open"></span>' +
-            '</button>').on('click', function () {
+            '</span>').on('click', function () {
             $this.trigger('click');
         });
 
         var $textBox = $('<input type="text" class="form-control" readonly>').prop('placeholder', $this.prop('placeholder') || 'select file...');
 
-        $this.after($('<div class="input-group">').append($textBox).append($('<span class="input-group-btn">').append($button)));
+        $this.after($('<div class="input-group file">').append($textBox).append($button));
 
         $this.on('change', function () {
             $textBox.val(Array.prototype.map.call($this.prop('files'), function (file) {
@@ -106,39 +101,30 @@ $(function () {
     });
 
     /**
-     * テーブル表示ダイアログ
+     * テキスト表示ダイアログ
      */
-    $('a.dialog-table').on('click', function () {
+    $('a[data-dialog-message]').on('click', function (e) {
+        e.preventDefault();
+
         var $this = $(this);
-        var title = $this.data('original-title');
-        var header = $this.data('table-header');
-        var body = $this.data('table-body');
-
-        var $header = $('<tr>');
-        var $table = $('<table class="table table-bordered">');
-
-        $header.append('<th>#</th>');
-
-        Object.keys(header).forEach(function (key) {
-            $header.append('<th>' + header[key] + '</th>');
-        });
-        $table.append($header);
-
-        body.forEach(function (entry, idx) {
-            var $body = $('<tr>');
-
-            $body.append('<td>' + (idx + 1) + '</td>');
-            Object.keys(header).forEach(function (key) {
-                $body.append('<td>' + entry[key] + '</td>');
-            });
-            $table.append($body);
-        });
 
         BootstrapDialog.show({
-            title: title,
-            message: $table
+            title: $this.data('dialog-title'),
+            message: $this.data('dialog-message')
         });
+    });
 
-        return false;
+    /**
+     * HTML表示ダイアログ
+     */
+    $('a[data-dialog-content]').on('click', function (e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        BootstrapDialog.show({
+            title: $this.data('dialog-title'),
+            message: $($this.data('dialog-content')).clone().removeClass('hidden')
+        });
     });
 });

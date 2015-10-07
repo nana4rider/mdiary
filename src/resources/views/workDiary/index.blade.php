@@ -26,7 +26,6 @@
         </div>
     </div>
 
-
     <h1 class="page-header">@yield('title')</h1>
 
     <div class="row">
@@ -44,7 +43,7 @@
                     <h5>作業記録</h5>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-responsive">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -67,10 +66,33 @@
                                 <td>3</td>
                                 <td>{{ date(config('format.date')) }}</td>
                                 <td>
-                                    <a href="#" class="dialog-table"
-                                       title="防除詳細"
-                                       data-table-header="{{ json_encode(['name' => '農薬名', 'amount' => '農薬使用倍率/使用量']) }}"
-                                       data-table-body="{{ json_encode([['name' => 'アファーム', 'amount' => '1000'], ['name' => 'カスケード', 'amount' => '1000']]) }}">防除</a>
+                                    <a href="#"
+                                       data-dialog-title="防除詳細"
+                                       data-dialog-content="#work-record-99">防除</a>
+
+                                    <div id="work-record-99" class="table-responsive hidden">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>農薬名</th>
+                                                <th>農薬使用倍率/使用量</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>アファーム</td>
+                                                <td>1000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>カスケード</td>
+                                                <td>1000</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>
@@ -80,7 +102,7 @@
                     <h5>農薬使用記録</h5>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table">
                             <thead>
                             <tr>
                                 <th>#</th>

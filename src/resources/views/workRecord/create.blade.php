@@ -21,8 +21,6 @@
                     {!! BootForm::select('作業内容', 'work')
                             ->options(['防除', '定植', '整枝', '交配', '収穫']) !!}
 
-                    {!! BootForm::textarea('備考', 'note')->rows(5) !!}
-
                     <div class="form-group">
                         <label class="control-label">農薬</label>
 
@@ -33,7 +31,7 @@
                                 <th>
                                     農薬使用倍率/使用量
                                     <span class="pull-right">
-                                        <a href="#" id="pesticide-add" title="農薬を追加">
+                                        <a href="#" data-dialog-title="農薬を追加" data-dialog-content="#pesticide-form">
                                             <span class="glyphicon glyphicon-plus"></span></a>
                                     </span>
                                 </th>
@@ -46,7 +44,7 @@
                                 <td>
                                     1000
                                     <span class="pull-right">
-                                        <a href="#" id="pesticide-remove" title="農薬を削除">
+                                        <a href="#" id="pesticide-remove">
                                             <span class="glyphicon glyphicon-remove"></span></a>
                                     </span>
                                 </td>
@@ -56,6 +54,8 @@
                         </table>
 
                     </div>
+
+                    {!! BootForm::textarea('備考', 'note')->rows(5) !!}
 
                     {!! BootForm::submit('作成', 'btn-primary') !!}
 
@@ -77,22 +77,4 @@
 
         {!! BootForm::close() !!}
     </div>
-@endsection
-
-@section('js')
-    <script>
-        $(function () {
-            $('#pesticide-add').on('click', function (e) {
-                var $this = $(this);
-                e.preventDefault();
-
-                BootstrapDialog.show({
-                    title: $this.data('original-title'),
-                    message: function (dialog) {
-                        return $('#pesticide-form').clone().removeClass('hidden');
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

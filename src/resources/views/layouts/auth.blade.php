@@ -14,6 +14,7 @@
             <li class="{{ Request::is('home') ? 'active' : null }}">
                 <a href="{{ url('home') }}">{{ label('home') }}</a>
             </li>
+
             <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                     {{ label('textDiary') }} <span class="caret"></span>
@@ -36,6 +37,9 @@
                 </ul>
             </li>
 
+            <li class="{{ Request::is('stateManagement*') ? 'active' : null }}">
+                <a href="{{ url('stateManagement/place') }}">{{ label('stateManagement') }}</a>
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

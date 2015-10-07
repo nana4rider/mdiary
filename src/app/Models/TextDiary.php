@@ -10,7 +10,12 @@ class TextDiary extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'text_diarys';
+    /**
+     * モデルで使用するデータベーステーブル
+     *
+     * @var string
+     */
+    protected $table = 'text_diaries';
 
-    //
+    protected $dates = ['time'];
 }

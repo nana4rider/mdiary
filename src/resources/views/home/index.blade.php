@@ -11,7 +11,8 @@
                 <ul class="list-group">
                     @foreach($informations as $information)
                         <li class="list-group-item">
-                            <a href="#" data-information="{{ $information->toJson() }}">
+                            <a href="#" data-dialog-title="{{ $information->title }}"
+                               data-dialog-message="{{ $information->message }}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
                                 <small>{{ $information->formatTime }}</small>
                                 {{ $information->title }}
@@ -23,8 +24,4 @@
         </div>
     </div>
 
-@endsection
-
-@section('js')
-    <script src="{{ url('js/home.js') }}"></script>
 @endsection
