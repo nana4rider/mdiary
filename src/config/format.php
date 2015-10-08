@@ -10,4 +10,5 @@ return [
     'date' => 'Y/m/d',
     'time' => 'H:i',
     'datetime' => 'Y/m/d H:i',
+    'dateSimple' => 'm/d',
 ];

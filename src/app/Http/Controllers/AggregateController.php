@@ -15,4 +15,9 @@ class AggregateController extends Controller
     {
         return view('aggregate.field');
     }
+
+    public function workDiary()
+    {
+        return view('aggregate.workDiary');
+    }
 }
