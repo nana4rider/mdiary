@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', label('stateManagement.place'))
+@section('title', label('aggregate.field'))
 
 @section('content')
     <h1 class="page-header">検索条件</h1>

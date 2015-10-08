@@ -52,7 +52,8 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     Route::resource('workRecord', 'WorkRecordController');
 
     /**
-     * 状態管理
+     * 集計
      */
-    Route::get('stateManagement/place', 'StateManagementController@place');
+    Route::get('aggregate/field', 'AggregateController@field');
+    Route::get('aggregate/workDiary', 'AggregateController@workDiary');
 });

@@ -37,8 +37,14 @@
                 </ul>
             </li>
 
-            <li class="{{ Request::is('stateManagement*') ? 'active' : null }}">
-                <a href="{{ url('stateManagement/place') }}">{{ label('stateManagement') }}</a>
+            <li class="dropdown {{ Request::is('aggregate*') ? 'active' : null }}">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    {{ label('aggregate') }} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="{{ url('aggregate/field') }}">{{ label('aggregate.field') }}</a></li>
+                    <li><a href="{{ url('aggregate/workDiary') }}">{{ label('aggregate.workDiary') }}</a></li>
+                </ul>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

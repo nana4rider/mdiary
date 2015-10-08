@@ -12,12 +12,13 @@ return [
     'textDiary' => '日記',
     'work' => '作業',
     'information' => 'お知らせ',
-    'stateManagement' => '状態管理',
+    'aggregate' => '集計',
     'textDiary.create' => '日記を書く',
     'textDiary.index' => '日記を見る',
     'workDiary.create' => '作業日誌を作成',
     'workDiary.index' => '作業日誌を見る',
     'workRecord.create' => '作業記録を作成',
     'workRecord.index' => '作業記録を見る',
-    'stateManagement.place' => '場所ごとの状態を見る'
+    'aggregate.field' => '場所ごとの集計',
+    'aggregate.workDiary' => '作業日誌の集計',
 ];

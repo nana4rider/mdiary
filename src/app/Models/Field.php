@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Place extends Model
+class Field extends Model
 {
     use SoftDeletes;
     use UserInfo;
@@ -15,6 +15,6 @@ class Place extends Model
      *
      * @var string
      */
-    protected $table = 'places';
+    protected $table = 'fields';
 
 }

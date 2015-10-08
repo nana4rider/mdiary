@@ -102,7 +102,7 @@
                     <h5>農薬使用記録</h5>
 
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>#</th>

@@ -9,10 +9,10 @@
 namespace App\Http\Controllers;
 
 
-class StateManagementController extends Controller
+class AggregateController extends Controller
 {
-    public function place()
+    public function field()
     {
-        return view('stateManagement.place');
+        return view('aggregate.field');
     }
 }
