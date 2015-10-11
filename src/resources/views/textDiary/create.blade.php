@@ -35,7 +35,7 @@
 
                     {!! BootForm::textarea(label('body'), 'body')->rows(10) !!}
                     {!! BootForm::select(label('category'), 'category')
-                            ->options($categories)->multiple() !!}
+                            ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple() !!}
 

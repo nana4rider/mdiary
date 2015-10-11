@@ -21,14 +21,25 @@ class TextDiaryController extends Controller
 {
     public function index()
     {
-        return view('textDiary.index');
+        // カテゴリ毎の日記件数
+        $dairyCount = DB::table('text_diary_text_diary_category')
+            ->select('text_diary_category_id', DB::raw('count(*) as count'))
+            ->groupBy('text_diary_category_id')
+            ->lists('count', 'text_diary_category_id');
+
+        // 日記が存在するカテゴリ
+        $categories = TextDiaryCategory::whereIn('id', array_keys($dairyCount))->orderBy('display_order')->get();
+
+        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')->orderBy('datetime', 'desc')->get();
+
+        return view('textDiary.index', compact('categories', 'dairyCount', 'textDiaries'));
     }
 
     public function create()
     {
-        $categories = options(TextDiaryCategory::orderBy('display_order')->get());
+        $categoryOptions = options(TextDiaryCategory::orderBy('display_order')->get());
 
-        return view('textDiary.create', compact('categories'));
+        return view('textDiary.create', compact('categoryOptions'));
     }
 
     public function store(Request $request, FlickrService $flickrService)
@@ -42,7 +53,7 @@ class TextDiaryController extends Controller
         ]);
 
         if ($v->fails()) {
-            return redirect()->back()->withErrors($v->errors())->withInput(Input::all());
+            return redirect()->back()->withErrors($v->errors())->withInput($request->all());
         }
 
         // 入力検証(写真)
@@ -50,7 +61,7 @@ class TextDiaryController extends Controller
             $v = Validator::make(array('picture' => $picture), array('picture' => 'mimes:jpeg,bmp,png'));
 
             if ($v->fails()) {
-                return redirect()->back()->withErrors($v->errors())->withInput(Input::all());
+                return redirect()->back()->withErrors($v->errors())->withInput($request->all());
             }
         }
 
