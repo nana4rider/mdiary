@@ -1,17 +1,30 @@
-/**
- * 二重送信防止、getメソッド時のトークン削除
- */
 $(function () {
-    var method = null;
+    var buttonMethod = null;
 
     $(document).on('submit', 'form', function (e) {
-        if (method === null) {
-            method = $(this).prop('method');
+        if (buttonMethod === 'get'
+            || (buttonMethod === null && $(this).prop('method') === 'get')) {
+            // トークンとメソッド送信を無効化
+            $(this).children('input[name="_token"]').attr('disabled', true);
         }
 
-        if (method === 'get') {
-            // トークンの送信を無効化
-            $(this).find('input[name="_token"]').attr('disabled', true);
+        /*
+         * メソッドをボタン毎に切り替え
+         * <button data-method="PUT">Update</button>
+         */
+        if (buttonMethod === 'post' || buttonMethod === 'get') {
+            $(this).prop('method', buttonMethod.toUpperCase());
+            $(this).children('input[name="_method"]').attr('disabled', true);
+        } else if (buttonMethod === 'put' || buttonMethod === 'delete') {
+            $(this).prop('method', 'POST');
+            $_method = $(this).children('input[name="_method"]');
+
+            if ($_method.length === 0) {
+                $_method = $('<input type="hidden" name="_method">');
+                $(this).append($_method);
+            }
+
+            $_method.val(buttonMethod.toUpperCase());
         }
 
         $(document).on('submit', 'form', function (e) {
@@ -21,12 +34,12 @@ $(function () {
     });
 
     $(document).on('click', 'button[type="submit"]', function (e) {
-        var m = $(this).attr('formmethod');
+        var m = $(this).data('method');
 
         if (m === undefined) {
-            method = null;
+            buttonMethod = null;
         } else {
-            method = m.toLowerCase();
+            buttonMethod = m.toLowerCase();
         }
     });
 });
@@ -115,7 +128,7 @@ $(function () {
     /**
      * トグルメニューのアイコン
      */
-    $('a[data-toggle="collapse"]').on('click', function () {
+    $('[data-toggle="collapse"]').on('click', function () {
         var removeClass;
         var addClass;
 
@@ -134,7 +147,7 @@ $(function () {
     /**
      * テキスト表示ダイアログ
      */
-    $('a[data-dialog-message]').on('click', function (e) {
+    $('[data-dialog-message]').on('click', function (e) {
         e.preventDefault();
 
         BootstrapDialog.show({
@@ -169,7 +182,7 @@ $(function () {
     /**
      * HTML表示ダイアログ(リンク)
      */
-    $('a[data-dialog-content]').on('click', function (e) {
+    $('[data-dialog-content]').on('click', function (e) {
         e.preventDefault();
 
         var $content = $($(this).data('dialog-content'));
@@ -180,7 +193,32 @@ $(function () {
     /**
      * HTML表示ダイアログ(初期表示)
      */
-    $('div[data-dialog-onload]').each(function () {
+    $('[data-dialog-onload]').each(function () {
         showContentDialog($(this).attr('title'), $(this));
+    });
+
+    $('[data-confirm]').each(function () {
+        var $element = $(this);
+        var confirm = false;
+
+        $element.on('click', function (e) {
+            if (confirm) {
+                confirm = false;
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            BootstrapDialog.confirm({
+                message: $element.data('confirm'),
+                callback: function (result) {
+                    if (result) {
+                        confirm = true;
+                        $element.trigger('click');
+                    }
+                }
+            });
+        });
     });
 });

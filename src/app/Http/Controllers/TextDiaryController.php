@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 use App\Models\TextDiary;
 use App\Models\TextDiaryCategory;
 use App\Services\FlickrService;
-use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Input;
@@ -19,7 +18,17 @@ use Validator;
 
 class TextDiaryController extends Controller
 {
-    public function index()
+    private function getCatetoryOptions()
+    {
+        return options(TextDiaryCategory::orderBy('display_order')->get());
+    }
+
+    /**
+     * 一覧表示
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
     {
         // カテゴリ毎の日記件数
         $dairyCount = DB::table('text_diary_text_diary_category')
@@ -30,18 +39,34 @@ class TextDiaryController extends Controller
         // 日記が存在するカテゴリ
         $categories = TextDiaryCategory::whereIn('id', array_keys($dairyCount))->orderBy('display_order')->get();
 
-        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')->orderBy('datetime', 'desc')->get();
+        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')
+            ->whereHas('textDiaryCategories', function ($q) use ($request) {
+                if ($request->has('category')) {
+                    // 選択したカテゴリで絞込
+                    $q->where('id', '=', $request->get('category'));
+                }
+            })->orderBy('datetime', 'desc')->paginate(config('const.max_text_diary'));
 
         return view('textDiary.index', compact('categories', 'dairyCount', 'textDiaries'));
     }
 
+    /**
+     * 作成画面
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
-        $categoryOptions = options(TextDiaryCategory::orderBy('display_order')->get());
+        $categoryOptions = $this->getCatetoryOptions();
 
         return view('textDiary.create', compact('categoryOptions'));
     }
 
+    /**
+     * 作成処理
+     * @param Request $request
+     * @param FlickrService $flickrService
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request, FlickrService $flickrService)
     {
         // 入力検証
@@ -86,7 +111,6 @@ class TextDiaryController extends Controller
         DB::transaction(function () use ($request, &$flickrIds, $textDiary) {
             // 日記登録
             $textDiary->fill($request->all());
-            $textDiary->datetime = Carbon::createFromFormat(config('format.datetime'), $request->datetime);
             $textDiary->save();
 
             // カテゴリ紐付け
@@ -97,5 +121,20 @@ class TextDiaryController extends Controller
         });
 
         return redirect()->back()->with('newEntity', $textDiary);
+    }
+
+    public function edit($id)
+    {
+        $categoryOptions = $this->getCatetoryOptions();
+        $textDiary = TextDiary::find($id);
+
+        return view('textDiary.edit', compact('categoryOptions', 'textDiary'));
+    }
+
+    public function destroy($id)
+    {
+        TextDiary::destroy($id);
+
+        return redirect('textDiary');
     }
 }

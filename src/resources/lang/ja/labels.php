@@ -18,6 +18,8 @@ return [
     // ボタン
     'post' => '投稿',
     'edit' => '編集',
+    'update' => '更新',
+    'delete' => '削除',
     'inputRepeat' => '続けて入力',
 
     // メニュー
@@ -30,6 +32,7 @@ return [
     'information' => 'お知らせ',
     'aggregate' => '集計',
     'textDiary.create' => '日記を書く',
+    'textDiary.edit' => '日記を編集',
     'textDiary.index' => '日記を見る',
     'workDiary.create' => '作業日誌を作成',
     'workDiary.index' => '作業日誌を見る',

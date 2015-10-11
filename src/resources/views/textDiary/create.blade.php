@@ -43,9 +43,7 @@
 
                     {!! BootForm::close() !!}
                 </div>
-                <!--/panel content-->
             </div>
-            <!--/panel-->
         </div>
     </div>
 

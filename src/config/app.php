@@ -146,7 +146,6 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
-        'McCool\LaravelAutoPresenter\AutoPresenterServiceProvider',
         'Barryvdh\Debugbar\ServiceProvider',
         'AdamWathan\BootForms\BootFormsServiceProvider',
         'AdamWathan\EloquentOAuthL5\EloquentOAuthServiceProvider',

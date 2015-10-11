@@ -12,7 +12,6 @@
     "laravel/framework": "5.1.*",
     "barryvdh/laravel-ide-helper": "^2.1",
     "laravel-ja/comja5": "~1",
-    "mccool/laravel-auto-presenter": "~4.0",
     "barryvdh/laravel-debugbar": "^2.0",
     "adamwathan/bootforms": "^0.7.0",
     "adamwathan/eloquent-oauth-l5": "^0.3.1",

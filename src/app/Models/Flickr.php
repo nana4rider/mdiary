@@ -2,20 +2,45 @@
 
 namespace App\Models;
 
-use App\Presenters\FlickrPresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Flickr extends Model implements HasPresenter
+class Flickr extends Model
 {
     use SoftDeletes;
     use UserInfo;
 
     protected $table = 'flickrs';
 
-    public function getPresenterClass()
+    /**
+     * s    small square 75x75
+     * t    thumbnail, 100 on longest side
+     * m    small, 240 on longest side
+     * z    medium 640, 640 on longest side
+     * b    large, 1024 on longest side*
+     *
+     * @param null $size [mstzb]
+     * @return string
+     */
+    private function getUrl($size = null)
     {
-        return FlickrPresenter::class;
+        $url = 'https://farm' . $this->flickr_farm . '.staticflickr.com/';
+        $url .= $this->flickr_server . '/' . $this->flickr_id . '_' . $this->flickr_secret;
+        if (!is_null($size)) {
+            $url .= '_' . $size;
+        }
+        $url .= '.jpg';
+
+        return $url;
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->getUrl('b');
+    }
+
+    public function getThumbnailUrlAttribute()
+    {
+        return $this->getUrl('m');
     }
 }

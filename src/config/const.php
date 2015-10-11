@@ -14,5 +14,7 @@ return [
         'oauth_token_secret' => '0d7f3de576948527',
     ],
 
+    // 表示件数
     'max_home_information' => 5,
+    'max_text_diary' => 10,
 ];

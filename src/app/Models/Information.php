@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use App\Presenters\InformationPresenter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use McCool\LaravelAutoPresenter\HasPresenter;
 
-class Information extends Model implements HasPresenter
+class Information extends Model
 {
     use SoftDeletes;
     use UserInfo;
@@ -16,8 +14,8 @@ class Information extends Model implements HasPresenter
 
     protected $dates = ['time'];
 
-    public function getPresenterClass()
+    public function getFormatTimeAttribute()
     {
-        return InformationPresenter::class;
+        return $this->time->format(config('format.date'));
     }
 }
