@@ -24,3 +24,11 @@ footer {
 .input-group.file .input-group-addon {
     cursor: pointer;
 }
+
+.has-error .multiselect-container label {
+    color: #000000;
+}
+
+.bootstrap-dialog-body form > .btn {
+    display: none;
+}

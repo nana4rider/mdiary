@@ -10,11 +10,6 @@ class Field extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'fields';
 
 }

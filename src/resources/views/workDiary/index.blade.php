@@ -67,31 +67,33 @@
                                 <td>{{ date(config('format.date')) }}</td>
                                 <td>
                                     <a href="#"
-                                       data-dialog-title="防除詳細"
+                                       title="防除詳細"
                                        data-dialog-content="#work-record-99">防除</a>
 
-                                    <div id="work-record-99" class="table-responsive hidden">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>農薬名</th>
-                                                <th>農薬使用倍率/使用量</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>アファーム</td>
-                                                <td>1000</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>カスケード</td>
-                                                <td>1000</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    <div id="work-record-99" class="hidden">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>農薬名</th>
+                                                    <th>農薬使用倍率/使用量</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>アファーム</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>カスケード</td>
+                                                    <td>1000</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

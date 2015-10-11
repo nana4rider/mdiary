@@ -54,36 +54,38 @@
                             <td>{{ date(config('format.date')) }}</td>
                             <td>40</td>
                             <td>
-                                <a href="#" data-dialog-title="農薬使用記録" data-dialog-content="#pesticide-summary-99">7</a>
+                                <a href="#" title="農薬使用記録" data-dialog-content="#pesticide-summary-99">7</a>
 
-                                <div id="pesticide-summary-99" class="table-responsive hidden">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>農薬名</th>
-                                            <th>使用回数</th>
-                                            <th>最終使用日</th>
-                                            <th>残効日数</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>アファーム</td>
-                                            <td class="warning">4/5</td>
-                                            <td>{{ date(config('format.date')) }}</td>
-                                            <td class="success">0</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>アルバリン</td>
-                                            <td class="danger">5/5</td>
-                                            <td>{{ date(config('format.date')) }}</td>
-                                            <td class="danger">7</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                <div id="pesticide-summary-99" class="hidden">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>農薬名</th>
+                                                <th>使用回数</th>
+                                                <th>最終使用日</th>
+                                                <th>残効日数</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>アファーム</td>
+                                                <td class="warning">4/5</td>
+                                                <td>{{ date(config('format.date')) }}</td>
+                                                <td class="success">0</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>アルバリン</td>
+                                                <td class="danger">5/5</td>
+                                                <td>{{ date(config('format.date')) }}</td>
+                                                <td class="danger">7</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

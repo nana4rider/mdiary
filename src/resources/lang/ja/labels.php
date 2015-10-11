@@ -2,11 +2,27 @@
 
 return [
     'app_name' => 'mDiary',
-    'login' => 'ログイン',
-    'logout' => 'ログアウト',
-    'email' => 'メールアドレス',
+
+    // 固有名詞
     'google' => 'Google',
     'facebook' => 'Facebook',
+
+    // 入力項目
+    'datetime' => '日時',
+    'email' => 'メールアドレス',
+    'title' => 'タイトル',
+    'body' => '本文',
+    'category' => 'カテゴリ',
+    'picture' => '写真',
+
+    // ボタン
+    'post' => '投稿',
+    'edit' => '編集',
+    'inputRepeat' => '続けて入力',
+
+    // メニュー
+    'login' => 'ログイン',
+    'logout' => 'ログアウト',
     'menu' => 'メニュー',
     'home' => 'ホーム',
     'textDiary' => '日記',

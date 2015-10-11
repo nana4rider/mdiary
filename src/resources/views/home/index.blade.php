@@ -11,7 +11,7 @@
                 <ul class="list-group">
                     @foreach($informations as $information)
                         <li class="list-group-item">
-                            <a href="#" data-dialog-title="{{ $information->title }}"
+                            <a href="#" title="{{ $information->title }}"
                                data-dialog-message="{{ $information->message }}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
                                 <small>{{ $information->formatTime }}</small>

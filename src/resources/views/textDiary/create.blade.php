@@ -5,24 +5,41 @@
 @section('content')
     <h1 class="page-header">@yield('title')</h1>
 
+    @if(Session::has('newEntity'))
+        <div data-dialog-onload class="hidden">
+            <p>
+                {{ message('complete', ['name' => 'post']) }}
+            </p>
+
+            {!! BootForm::open()->get() !!}
+
+            {!! BootForm::submit(label('textDiary.index'))->formaction(url('textDiary')) !!}
+
+            {!! BootForm::submit(label('edit'))->formaction(url('textDiary/' . Session::get('newEntity')->id . '/edit')) !!}
+
+            {!! BootForm::button(label('inputRepeat'), null, 'btn-primary')->data('dismiss', 'modal') !!}
+
+            {!! BootForm::close() !!}
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post()->action(url('textDiary')) !!}
+                    {!! BootForm::open()->post()->action(url('textDiary'))->multipart() !!}
 
-                    {!! BootForm::text('日時', 'datetime')->data('datetimepicker', 'datetime') !!}
+                    {!! BootForm::text(label('datetime'), 'datetime')->data('datetimepicker', 'datetime') !!}
 
-                    {!! BootForm::text('タイトル', 'title') !!}
+                    {!! BootForm::text(label('title'), 'title') !!}
 
-                    {!! BootForm::textarea('本文', 'note')->rows(10) !!}
+                    {!! BootForm::textarea(label('body'), 'body')->rows(10) !!}
+                    {!! BootForm::select(label('category'), 'category')
+                            ->options($categories)->multiple() !!}
 
-                    {!! BootForm::select('カテゴリ', 'category')
-                            ->options(['ちょびん', 'にゃんた', 'こみけたん'])->multiple() !!}
+                    {!! BootForm::file(label('picture'), 'picture[]')->multiple() !!}
 
-                    {!! BootForm::file('写真', 'picture')->multiple() !!}
-
-                    {!! BootForm::submit('投稿', 'btn-primary') !!}
+                    {!! BootForm::submit(label('post'), 'btn-primary') !!}
 
                     {!! BootForm::close() !!}
                 </div>

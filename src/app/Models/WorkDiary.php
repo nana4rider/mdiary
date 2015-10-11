@@ -10,11 +10,20 @@ class WorkDiary extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'work_diaries';
 
+    public function workRecords()
+    {
+        return $this->belongsToMany(WorkRecord::class);
+    }
+
+    public function crop()
+    {
+        return $this->belongsTo(Crop::class);
+    }
+
+    public function field()
+    {
+        return $this->belongsTo(Field::class);
+    }
 }

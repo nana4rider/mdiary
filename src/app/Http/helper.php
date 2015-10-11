@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Created by PhpStorm.
@@ -20,4 +21,21 @@ function message($id, $parameters = [])
 function label($id)
 {
     return trans('labels.' . $id);
+}
+
+function options(Collection $collection, $key = 'id', $value = 'name')
+{
+    $options = [];
+
+    if (is_null($key)) {
+        foreach ($collection as $model) {
+            $options[] = $model->$value;
+        }
+    } else {
+        foreach ($collection as $model) {
+            $options[$model->$key] = $model->$value;
+        }
+    }
+
+    return $options;
 }

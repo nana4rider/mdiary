@@ -10,11 +10,10 @@ class Crop extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'crops';
 
+    public function cultivars()
+    {
+        return $this->hasMany(Cultivar::class);
+    }
 }

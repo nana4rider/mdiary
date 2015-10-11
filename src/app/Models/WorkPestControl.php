@@ -10,11 +10,10 @@ class WorkPestControl extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'work_pest_controls';
 
+    public function pesticide()
+    {
+        return $this->belongsTo(Pesticide::class);
+    }
 }

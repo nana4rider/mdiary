@@ -10,11 +10,10 @@ class TextDiaryCategory extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'text_diary_categories';
 
+    public function textDiaries()
+    {
+        return $this->belongsToMany(TextDiary::class);
+    }
 }

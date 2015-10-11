@@ -12,11 +12,6 @@ class Information extends Model implements HasPresenter
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'informations';
 
     protected $dates = ['time'];

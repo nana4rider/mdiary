@@ -8,14 +8,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Models\InformationService;
+use App\Models\Information;
+use App\Services\InformationService;
 
 class HomeController extends Controller
 {
-    public function index(InformationService $service)
+    public function index()
     {
         $maxInformation = config('const.max_home_information');
-        $informations = $service->findNewer($maxInformation);
+        $informations = Information::orderBy('time', 'desc')->limit($maxInformation)->get();
 
         return view('home.index', compact('informations'));
     }

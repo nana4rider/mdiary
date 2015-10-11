@@ -10,11 +10,10 @@ class WorkSeeding extends Model
     use SoftDeletes;
     use UserInfo;
 
-    /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
     protected $table = 'work_seedings';
 
+    public function cultivar()
+    {
+        return $this->belongsTo(Cultivar::class);
+    }
 }

@@ -31,7 +31,7 @@
                                 <th>
                                     農薬使用倍率/使用量
                                     <span class="pull-right">
-                                        <a href="#" data-dialog-title="農薬を追加" data-dialog-content="#pesticide-form">
+                                        <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form">
                                             <span class="glyphicon glyphicon-plus"></span></a>
                                     </span>
                                 </th>
@@ -73,7 +73,7 @@
 
         {!! BootForm::text('農薬使用倍率/使用量', '')->value(1000) !!}
 
-        {!! BootForm::submit('追加', 'btn-primary') !!}
+        {!! BootForm::submit('追加', 'btn-primary btn-dialog') !!}
 
         {!! BootForm::close() !!}
     </div>
