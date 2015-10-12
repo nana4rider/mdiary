@@ -15,34 +15,60 @@ class TextDiary extends Model
 
     protected $fillable = ['title', 'body', 'datetime'];
 
-    protected $dates = ['datetime'];
+    /**
+     * カテゴリIDのキャッシュ
+     * @var
+     */
+    protected $categoryIds = null;
 
+    /**
+     * TextDiaryCategory
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function textDiaryCategories()
     {
         return $this->belongsToMany(TextDiaryCategory::class);
     }
 
+    /**
+     * Flickr
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function flickrs()
     {
         return $this->belongsToMany(Flickr::class);
     }
 
-    public function getFormatDatetimeAttribute()
+    /**
+     * 日付を整形して取得
+     * @param $value
+     * @return string
+     */
+    public function getDatetimeAttribute($value)
     {
-        return $this->datetime->format(config('format.datetime'));
+        return Carbon::parse($value)->format(config('format.datetime'));
     }
 
+    /**
+     * 日付をCarbonに変換して設定
+     * @param $value
+     */
     public function setDatetimeAttribute($value)
     {
-        if ($value instanceof Carbon) {
-            $this->attributes['datetime'] = $value;
-        } else {
-            $this->attributes['datetime'] = Carbon::createFromFormat(config('format.datetime'), $value);
-        }
+        $this->attributes['datetime'] =
+            Carbon::createFromFormat(config('format.datetime'), $value)->toDateTimeString();
     }
 
+    /**
+     * カテゴリIDを取得
+     * @return mixed
+     */
     public function getCategoryIdsAttribute()
     {
-        return $this->textDiaryCategories()->lists('id')->all();
+        if (is_null($this->categoryIds)) {
+            $this->categoryIds = $this->textDiaryCategories()->lists('id')->all();
+        }
+
+        return $this->categoryIds;
     }
 }

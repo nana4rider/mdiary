@@ -40,13 +40,14 @@
                     <div class="panel-body">
                         <p>
                             <small>
-                                Posted: {{ $textDiary->formatDatetime }}
+                                Posted: {{ $textDiary->datetime }}
                                 @foreach($textDiary->textDiaryCategories as $category)
                                     |
                                     <a href="{{ url('textDiary') . '?' . http_build_query(['category' => $category->id]) }}">
                                         {{ $category->name }}
                                     </a>
                                 @endforeach
+                                |
                             </small>
                         </p>
 
@@ -82,5 +83,4 @@
             </nav>
         </div>
     </div>
-
 @endsection

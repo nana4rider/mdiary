@@ -8,19 +8,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TextDiaryRequest;
 use App\Models\TextDiary;
 use App\Models\TextDiaryCategory;
 use App\Services\FlickrService;
 use DB;
 use Illuminate\Http\Request;
-use Input;
-use Validator;
 
 class TextDiaryController extends Controller
 {
-    private function getCatetoryOptions()
+    protected $flickrService;
+
+    public function __construct(FlickrService $flickrService)
     {
-        return options(TextDiaryCategory::orderBy('display_order')->get());
+        $this->flickrService = $flickrService;
     }
 
     /**
@@ -43,7 +44,7 @@ class TextDiaryController extends Controller
             ->whereHas('textDiaryCategories', function ($q) use ($request) {
                 if ($request->has('category')) {
                     // 選択したカテゴリで絞込
-                    $q->where('id', '=', $request->get('category'));
+                    $q->where('id', '=', $request->input('category'));
                 }
             })->orderBy('datetime', 'desc')->paginate(config('const.max_text_diary'));
 
@@ -56,65 +57,55 @@ class TextDiaryController extends Controller
      */
     public function create()
     {
-        $categoryOptions = $this->getCatetoryOptions();
+        $categoryOptions = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
 
         return view('textDiary.create', compact('categoryOptions'));
     }
 
     /**
-     * 作成処理
-     * @param Request $request
-     * @param FlickrService $flickrService
-     * @return $this|\Illuminate\Http\RedirectResponse
+     * 写真をFlickrにアップロード
+     *
+     * @param $files
+     * @param $title
+     * @return array アップロードした画像のID
      */
-    public function store(Request $request, FlickrService $flickrService)
+    protected function uploadFlickr($files, $title)
     {
-        // 入力検証
-        $v = Validator::make($request->all(), [
-            'datetime' => 'required|date_format:"' . config('format.datetime') . '"',
-            'title' => 'required|max:100',
-            'body' => 'required|max:10000',
-            'category' => 'required',
-        ]);
+        $flickrService = $this->flickrService;
 
-        if ($v->fails()) {
-            return redirect()->back()->withErrors($v->errors())->withInput($request->all());
-        }
-
-        // 入力検証(写真)
-        foreach (Input::file('picture') as $picture) {
-            $v = Validator::make(array('picture' => $picture), array('picture' => 'mimes:jpeg,bmp,png'));
-
-            if ($v->fails()) {
-                return redirect()->back()->withErrors($v->errors())->withInput($request->all());
-            }
-        }
-
-        // 選択したカテゴリの名称を取得
-        $categories = TextDiaryCategory::whereIn('id', $request->category)->orderBy('display_order')->get();
-        $categoryNames = options($categories, null);
-
-        // 写真をFlickrにアップロード
         $flickrIds = [];
-        foreach (Input::file('picture') as $picture) {
-            if (is_null($picture)) {
+        foreach ($files as $file) {
+            if (is_null($file)) {
                 continue;
             }
 
-            DB::transaction(function () use ($request, &$flickrIds, $flickrService, $picture, $categoryNames) {
-                $flickr = $flickrService->upload($picture->getRealPath(), $request->title, null, $categoryNames);
-                $flickrIds[] = $flickr->getKey();
+            DB::transaction(function () use ($flickrService, $title, &$flickrIds, $file) {
+                $flickr = $flickrService->upload($file->getRealPath(), $title);
+                $flickrIds[] = $flickr->id;
             });
         }
 
+        return $flickrIds;
+    }
+
+    /**
+     * 作成処理
+     * @param TextDiaryRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(TextDiaryRequest $request)
+    {
+        $flickrIds = $this->uploadFlickr($request->file('picture'), $request->input('title'));
+
         $textDiary = new TextDiary();
+
         DB::transaction(function () use ($request, &$flickrIds, $textDiary) {
             // 日記登録
             $textDiary->fill($request->all());
             $textDiary->save();
 
             // カテゴリ紐付け
-            $textDiary->textDiaryCategories()->attach($request->category);
+            $textDiary->textDiaryCategories()->attach($request->input('categoryIds'));
 
             // Flickr保存・紐付け
             $textDiary->flickrs()->attach($flickrIds);
@@ -123,14 +114,55 @@ class TextDiaryController extends Controller
         return redirect()->back()->with('newEntity', $textDiary);
     }
 
+    /**
+     * 編集画面
+     * @param $id
+     * @return \Illuminate\View\View
+     */
     public function edit($id)
     {
-        $categoryOptions = $this->getCatetoryOptions();
-        $textDiary = TextDiary::find($id);
+        $categoryOptions = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
+        $textDiary = TextDiary::findOrFail($id);
 
         return view('textDiary.edit', compact('categoryOptions', 'textDiary'));
     }
 
+    /**
+     * 更新処理
+     * @param $id
+     * @param TextDiaryRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function update($id, TextDiaryRequest $request)
+    {
+        $textDiary = TextDiary::findOrFail($id);
+
+        $flickrIds = $this->uploadFlickr($request->file('picture'), $request->input('title'));
+
+        DB::transaction(function () use ($request, &$flickrIds, $textDiary) {
+            // 日記登録
+            $textDiary->fill($request->all());
+            $textDiary->save();
+
+            // カテゴリ紐付け
+            $textDiary->textDiaryCategories()->sync($request->input('categoryIds'));
+
+            if ($request->has('flickrIds')) {
+                $flickrIds = array_merge($flickrIds, $request->input('flickrIds'));
+            }
+
+            // Flickr紐付け更新
+            $textDiary->flickrs()->sync($flickrIds);
+        });
+
+        return redirect('textDiary');
+    }
+
+    /**
+     * 削除処理
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function destroy($id)
     {
         TextDiary::destroy($id);

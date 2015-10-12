@@ -33,8 +33,9 @@
 
                     {!! BootForm::text(label('title'), 'title') !!}
 
-                    {!! BootForm::textarea(label('body'), 'body')->rows(10) !!}
-                    {!! BootForm::select(label('category'), 'category')
+                    {!! BootForm::textarea(label('body'), 'body')->rows(config('const.text_diary_body_rows')) !!}
+
+                    {!! BootForm::select(label('category'), 'categoryIds')
                             ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple() !!}
@@ -46,5 +47,4 @@
             </div>
         </div>
     </div>
-
 @endsection

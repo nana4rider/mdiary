@@ -17,4 +17,6 @@ return [
     // 表示件数
     'max_home_information' => 5,
     'max_text_diary' => 10,
+
+    'text_diary_body_rows' => 10,
 ];

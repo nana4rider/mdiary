@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
  */
 trait UserInfo
 {
-    private static function setUserId(Model $model, $key)
+    protected static function setUserId(Model $model, $key)
     {
         $model->setAttribute($key, Auth::check() ? Auth::User()->id : null);
     }

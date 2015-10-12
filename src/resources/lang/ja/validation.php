@@ -1,4 +1,7 @@
 <?php // resources/lang/ja/validation.php
+
+$label = File::getRequire(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'labels.php');
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -96,5 +99,9 @@ return [
     | of "email". This simply helps us make messages a little cleaner.
     |
     */
-    'attributes' => File::getRequire(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'labels.php'),
+    'attributes' => $label +
+        [
+            // バリデーション固有のラベルを記述
+            'categoryIds' => $label['category'],
+        ],
 ];

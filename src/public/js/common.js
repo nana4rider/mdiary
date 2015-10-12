@@ -1,3 +1,32 @@
+/**
+ * Localize
+ */
+$(function () {
+    /**
+     * multiselect日本語化
+     */
+    $.extend($.fn.multiselect.Constructor.prototype.defaults, {
+        selectAllText: ' 全選択',
+        filterPlaceholder: '検索',
+        nonSelectedText: '未選択',
+        nSelectedText: '件選択',
+        allSelectedText: '全選択'
+    });
+
+    /**
+     * datetimepickerの初期設定
+     */
+    $.extend($.fn.datetimepicker.defaults,
+        {dayViewHeaderFormat: "YYYY年 MMMM"}
+    );
+
+    BootstrapDialog.DEFAULT_TEXTS['CANCEL'] = 'キャンセル';
+    BootstrapDialog.DEFAULT_TEXTS['CONFIRM'] = '確認';
+});
+
+/**
+ * Laravel Form
+ */
 $(function () {
     var buttonMethod = null;
 
@@ -48,23 +77,18 @@ $(function () {
  * HTML要素のUI変更
  */
 $(function () {
-    /**
-     * multiselect日本語化
-     */
-    $.extend($.fn.multiselect.Constructor.prototype.defaults, {
-        selectAllText: ' 全選択',
-        filterPlaceholder: '検索',
-        nonSelectedText: '未選択',
-        nSelectedText: '件選択',
-        allSelectedText: '全選択'
-    });
-
-    /**
-     * セレクトボックスのUI変更
-     */
-    $('select').wrap('<div></div>').multiselect({
-        includeSelectAllOption: true
-    });
+    if ($.browser.android || $.browser.iphone || $.browser.ipad) {
+        $('select').css('visibility', 'visible');
+    } else {
+        /**
+         * セレクトボックスのUI変更
+         */
+        $('select').wrap('<div></div>').multiselect({
+            includeSelectAllOption: true,
+            buttonWidth: '300',
+            maxHeight: '200'
+        });
+    }
 
     /**
      * ファイルアップロードのUI変更
@@ -93,13 +117,6 @@ $(function () {
             }).join(', '));
         });
     });
-
-    /**
-     * datetimepickerの初期設定
-     */
-    $.extend($.fn.datetimepicker.defaults,
-        {dayViewHeaderFormat: "YYYY年 MMMM"}
-    );
 
     /**
      * 日付選択
@@ -210,7 +227,7 @@ $(function () {
             e.preventDefault();
             e.stopPropagation();
 
-            BootstrapDialog.confirm({
+            var options = {
                 message: $element.data('confirm'),
                 callback: function (result) {
                     if (result) {
@@ -218,7 +235,14 @@ $(function () {
                         $element.trigger('click');
                     }
                 }
-            });
+            };
+
+            var type = $element.data('dialog-type');
+            if (type !== undefined) {
+                options['type'] = BootstrapDialog['TYPE_' + type.toUpperCase()];
+            }
+
+            BootstrapDialog.confirm(options);
         });
     });
 });
