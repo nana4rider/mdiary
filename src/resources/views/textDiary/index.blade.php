@@ -47,7 +47,6 @@
                                         {{ $category->name }}
                                     </a>
                                 @endforeach
-                                |
                             </small>
                         </p>
 

@@ -22,7 +22,7 @@
                             ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple()
-                            ->helpBlock(message('help.deletePicture')) !!}
+                            ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.deletePicture')) !!}
 
                     <div class="row form-group" id="flickr-img">
                         @foreach($textDiary->flickrs as $flickr)

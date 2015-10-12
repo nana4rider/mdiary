@@ -13,7 +13,7 @@
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.min.css">
-    <link rel="stylesheet" href="{{ url('css/bootstrap-multiselect.css') }}">
+    <link rel="stylesheet" href="{{ url('css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/bootstrap-image-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/common.css') }}">
     @yield('css')
@@ -84,7 +84,8 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.6/js/bootstrap-dialog.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
-<script src="{{ url('js/bootstrap-multiselect.js') }}"></script>
+<script src="{{ url('js/bootstrap-select.min.js') }}"></script>
+<script src="{{ url('js/bootstrap-select.ja.js') }}"></script>
 <script src="{{ url('js/bootstrap-image-gallery.min.js') }}"></script>
 <script src="{{ url('js/common.js') }}"></script>
 @yield('js')

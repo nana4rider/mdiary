@@ -3,17 +3,6 @@
  */
 $(function () {
     /**
-     * multiselect日本語化
-     */
-    $.extend($.fn.multiselect.Constructor.prototype.defaults, {
-        selectAllText: ' 全選択',
-        filterPlaceholder: '検索',
-        nonSelectedText: '未選択',
-        nSelectedText: '件選択',
-        allSelectedText: '全選択'
-    });
-
-    /**
      * datetimepickerの初期設定
      */
     $.extend($.fn.datetimepicker.defaults,
@@ -83,10 +72,10 @@ $(function () {
         /**
          * セレクトボックスのUI変更
          */
-        $('select').wrap('<div></div>').multiselect({
-            includeSelectAllOption: true,
-            buttonWidth: '300',
-            maxHeight: '200'
+        $('select').selectpicker({
+            actionsBox: true,
+            style: 'btn-default',
+            size: 5
         });
     }
 
