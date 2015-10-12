@@ -40,11 +40,10 @@
                     <div class="panel-body">
                         <p>
                             <small>
-                                Posted: {{ $textDiary->datetime }}
+                                {{ label('posted') }}: {{ $textDiary->datetime }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
-                                    |
                                     <a href="{{ url('textDiary') . '?' . http_build_query(['category' => $category->id]) }}">
-                                        {{ $category->name }}
+                                        <span class="label label-primary">{{ $category->name }}</span>
                                     </a>
                                 @endforeach
                             </small>

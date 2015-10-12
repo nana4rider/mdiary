@@ -15,6 +15,10 @@ return [
     'category' => 'カテゴリ',
     'picture' => '写真',
 
+    // その他
+    'posted' => 'Posted',
+    'created' => 'Created',
+
     // ボタン
     'post' => '投稿',
     'edit' => '編集',

@@ -33,14 +33,17 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        #99
                         <span class="text-muted"><small>場所:</small></span>A3
-                        <span class="text-muted"><small>作物:</small></span>スイカ
-                        <span class="label label-success pull-right">アーカイブ済み</span>
+                        <span class="text-muted"><small>作物:</small></span>スイカスイカスイカ
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <h5>作業記録</h5>
+                    <small>
+                        {{ label('created') }}: {{ date(config('format.datetime')) }} |
+                        <span class="label label-warning">アーカイブ済み</span>
+                    </small>
+
+                    <h4>作業記録</h4>
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -101,7 +104,7 @@
                         </table>
                     </div>
 
-                    <h5>農薬使用記録</h5>
+                    <h4>農薬使用記録</h4>
 
                     <div class="table-responsive">
                         <table class="table table-bordered">
@@ -133,7 +136,7 @@
                         </table>
                     </div>
 
-                    <h5>備考</h5>
+                    <h4>備考</h4>
 
                     <p>
                         The quick brown fox jumps over the lazy dog<br>
