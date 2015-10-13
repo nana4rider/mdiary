@@ -144,7 +144,7 @@
                         The quick brown fox jumps over the lazy dog<br>
                     </p>
 
-                    {!! BootForm::open()->get()->action(url('workDiary/1/edit')) !!}
+                    {!! BootForm::open()->get()->action(route('workDiary.edit', ['id' => 1])) !!}
 
                     {!! BootForm::submit('編集', 'btn-primary') !!}
 

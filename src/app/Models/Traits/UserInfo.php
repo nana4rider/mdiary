@@ -6,7 +6,7 @@
  * Time: 20:36
  */
 
-namespace App\Models;
+namespace App\Models\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;

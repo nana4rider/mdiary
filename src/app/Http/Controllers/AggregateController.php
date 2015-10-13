@@ -11,12 +11,12 @@ namespace App\Http\Controllers;
 
 class AggregateController extends Controller
 {
-    public function field()
+    public function getField()
     {
         return view('aggregate.field');
     }
 
-    public function workDiary()
+    public function getWorkDiary()
     {
         return view('aggregate.workDiary');
     }

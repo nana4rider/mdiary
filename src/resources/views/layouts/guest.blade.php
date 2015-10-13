@@ -2,6 +2,6 @@
 
 @section('header')
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
+        <a class="navbar-brand" href="{{ url() }}">{{ label('appName') }}</a>
     </div>
 @endsection

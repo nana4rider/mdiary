@@ -73,12 +73,11 @@ $(function () {
          * セレクトボックスのUI変更
          */
         $('select').each(function () {
-
-        });
             $(this).selectpicker({
-            actionsBox: $(this).attr('multiple'),
-            style: 'btn-default',
-            size: 5
+                actionsBox: $(this).attr('multiple'),
+                style: 'btn-default',
+                size: 5
+            });
         });
     }
 

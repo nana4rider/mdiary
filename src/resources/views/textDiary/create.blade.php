@@ -13,9 +13,9 @@
 
             {!! BootForm::open()->get() !!}
 
-            {!! BootForm::submit(label('textDiary.index'))->formaction(url('textDiary')) !!}
+            {!! BootForm::submit(label('textDiary.index'))->formaction(route('textDiary.index')) !!}
 
-            {!! BootForm::submit(label('edit'))->formaction(url('textDiary/' . Session::get('newEntity')->id . '/edit')) !!}
+            {!! BootForm::submit(label('edit'))->formaction(route('textDiary.edit', ['id' => Session::get('newEntity')->id])) !!}
 
             {!! BootForm::button(label('inputRepeat'), null, 'btn-primary')->data('dismiss', 'modal') !!}
 
@@ -27,7 +27,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post()->action(url('textDiary'))->multipart() !!}
+                    {!! BootForm::open()->post()->action(route('textDiary.store'))->multipart() !!}
 
                     {!! BootForm::text(label('datetime'), 'datetime')->data('datetimepicker', 'datetime') !!}
 

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'app_name' => 'mDiary',
+    'appName' => 'mDiary',
 
     // 固有名詞
     'google' => 'Google',

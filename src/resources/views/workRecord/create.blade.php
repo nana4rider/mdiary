@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post()->action(url('workRecord')) !!}
+                    {!! BootForm::open()->post()->action(route('workRecord.store')) !!}
 
                     {!! BootForm::text('作業日時', 'datetime')->data('datetimepicker', 'datetime') !!}
 
@@ -66,7 +66,7 @@
     </div>
 
     <div id="pesticide-form" class="hidden">
-        {!! BootForm::open()->post()->action(url('workRecord/xxx')) !!}
+        {!! BootForm::open()->post()->action(route('workRecord.store')) !!}
 
         {!! BootForm::select('農薬名', '')
                 ->options(['未選択', 'アファーム', 'カスケード']) !!}

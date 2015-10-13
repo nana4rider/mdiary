@@ -14,11 +14,9 @@
 /**
  * ユーザ認証
  */
-
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
-Route::get('auth/{provider}', 'Auth\SocialAuthController@getAuthorize');
-Route::get('auth/{provider}/login', 'Auth\SocialAuthController@getLogin');
+Route::get('auth/login', ['as' => 'login', 'uses' => 'Auth\AuthController@getLogin']);
+Route::get('auth/logout', ['as' => 'logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::controller('auth/{provider}', 'Auth\SocialAuthController', ['getAuthorize' => 'social.authorize']);
 
 /**
  * ログイン中
@@ -29,18 +27,18 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     });
 
     Route::get('/', function () {
-        return Redirect::to('home');
+        return Redirect::route('home');
     });
 
     /**
      * ホーム画面
      */
-    Route::get('home', 'HomeController@index');
+    Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
     /**
      * 日記
      */
-    Route::resource('textDiary', 'TextDiaryController');
+    Route::resource('textDiary', 'TextDiaryController', ['except' => 'show']);
 
     /**
      * 作業日誌
@@ -55,6 +53,8 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     /**
      * 集計
      */
-    Route::get('aggregate/field', 'AggregateController@field');
-    Route::get('aggregate/workDiary', 'AggregateController@workDiary');
+    Route::controller('aggregate', 'AggregateController', [
+        'getField' => 'aggregate.field',
+        'getWorkDiary' => 'aggregate.workDiary'
+    ]);
 });

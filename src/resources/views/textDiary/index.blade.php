@@ -21,7 +21,7 @@
                         <div class="list-group">
                             @foreach($categories as $category)
                                 <a class="list-group-item{{ Request::get('category') == $category->id ? ' active' : '' }}"
-                                   href="{{ url('textDiary') . '?' . http_build_query(['category' => $category->id]) }}">
+                                   href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
                                     {{ $category->name }}
                                     <span class="badge">{{ $dairyCount[$category->id] }}</span>
                                 </a>
@@ -42,7 +42,7 @@
                             <small>
                                 {{ label('posted') }}: {{ $textDiary->datetime }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
-                                    <a href="{{ url('textDiary') . '?' . http_build_query(['category' => $category->id]) }}">
+                                    <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
                                         <span class="label label-primary">{{ $category->name }}</span>
                                     </a>
                                 @endforeach
@@ -67,7 +67,7 @@
                             @endforeach
                         </div>
 
-                        {!! BootForm::open()->get()->action(url('textDiary/' . $textDiary->id . '/edit'))->class('form-inline') !!}
+                        {!! BootForm::open()->get()->action(route('textDiary.edit', ['id' => $textDiary->id]))->class('form-inline') !!}
 
                         {!! BootForm::submit(label('edit'), 'btn-primary') !!}
 

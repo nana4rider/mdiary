@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
+        <a class="navbar-brand" href="{{ url() }}">{{ label('appName') }}</a>
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -12,7 +12,7 @@
     <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
             <li class="{{ Request::is('home') ? 'active' : null }}">
-                <a href="{{ url('home') }}">{{ label('home') }}</a>
+                <a href="{{ route('home') }}">{{ label('home') }}</a>
             </li>
 
             <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
@@ -20,8 +20,8 @@
                     {{ label('textDiary') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('textDiary/create') }}">{{ label('textDiary.create') }}</a></li>
-                    <li><a href="{{ url('textDiary') }}">{{ label('textDiary.index') }}</a></li>
+                    <li><a href="{{ route('textDiary.create') }}">{{ label('textDiary.create') }}</a></li>
+                    <li><a href="{{ route('textDiary.index') }}">{{ label('textDiary.index') }}</a></li>
                 </ul>
             </li>
 
@@ -30,10 +30,10 @@
                     {{ label('work') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('workDiary/create') }}">{{ label('workDiary.create') }}</a></li>
-                    <li><a href="{{ url('workDiary') }}">{{ label('workDiary.index') }}</a></li>
-                    <li><a href="{{ url('workRecord/create') }}">{{ label('workRecord.create') }}</a></li>
-                    <li><a href="{{ url('workRecord') }}">{{ label('workRecord.index') }}</a></li>
+                    <li><a href="{{ route('workDiary.create') }}">{{ label('workDiary.create') }}</a></li>
+                    <li><a href="{{ route('workDiary.index') }}">{{ label('workDiary.index') }}</a></li>
+                    <li><a href="{{ route('workRecord.create') }}">{{ label('workRecord.create') }}</a></li>
+                    <li><a href="{{ route('workRecord.index') }}">{{ label('workRecord.index') }}</a></li>
                 </ul>
             </li>
 
@@ -42,8 +42,8 @@
                     {{ label('aggregate') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('aggregate/field') }}">{{ label('aggregate.field') }}</a></li>
-                    <li><a href="{{ url('aggregate/workDiary') }}">{{ label('aggregate.workDiary') }}</a></li>
+                    <li><a href="{{ route('aggregate.field') }}">{{ label('aggregate.field') }}</a></li>
+                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('aggregate.workDiary') }}</a></li>
                 </ul>
             </li>
         </ul>
@@ -52,7 +52,7 @@
                 <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
                     <i class="glyphicon glyphicon-user"></i> {{ $currentUser->name }} <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
-                    <li><a href="{{ url('auth/logout') }}">
+                    <li><a href="{{ route('logout') }}">
                             <i class="glyphicon glyphicon-lock"></i> {{ label('logout') }}</a></li>
                 </ul>
             </li>

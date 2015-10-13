@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->post()->action(url('workDiary')) !!}
+                    {!! BootForm::open()->post()->action(route('workDiary.store')) !!}
 
                     {!! BootForm::select('作物', 'product')->options(['スイカ', 'ほうれん草', '小松菜']) !!}
 

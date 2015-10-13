@@ -9,7 +9,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {!! BootForm::open()->put()->action(url('textDiary/' . $textDiary->id))->multipart() !!}
+                    {!! BootForm::open()->put()->action(route('textDiary.update', ['id' => $textDiary->id]))->multipart() !!}
 
                     {!! BootForm::bind($textDiary) !!}
 
