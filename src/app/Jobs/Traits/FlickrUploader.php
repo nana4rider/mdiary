@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Traits;
+namespace App\Jobs\Traits;
 
 use App\Exceptions\FlickrFailedException;
 use App\Models\Flickr;
-use DB;
 use Rezzza\Flickr\ApiFactory;
 use Rezzza\Flickr\Http\GuzzleAdapter;
 use Rezzza\Flickr\Metadata;
@@ -19,21 +18,21 @@ trait FlickrUploader
 {
     /**
      * 写真をFlickrにアップロード
-     * @param $file
+     * @param $picture
      * @param null $title
      * @param null $description
      * @param null $tags
      * @return Flickr
      * @throws FlickrFailedException
      */
-    public function uploadFlickr($file, $title = null, $description = null, $tags = null)
+    public function uploadFlickr($picture, $title = null, $description = null, $tags = null)
     {
         $metadata = new Metadata(config('const.flickr.apikey'), config('const.flickr.secret'));
         $metadata->setOauthAccess(config('const.flickr.oauth_token'), config('const.flickr.oauth_token_secret'));
 
         $factory = new ApiFactory($metadata, new GuzzleAdapter());
 
-        $upload = $factory->upload($file, $title, $description, $tags, true);
+        $upload = $factory->upload($picture, $title, $description, $tags, true);
 
         if ((string)$upload->attributes()->stat === 'fail') {
             $errAttr = $upload->err->attributes();
@@ -48,13 +47,11 @@ trait FlickrUploader
 
         $flickr = new Flickr();
 
-        DB::transaction(function () use ($flickr, $photoAttr) {
-            foreach (['id', 'server', 'farm', 'secret'] as $name) {
-                $flickr->{'flickr_' . $name} = (string)$photoAttr->$name;
-            }
+        foreach (['id', 'server', 'farm', 'secret'] as $name) {
+            $flickr->{'flickr_' . $name} = (string)$photoAttr->$name;
+        }
 
-            $flickr->save();
-        });
+        $flickr->save();
 
         return $flickr;
     }

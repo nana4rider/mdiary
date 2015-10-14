@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\FlickrUploader;
 use App\Http\Requests\TextDiaryRequest;
+use App\Jobs\TextDiaryPictureUploader;
 use App\Models\TextDiary;
 use App\Models\TextDiaryCategory;
 use DB;
@@ -17,8 +18,6 @@ use Illuminate\Http\Request;
 
 class TextDiaryController extends Controller
 {
-    use FlickrUploader;
-
     /**
      * 一覧表示
      * @param Request $request
@@ -64,27 +63,21 @@ class TextDiaryController extends Controller
      */
     public function store(TextDiaryRequest $request)
     {
-        // Flickerにアップロード
-        $flickrIds = [];
-        foreach ($request->file('picture') as $file) {
-            if (!is_null($file)) {
-                $flickrIds[] = $this->uploadFlickr($file, $request->input('title'))->id;
-            }
-        }
-
         $textDiary = new TextDiary();
 
-        DB::transaction(function () use ($request, &$flickrIds, $textDiary) {
+        DB::transaction(function () use ($request, $textDiary) {
             // 日記登録
             $textDiary->fill($request->all());
             $textDiary->save();
 
             // カテゴリ紐付け
             $textDiary->textDiaryCategories()->attach($request->input('categoryIds'));
-
-            // Flickr保存・紐付け
-            $textDiary->flickrs()->attach($flickrIds);
         });
+
+        // Flickerにアップロード
+        if (!empty($request->file('picture')[0])) {
+            $this->dispatch(new TextDiaryPictureUploader($textDiary, $request->file('picture'), $request->input('title')));
+        }
 
         return redirect()->back()->with('newEntity', $textDiary);
     }
@@ -109,15 +102,7 @@ class TextDiaryController extends Controller
      */
     public function update(TextDiary $textDiary, TextDiaryRequest $request)
     {
-        // Flickerにアップロード
-        $flickrIds = [];
-        foreach ($request->file('picture') as $file) {
-            if (!is_null($file)) {
-                $flickrIds[] = $this->uploadFlickr($file, $request->input('title'))->id;
-            }
-        }
-
-        DB::transaction(function () use ($request, &$flickrIds, $textDiary) {
+        DB::transaction(function () use ($request, $textDiary) {
             // 日記登録
             $textDiary->fill($request->all());
             $textDiary->save();
@@ -125,13 +110,18 @@ class TextDiaryController extends Controller
             // カテゴリ紐付け
             $textDiary->textDiaryCategories()->sync($request->input('categoryIds'));
 
-            if ($request->has('flickrIds')) {
-                $flickrIds = array_merge($flickrIds, $request->input('flickrIds'));
-            }
-
             // Flickr紐付け更新
-            $textDiary->flickrs()->sync($flickrIds);
+            if ($request->has('flickrIds')) {
+                $textDiary->flickrs()->sync($request->input('flickrIds'));
+            } else {
+                $textDiary->flickrs()->detach();
+            }
         });
+
+        // Flickerにアップロード
+        if (!empty($request->file('picture')[0])) {
+            $this->dispatch(new TextDiaryPictureUploader($textDiary, $request->file('picture'), $request->input('title')));
+        }
 
         return redirect()->route('textDiary.index');
     }
