@@ -8,7 +8,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Traits\FlickrUploader;
 use App\Http\Requests\TextDiaryRequest;
 use App\Jobs\TextDiaryPictureUploader;
 use App\Models\TextDiary;
