@@ -6,31 +6,7 @@
     <h1 class="page-header">@yield('title')</h1>
 
     <div class="row">
-        <div class="col-md-12">
-            {{-- カテゴリ一覧 --}}
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a href="#diaryCategory" data-toggle="collapse">
-                                {{ label('category') }}<span class="glyphicon glyphicon-chevron-up pull-right"></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse" id="diaryCategory">
-                        <div class="list-group">
-                            @foreach($categories as $category)
-                                <a class="list-group-item{{ Request::get('category') == $category->id ? ' active' : '' }}"
-                                   href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
-                                    {{ $category->name }}
-                                    <span class="badge">{{ $dairyCount[$category->id] }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="col-md-9">
             {{-- 日記 --}}
             @foreach($textDiaries as $textDiary)
                 <article class="panel panel-default">
@@ -42,7 +18,8 @@
                             <small>
                                 {{ label('posted') }}: {{ $textDiary->datetime }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
-                                    <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
+                                    <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}"
+                                       class="no-underline">
                                         <span class="label label-primary">{{ $category->name }}</span>
                                     </a>
                                 @endforeach
@@ -80,5 +57,29 @@
                 {!! $textDiaries->appends(['category' => Request::get('category')])->render() !!}
             </nav>
         </div>
+
+        <div class="col-md-3">
+            {{-- カテゴリ一覧 --}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        {{ label('category') }}
+                    </h4>
+                </div>
+                <div class="list-group">
+                    <a class="list-group-item{{ !Request::has('category') ? ' active' : '' }}"
+                       href="{{ route('textDiary.index') }}">
+                        {{ label('all') }}
+                    </a>
+                    @foreach($categories as $category)
+                        <a class="list-group-item{{ Request::get('category') == $category->id ? ' active' : '' }}"
+                           href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
+                            {{ $category->name }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 @endsection

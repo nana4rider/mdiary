@@ -16,6 +16,7 @@ return [
     'picture' => '写真',
 
     // その他
+    'all' => '全て',
     'posted' => 'Posted',
     'created' => 'Created',
 

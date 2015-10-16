@@ -74,7 +74,6 @@ $(function () {
          */
         $('select').each(function () {
             $(this).selectpicker({
-                actionsBox: $(this).attr('multiple'),
                 style: 'btn-default',
                 size: 5
             });

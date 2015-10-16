@@ -31,15 +31,18 @@ class TextDiaryController extends Controller
             ->lists('count', 'text_diary_category_id');
 
         // 日記が存在するカテゴリ
-        $categories = TextDiaryCategory::whereIn('id', array_keys($dairyCount))->orderBy('display_order')->get();
+        $categories = TextDiaryCategory::orderBy('display_order')->get();
 
-        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')
-            ->whereHas('textDiaryCategories', function ($q) use ($request) {
-                if ($request->has('category')) {
-                    // 選択したカテゴリで絞込
-                    $q->where('id', '=', $request->input('category'));
-                }
-            })->latest('datetime')->paginate(config('const.max_text_diary'));
+        $builder = TextDiary::with('textDiaryCategories')->with('flickrs');
+
+        if ($request->has('category')) {
+            $builder->whereHas('textDiaryCategories', function ($q) use ($request) {
+                // 選択したカテゴリで絞込
+                $q->where('id', '=', $request->input('category'));
+            });
+        }
+
+        $textDiaries = $builder->latest('datetime')->paginate(config('const.max_text_diary'));
 
         return view('textDiary.index', compact('categories', 'dairyCount', 'textDiaries'));
     }
