@@ -15,12 +15,12 @@ return [
             'redirect_uri' => env('URL') . '/auth/facebook/login',
             'scope' => [],
         ],
-//        'github' => [
-//            'client_id' => '12345678',
-//            'client_secret' => 'y0ur53cr374ppk3y',
-//            'redirect_uri' => 'https://example.com/your/github/redirect',
-//            'scope' => [],
-//        ],
+        'github' => [
+            'client_id' => '31f379e30e12a04ff8d9',
+            'client_secret' => '03bf5096d90cf1048dabed9934be698683e4e42f',
+            'redirect_uri' => env('URL') . '/auth/github/login',
+            'scope' => [],
+        ],
 //        'linkedin' => [
 //            'client_id' => '12345678',
 //            'client_secret' => 'y0ur53cr374ppk3y',

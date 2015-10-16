@@ -6,6 +6,7 @@ return [
     // 固有名詞
     'google' => 'Google',
     'facebook' => 'Facebook',
+    'github' => 'GitHub',
 
     // 入力項目
     'datetime' => '日時',

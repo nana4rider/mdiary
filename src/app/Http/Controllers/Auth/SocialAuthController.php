@@ -43,7 +43,9 @@ class SocialAuthController extends Controller
                     $user->group_id = Group::GUEST;
                 }
 
-                $user->name = $details->full_name;
+                $name = $details->full_name ?: $details->nickname;
+
+                $user->name = $name;
                 $user->email = $details->email;
                 $user->save();
             });

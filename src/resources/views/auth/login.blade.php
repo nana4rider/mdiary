@@ -19,6 +19,13 @@
                     <span class="fa fa-facebook"></span> {{ message('sign_in_with', ['name' => 'facebook']) }}
                 </a>
             </p>
+
+            <p>
+                <a href="{{ route('social.authorize', ['provider' => 'github']) }}"
+                   class="btn btn-social btn-github">
+                    <span class="fa fa-github"></span> {{ message('sign_in_with', ['name' => 'github']) }}
+                </a>
+            </p>
         </div>
     </div>
 @endsection
