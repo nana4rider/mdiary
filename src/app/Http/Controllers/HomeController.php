@@ -8,15 +8,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\Information;
-use App\Services\InformationService;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function getIndex()
     {
         $maxInformation = config('const.max_home_information');
-        $informations = Information::orderBy('time', 'desc')->limit($maxInformation)->get();
+        $informations = Information::orGroup(Group::SYSTEM)->orderBy('datetime', 'desc')->limit($maxInformation)->get();
 
         return view('home.index', compact('informations'));
     }

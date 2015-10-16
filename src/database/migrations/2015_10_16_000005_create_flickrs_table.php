@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTextDiariesTable extends Migration
+class CreateFlickrsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,17 +12,16 @@ class CreateTextDiariesTable extends Migration
      */
     public function up()
     {
-        Schema::create('text_diaries', function (Blueprint $table) {
+        Schema::create('flickrs', function (Blueprint $table) {
             $table->increments('id');
-            $table->dateTime('datetime');
-            $table->string('title');
-            $table->text('body');
+            $table->string('flickr_id');
+            $table->string('flickr_server');
+            $table->string('flickr_farm');
+            $table->string('flickr_secret');
 
             $table->timestamps();
-            $table->softDeletes();
             $table->unsignedInteger('created_user_id')->nullable();
             $table->unsignedInteger('updated_user_id')->nullable();
-            $table->unsignedInteger('deleted_user_id')->nullable();
         });
     }
 
@@ -33,6 +32,6 @@ class CreateTextDiariesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('text_diaries');
+        Schema::drop('flickrs');
     }
 }

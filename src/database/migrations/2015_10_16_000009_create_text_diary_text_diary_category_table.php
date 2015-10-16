@@ -14,10 +14,9 @@ class CreateTextDiaryTextDiaryCategoryTable extends Migration
     {
         Schema::create('text_diary_text_diary_category', function (Blueprint $table) {
             $table->integer('text_diary_id')->unsigned();
+            $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('restrict');
             $table->integer('text_diary_category_id')->unsigned();
-
-            $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('cascade');
-            $table->foreign('text_diary_category_id')->references('id')->on('text_diary_categories')->onDelete('cascade');
+            $table->foreign('text_diary_category_id')->references('id')->on('text_diary_categories')->onDelete('restrict');
         });
     }
 

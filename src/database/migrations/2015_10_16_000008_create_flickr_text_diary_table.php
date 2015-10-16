@@ -14,10 +14,9 @@ class CreateFlickrTextDiaryTable extends Migration
     {
         Schema::create('flickr_text_diary', function (Blueprint $table) {
             $table->integer('flickr_id')->unsigned();
+            $table->foreign('flickr_id')->references('id')->on('flickrs')->onDelete('restrict');
             $table->integer('text_diary_id')->unsigned();
-
-            $table->foreign('flickr_id')->references('id')->on('flickrs')->onDelete('cascade');
-            $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('cascade');
+            $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('restrict');
         });
     }
 

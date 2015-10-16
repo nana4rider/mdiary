@@ -1,9 +1,10 @@
 <?php
 
+use App\Models\Group;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateFlickrsTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +13,9 @@ class CreateFlickrsTable extends Migration
      */
     public function up()
     {
-        Schema::create('flickrs', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('flickr_id');
-            $table->string('flickr_server');
-            $table->string('flickr_farm');
-            $table->string('flickr_secret');
+            $table->string('name');
 
             $table->timestamps();
             $table->softDeletes();
@@ -25,6 +23,14 @@ class CreateFlickrsTable extends Migration
             $table->unsignedInteger('updated_user_id')->nullable();
             $table->unsignedInteger('deleted_user_id')->nullable();
         });
+
+        foreach (['System', 'Admin', 'Develop', 'Guest', '*',
+                     '*', '*', '*', '*', '*'] as $key => $value) {
+            $group = new Group();
+            $group->name = $value;
+            $group->save();
+        }
+
     }
 
     /**
@@ -34,6 +40,6 @@ class CreateFlickrsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('flickrs');
+        Schema::drop('groups');
     }
 }

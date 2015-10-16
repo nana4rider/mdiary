@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Group;
 use App\Models\TextDiaryCategory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +16,8 @@ class CreateTextDiaryCategoriesTable extends Migration
     {
         Schema::create('text_diary_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
             $table->string('name');
             $table->integer('display_order')->unsigned();;
 
@@ -27,7 +30,8 @@ class CreateTextDiaryCategoriesTable extends Migration
 
         for ($i = 1; $i <= 5; $i++) {
             $textDiaryCategory = new TextDiaryCategory();
-            $textDiaryCategory->name = 'カテゴリ' . $i;
+            $textDiaryCategory->group_id = Group::GUEST;
+            $textDiaryCategory->name = 'TestCategory' . $i;
             $textDiaryCategory->display_order = $i;
             $textDiaryCategory->save();
         }

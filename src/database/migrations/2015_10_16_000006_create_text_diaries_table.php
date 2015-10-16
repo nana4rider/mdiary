@@ -3,21 +3,22 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateInformationsTable extends Migration
+class CreateTextDiariesTable extends Migration
 {
     /**
-     * マイグレーション実行
+     * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('informations', function (Blueprint $table) {
+        Schema::create('text_diaries', function (Blueprint $table) {
             $table->increments('id');
-
-            $table->timestamp('time');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
+            $table->dateTime('datetime');
             $table->string('title');
-            $table->text('message');
+            $table->text('body');
 
             $table->timestamps();
             $table->softDeletes();
@@ -28,12 +29,12 @@ class CreateInformationsTable extends Migration
     }
 
     /**
-     * マイグレーションを戻す
+     * Reverse the migrations.
      *
      * @return void
      */
     public function down()
     {
-        Schema::drop('informations');
+        Schema::drop('text_diaries');
     }
 }

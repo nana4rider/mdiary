@@ -33,7 +33,7 @@ class TextDiaryController extends Controller
         // 日記が存在するカテゴリ
         $categories = TextDiaryCategory::whereIn('id', array_keys($dairyCount))->orderBy('display_order')->get();
 
-        $textDiaries = TextDiary::allGroups()->with('textDiaryCategories')->with('flickrs')
+        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')
             ->whereHas('textDiaryCategories', function ($q) use ($request) {
                 if ($request->has('category')) {
                     // 選択したカテゴリで絞込

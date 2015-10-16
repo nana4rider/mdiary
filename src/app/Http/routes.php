@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     /**
      * ホーム画面
      */
-    Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
+    Route::get('home', ['as' => 'home', 'uses' => 'HomeController@getIndex']);
 
     /**
      * 日記

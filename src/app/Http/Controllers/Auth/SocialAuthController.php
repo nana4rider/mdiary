@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Group;
 use Redirect;
 use SocialAuth;
 use SocialNorm\Exceptions\ApplicationRejectedException;
@@ -37,6 +38,11 @@ class SocialAuthController extends Controller
     {
         try {
             SocialAuth::login($provider, function ($user, $details) {
+                if (is_null($user->id)) {
+                    // 初回登録時の項目
+                    $user->group_id = Group::GUEST;
+                }
+
                 $user->name = $details->full_name;
                 $user->email = $details->email;
                 $user->save();
