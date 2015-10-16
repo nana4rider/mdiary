@@ -3,8 +3,6 @@
 @section('title', label('textDiary.index'))
 
 @section('content')
-    <h1 class="page-header">@yield('title')</h1>
-
     <div class="row">
         <div class="col-md-9">
             {{-- 日記 --}}
@@ -48,6 +46,11 @@
 
                         {!! BootForm::submit(label('edit'), 'btn-primary') !!}
 
+                        {!! BootForm::submit(label('delete'), 'btn-danger')
+                                ->formaction(route('textDiary.destroy', ['id' => $textDiary->id]))
+                                ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
+                                ->data('dialog-type', 'danger') !!}
+
                         {!! BootForm::close() !!}
                     </div>
                 </article>
@@ -80,6 +83,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

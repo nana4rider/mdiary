@@ -3,8 +3,6 @@
 @section('title', label('textDiary.create'))
 
 @section('content')
-    <h1 class="page-header">@yield('title')</h1>
-
     @if(Session::has('newEntity'))
         <div data-dialog-onload class="hidden">
             <p>

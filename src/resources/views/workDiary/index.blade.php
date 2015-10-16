@@ -3,8 +3,6 @@
 @section('title', label('workDiary.index'))
 
 @section('content')
-    <h1 class="page-header">検索条件</h1>
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -20,16 +18,8 @@
 
                     {!! BootForm::close() !!}
                 </div>
-                <!--/panel content-->
             </div>
-            <!--/panel-->
-        </div>
-    </div>
 
-    <h1 class="page-header">@yield('title')</h1>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">

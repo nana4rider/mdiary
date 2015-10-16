@@ -3,11 +3,12 @@
 @section('title', label('home'))
 
 @section('content')
-    <h1 class="page-header">{{ label('information') }}</h1>
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ label('information') }}</h4>
+                </div>
                 <ul class="list-group">
                     @foreach($informations as $information)
                         <li class="list-group-item">

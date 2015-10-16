@@ -3,8 +3,6 @@
 @section('title', label('textDiary.edit'))
 
 @section('content')
-    <h1 class="page-header">@yield('title')</h1>
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -39,10 +37,6 @@
                     </div>
 
                     {!! BootForm::submit(label('update'), 'btn-primary') !!}
-
-                    {!! BootForm::submit(label('delete'), 'btn-danger')
-                            ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
-                            ->data('dialog-type', 'danger') !!}
 
                     {!! BootForm::close() !!}
                 </div>

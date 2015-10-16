@@ -19,4 +19,5 @@ return [
     'max_text_diary' => 10,
 
     'text_diary_body_rows' => 10,
+    'remarks_rows' => 5,
 ];

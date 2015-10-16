@@ -8,7 +8,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TextDiaryRequest;
+use App\Http\Requests\TextDiaryUpsertRequest;
 use App\Jobs\TextDiaryPictureUploader;
 use App\Models\TextDiary;
 use App\Models\TextDiaryCategory;
@@ -60,10 +60,10 @@ class TextDiaryController extends Controller
 
     /**
      * 作成処理
-     * @param TextDiaryRequest $request
+     * @param TextDiaryUpsertRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TextDiaryRequest $request)
+    public function store(TextDiaryUpsertRequest $request)
     {
         $textDiary = new TextDiary();
 
@@ -99,10 +99,10 @@ class TextDiaryController extends Controller
     /**
      * 更新処理
      * @param TextDiary $textDiary
-     * @param TextDiaryRequest $request
+     * @param TextDiaryUpsertRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(TextDiary $textDiary, TextDiaryRequest $request)
+    public function update(TextDiary $textDiary, TextDiaryUpsertRequest $request)
     {
         DB::transaction(function () use ($request, $textDiary) {
             // 日記登録

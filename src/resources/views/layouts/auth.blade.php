@@ -61,3 +61,9 @@
         </ul>
     </div>
 @endsection
+
+@section('content')
+    <h1 class="page-header">@yield('title')</h1>
+
+    @yield('content')
+@overwrite

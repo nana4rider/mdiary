@@ -14,6 +14,9 @@ return [
     'body' => '本文',
     'category' => 'カテゴリ',
     'picture' => '写真',
+    'crop' => '作物',
+    'workField' => '圃場',
+    'remarks' => '備考',
 
     // その他
     'all' => '全て',
@@ -23,6 +26,7 @@ return [
     // ボタン
     'post' => '投稿',
     'edit' => '編集',
+    'store' => '作成',
     'update' => '更新',
     'delete' => '削除',
     'inputRepeat' => '続けて入力',

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\TextDiary;
+use App\Models\WorkDiary;
+use App\Models\WorkRecord;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
 
@@ -26,6 +28,8 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $router->model('textDiary', TextDiary::class);
+        $router->model('workDiary', WorkDiary::class);
+        $router->model('workRecord', WorkRecord::class);
 
         parent::boot($router);
     }

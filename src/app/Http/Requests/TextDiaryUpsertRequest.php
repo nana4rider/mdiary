@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-class TextDiaryRequest extends Request
+class TextDiaryUpsertRequest extends Request
 {
     /**
      * Get the validation rules that apply to the request.

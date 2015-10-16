@@ -3,8 +3,6 @@
 @section('title', label('aggregate.workDiary'))
 
 @section('content')
-    <h1 class="page-header">検索条件</h1>
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -18,17 +16,12 @@
 
                     {!! BootForm::close() !!}
                 </div>
-                <!--/panel content-->
             </div>
-            <!--/panel-->
-        </div>
-    </div>
 
-    <h1 class="page-header">作業記録</h1>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">作業記録</h4>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -58,14 +51,11 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <h1 class="page-header">防除記録</h1>
-
-    <div class="row">
-        <div class="col-md-12">
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">防除記録</h4>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
@@ -97,5 +87,4 @@
             </div>
         </div>
     </div>
-
 @endsection

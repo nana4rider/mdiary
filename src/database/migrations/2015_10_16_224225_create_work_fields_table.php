@@ -1,11 +1,11 @@
 <?php
 
 use App\Models\Group;
-use App\Models\TextDiaryCategory;
+use App\Models\WorkField;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateTextDiaryCategoriesTable extends Migration
+class CreateWorkFieldsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,12 @@ class CreateTextDiaryCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('text_diary_categories', function (Blueprint $table) {
+        Schema::create('work_fields', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
             $table->string('name');
+            $table->text('remarks');
             $table->integer('display_order')->unsigned();
 
             $table->timestamps();
@@ -28,12 +29,16 @@ class CreateTextDiaryCategoriesTable extends Migration
             $table->unsignedInteger('deleted_user_id')->nullable();
         });
 
-        for ($i = 1; $i <= 5; $i++) {
-            $textDiaryCategory = new TextDiaryCategory();
-            $textDiaryCategory->group_id = Group::GUEST;
-            $textDiaryCategory->name = 'TestCategory' . $i;
-            $textDiaryCategory->display_order = $i;
-            $textDiaryCategory->save();
+        $order = 1;
+        foreach (['A', 'B'] as $a) {
+            foreach (range(1, 6) as $b) {
+                $workField = new WorkField();
+                $workField->group_id = Group::GUEST;
+                $workField->name = $a . $b;
+                $workField->remarks = 'test';
+                $workField->display_order = $order++;
+                $workField->save();
+            }
         }
     }
 
@@ -44,6 +49,6 @@ class CreateTextDiaryCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('text_diary_categories');
+        Schema::drop('work_fields');
     }
 }

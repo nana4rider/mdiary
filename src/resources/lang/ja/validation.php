@@ -103,5 +103,7 @@ return [
         [
             // バリデーション固有のラベルを記述
             'categoryIds' => $label['category'],
+            'cropIds' => $label['crop'],
+            'fieldIds' => $label['workField'],
         ],
 ];
