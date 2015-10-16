@@ -9,8 +9,6 @@ class Flickr extends Model
 {
     use UserInfo;
 
-    protected $table = 'flickrs';
-
     /**
      * s    small square 75x75
      * t    thumbnail, 100 on longest side

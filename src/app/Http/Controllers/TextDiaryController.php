@@ -33,7 +33,7 @@ class TextDiaryController extends Controller
         // 日記が存在するカテゴリ
         $categories = TextDiaryCategory::whereIn('id', array_keys($dairyCount))->orderBy('display_order')->get();
 
-        $textDiaries = TextDiary::with('textDiaryCategories')->with('flickrs')
+        $textDiaries = TextDiary::allGroups()->with('textDiaryCategories')->with('flickrs')
             ->whereHas('textDiaryCategories', function ($q) use ($request) {
                 if ($request->has('category')) {
                     // 選択したカテゴリで絞込
@@ -75,7 +75,7 @@ class TextDiaryController extends Controller
 
         // Flickerにアップロード
         if (!empty($request->file('picture')[0])) {
-            $this->dispatch(new TextDiaryPictureUploader($textDiary, $request->file('picture'), $request->input('title')));
+            $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
         }
 
         return redirect()->back()->with('newEntity', $textDiary);
@@ -119,7 +119,7 @@ class TextDiaryController extends Controller
 
         // Flickerにアップロード
         if (!empty($request->file('picture')[0])) {
-            $this->dispatch(new TextDiaryPictureUploader($textDiary, $request->file('picture'), $request->input('title')));
+            $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
         }
 
         return redirect()->route('textDiary.index');

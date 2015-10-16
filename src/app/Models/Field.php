@@ -11,6 +11,4 @@ class Field extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'fields';
-
 }

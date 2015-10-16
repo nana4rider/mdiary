@@ -11,8 +11,6 @@ class WorkDiary extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'work_diaries';
-
     public function workRecords()
     {
         return $this->belongsToMany(WorkRecord::class);

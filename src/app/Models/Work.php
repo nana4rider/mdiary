@@ -11,6 +11,4 @@ class Work extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'works';
-
 }

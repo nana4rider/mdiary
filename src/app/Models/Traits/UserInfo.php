@@ -25,16 +25,16 @@ trait UserInfo
 
     public static function bootUserInfo()
     {
-        static::creating(function ($model) {
+        static::creating(function (Model $model) {
             static::setUserId($model, 'created_user_id');
             static::setUserId($model, 'updated_user_id');
         });
 
-        static::updating(function ($model) {
+        static::updating(function (Model $model) {
             static::setUserId($model, 'updated_user_id');
         });
 
-        static::deleting(function ($model) {
+        static::deleting(function (Model $model) {
             static::setUserId($model, 'deleted_user_id');
         });
     }

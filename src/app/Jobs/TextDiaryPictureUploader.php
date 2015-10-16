@@ -13,7 +13,7 @@ class TextDiaryPictureUploader extends Job implements SelfHandling
 {
     use FlickrUploader;
 
-    protected $textDiary;
+    protected $textDiaryId;
 
     protected $pictures;
 
@@ -21,13 +21,13 @@ class TextDiaryPictureUploader extends Job implements SelfHandling
 
     /**
      * Create a new job instance.
-     * @param TextDiary $textDiary
+     * @param $textDiaryId
      * @param $pictures
      * @param $title
      */
-    public function __construct(TextDiary $textDiary, $pictures, $title)
+    public function __construct($textDiaryId, $pictures, $title)
     {
-        $this->textDiary = $textDiary;
+        $this->textDiaryId = $textDiaryId;
         $this->title = $title;
         $this->pictures = [];
 
@@ -45,14 +45,16 @@ class TextDiaryPictureUploader extends Job implements SelfHandling
      */
     public function handle()
     {
+        /** @var TextDiary $textDiary */
+        $textDiary = TextDiary::findOrFail($this->textDiaryId);
         $flickrIds = [];
 
         foreach ($this->pictures as $picture) {
-            DB::transaction(function () use ($picture, &$flickrIds) {
+            DB::transaction(function () use ($picture, &$flickrIds, $textDiary) {
                 // Flickrにアップロード
                 $flickrIds[] = $this->uploadFlickr($picture, $this->title)->id;
 
-                $this->textDiary->flickrs()->attach($flickrIds);
+                $textDiary->flickrs()->attach($flickrIds);
             });
 
             // 一時ファイルを削除

@@ -11,8 +11,6 @@ class WorkRecord extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'work_records';
-
     protected $dates = ['datetime'];
 
     public function workDiaries()

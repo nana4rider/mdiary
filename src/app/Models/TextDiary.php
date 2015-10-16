@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Grouping;
 use App\Models\Traits\UserInfo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class TextDiary extends Model
 {
     use SoftDeletes;
     use UserInfo;
+    use Grouping;
 
     protected $table = 'text_diaries';
 

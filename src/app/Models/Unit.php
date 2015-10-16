@@ -11,6 +11,4 @@ class Unit extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'units';
-
 }

@@ -11,8 +11,6 @@ class Cultivar extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'cultivars';
-
     public function crop()
     {
         return $this->belongsTo(Crop::class);

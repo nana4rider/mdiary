@@ -11,8 +11,6 @@ class WorkSeeding extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'work_seedings';
-
     public function cultivar()
     {
         return $this->belongsTo(Cultivar::class);

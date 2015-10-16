@@ -11,8 +11,6 @@ class Pesticide extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'pesticides';
-
     public function unit()
     {
         return $this->belongsTo(Unit::class);

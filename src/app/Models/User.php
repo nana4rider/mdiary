@@ -21,13 +21,6 @@ class User extends Model implements AuthenticatableContract,
     use UserInfo;
 
     /**
-     * モデルで使用するデータベーステーブル
-     *
-     * @var string
-     */
-    protected $table = 'users';
-
-    /**
      * 複数代入を行う属性
      *
      * @var array

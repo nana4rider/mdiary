@@ -11,8 +11,6 @@ class Information extends Model
     use SoftDeletes;
     use UserInfo;
 
-    protected $table = 'informations';
-
     protected $dates = ['time'];
 
     public function getFormatTimeAttribute()
