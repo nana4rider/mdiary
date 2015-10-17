@@ -20,6 +20,7 @@ class CreateWorkDiariesTable extends Migration
             $table->foreign('work_field_id')->references('id')->on('work_fields')->onDelete('restrict');
             $table->integer('crop_id')->unsigned();
             $table->foreign('crop_id')->references('id')->on('crops')->onDelete('restrict');
+            $table->boolean('archive');
             $table->text('remarks')->nullable();
 
             $table->timestamps();

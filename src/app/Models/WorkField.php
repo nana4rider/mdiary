@@ -14,23 +14,36 @@ class WorkField extends Model
     use UserInfo;
     use Grouping;
 
-    /**
-     * 編集中の日誌があるか
-     * @param Builder $query
-     * @return mixed
-     */
-    public function scopeHasEditing(Builder $query)
+    protected $casts = [
+        'archive' => 'boolean',
+    ];
+
+    public function workDiaries()
     {
-        return $query->whereNotNull('active_work_diary_id');
+        return $this->hasMany(WorkDiary::class);
     }
 
     /**
-     * 編集中の日誌がないか
+     * アクティブな日誌があるか
      * @param Builder $query
-     * @return mixed
+     * @return Builder|static
      */
-    public function scopeHasNotEditing(Builder $query)
+    public function scopeHasActiveDiary(Builder $query)
     {
-        return $query->whereNull('active_work_diary_id');
+        return $query->whereHas('workDiaries', function ($query) {
+            $query->where('archive', false);
+        });
+    }
+
+    /**
+     * アクティブな日誌がないか
+     * @param Builder $query
+     * @return Builder|static
+     */
+    public function scopeDoesntHaveActiveDiary(Builder $query)
+    {
+        return $query->whereDoesntHave('workDiaries', function ($query) {
+            $query->where('archive', false);
+        });
     }
 }

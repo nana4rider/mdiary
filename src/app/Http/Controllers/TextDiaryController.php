@@ -30,9 +30,9 @@ class TextDiaryController extends Controller
         $builder = TextDiary::with('textDiaryCategories')->with('flickrs');
 
         if ($request->has('category')) {
-            $builder->whereHas('textDiaryCategories', function ($q) use ($request) {
+            $builder->whereHas('textDiaryCategories', function ($query) use ($request) {
                 // 選択したカテゴリで絞込
-                $q->where('id', '=', $request->input('category'));
+                $query->where('id', '=', $request->input('category'));
             });
         }
 

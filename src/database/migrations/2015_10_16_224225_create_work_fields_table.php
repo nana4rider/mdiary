@@ -18,7 +18,6 @@ class CreateWorkFieldsTable extends Migration
             $table->increments('id');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
-            $table->integer('active_work_diary_id')->unsigned()->nullable()->unique();
             $table->string('name');
             $table->text('remarks')->nullable();
             $table->integer('display_order')->unsigned();

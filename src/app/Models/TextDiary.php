@@ -14,8 +14,6 @@ class TextDiary extends Model
     use UserInfo;
     use Grouping;
 
-    protected $table = 'text_diaries';
-
     protected $fillable = ['title', 'body', 'datetime'];
 
     /**

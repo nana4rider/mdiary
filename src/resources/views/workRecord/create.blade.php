@@ -24,10 +24,9 @@
                                 <th>農薬名</th>
                                 <th>
                                     農薬使用倍率/使用量
-                                    <span class="pull-right">
-                                        <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form">
-                                            <span class="glyphicon glyphicon-plus"></span></a>
-                                    </span>
+                                </th>
+                                <th>
+                                    操作
                                 </th>
                             </tr>
                             </thead>
@@ -37,14 +36,24 @@
                                 <td>アファーム</td>
                                 <td>
                                     1000
-                                    <span class="pull-right">
-                                        <a href="#" id="pesticide-remove">
-                                            <span class="glyphicon glyphicon-remove"></span></a>
-                                    </span>
+                                </td>
+                                <td class="text-right">
+                                    <a href="#" id="pesticide-remove" title="農薬を削除"
+                                       class="btn btn-danger btn-xs">削除</a>
                                 </td>
                             </tr>
 
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <td class="text-right" colspan="2">
+                                </td>
+                                <td class="text-right" colspan="1">
+                                    <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form"
+                                       class="btn btn-primary btn-xs">追加</a>
+                                </td>
+                            </tr>
+                            </tfoot>
                         </table>
 
                     </div>

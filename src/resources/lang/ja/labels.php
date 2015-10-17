@@ -27,6 +27,7 @@ return [
 
     // ボタン
     'post' => '投稿',
+    'show' => '参照',
     'edit' => '編集',
     'store' => '作成',
     'update' => '更新',
