@@ -23,8 +23,8 @@ class WorkDiary extends Model
         return $this->belongsTo(Crop::class);
     }
 
-    public function field()
+    public function workField()
     {
-        return $this->belongsTo(Field::class);
+        return $this->belongsTo(WorkField::class);
     }
 }

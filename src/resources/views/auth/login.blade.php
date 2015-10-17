@@ -1,5 +1,7 @@
 @extends('layouts.guest')
 
+@section('title', label('route.login'))
+
 @section('content')
     <div class="row">
         <div class="col-md-6 col-md-offset-3">

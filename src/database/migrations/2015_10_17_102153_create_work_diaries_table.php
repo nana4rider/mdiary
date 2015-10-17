@@ -1,11 +1,9 @@
 <?php
 
-use App\Models\Group;
-use App\Models\WorkField;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateWorkFieldsTable extends Migration
+class CreateWorkDiariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +12,15 @@ class CreateWorkFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('work_fields', function (Blueprint $table) {
+        Schema::create('work_diaries', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
-            $table->integer('active_work_diary_id')->unsigned()->nullable()->unique();
-            $table->string('name');
+            $table->integer('work_field_id')->unsigned();
+            $table->foreign('work_field_id')->references('id')->on('work_fields')->onDelete('restrict');
+            $table->integer('crop_id')->unsigned();
+            $table->foreign('crop_id')->references('id')->on('crops')->onDelete('restrict');
             $table->text('remarks')->nullable();
-            $table->integer('display_order')->unsigned();
 
             $table->timestamps();
             $table->softDeletes();
@@ -29,17 +28,6 @@ class CreateWorkFieldsTable extends Migration
             $table->unsignedInteger('updated_user_id')->nullable();
             $table->unsignedInteger('deleted_user_id')->nullable();
         });
-
-        $order = 1;
-        foreach (['A', 'B'] as $a) {
-            foreach (range(1, 6) as $b) {
-                $workField = new WorkField();
-                $workField->group_id = Group::GUEST;
-                $workField->name = $a . $b;
-                $workField->display_order = $order++;
-                $workField->save();
-            }
-        }
     }
 
     /**
@@ -49,6 +37,6 @@ class CreateWorkFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('work_fields');
+        Schema::drop('work_diaries');
     }
 }

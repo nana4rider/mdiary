@@ -3,7 +3,9 @@
 @section('title', '404 Not Found')
 
 @section('content')
-    <h1 class="page-header">@yield('title')</h1>
+    @if(Auth::guest())
+        <h1 class="page-header">@yield('title')</h1>
+    @endif
 
     <div class="row">
         <div class="col-md-12">

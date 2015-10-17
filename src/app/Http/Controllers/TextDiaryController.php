@@ -24,13 +24,7 @@ class TextDiaryController extends Controller
      */
     public function index(Request $request)
     {
-        // カテゴリ毎の日記件数
-        $dairyCount = DB::table('text_diary_text_diary_category')
-            ->select('text_diary_category_id', DB::raw('count(*) as count'))
-            ->groupBy('text_diary_category_id')
-            ->lists('count', 'text_diary_category_id');
-
-        // 日記が存在するカテゴリ
+        // カテゴリ
         $categories = TextDiaryCategory::orderBy('display_order')->get();
 
         $builder = TextDiary::with('textDiaryCategories')->with('flickrs');
@@ -44,7 +38,7 @@ class TextDiaryController extends Controller
 
         $textDiaries = $builder->latest('datetime')->paginate(config('const.max_text_diary'));
 
-        return view('textDiary.index', compact('categories', 'dairyCount', 'textDiaries'));
+        return view('textDiary.index', compact('categories', 'textDiaries'));
     }
 
     /**
