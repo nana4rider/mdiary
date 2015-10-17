@@ -1,7 +1,5 @@
 @extends('layouts.auth')
 
-@section('title', label('workDiary.create'))
-
 @section('content')
     <div class="row">
         <div class="col-md-12">

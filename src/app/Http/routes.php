@@ -53,8 +53,8 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
     /**
      * 集計
      */
-    Route::controller('aggregate', 'AggregateController', [
-        'getField' => 'aggregate.field',
-        'getWorkDiary' => 'aggregate.workDiary'
-    ]);
+    Route::get('aggregate/workField',
+        ['as' => 'aggregate.workField', 'uses' => 'AggregateController@getWorkField']);
+    Route::get('aggregate/workDiary',
+        ['as' => 'aggregate.workDiary', 'uses' => 'AggregateController@getWorkDiary']);
 });

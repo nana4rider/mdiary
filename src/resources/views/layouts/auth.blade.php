@@ -1,5 +1,7 @@
 @extends('layouts.master')
 
+@section('title', label('route.' . Route::currentRouteName()))
+
 @section('header')
     <div class="navbar-header">
         <a class="navbar-brand" href="{{ url() }}">{{ label('appName') }}</a>
@@ -12,38 +14,38 @@
     <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
             <li class="{{ Request::is('home') ? 'active' : null }}">
-                <a href="{{ route('home') }}">{{ label('home') }}</a>
+                <a href="{{ route('home') }}">{{ label('route.home') }}</a>
             </li>
 
             <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('textDiary') }} <span class="caret"></span>
+                    {{ label('menu.textDiary') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('textDiary.create') }}">{{ label('textDiary.create') }}</a></li>
-                    <li><a href="{{ route('textDiary.index') }}">{{ label('textDiary.index') }}</a></li>
+                    <li><a href="{{ route('textDiary.create') }}">{{ label('route.textDiary.create') }}</a></li>
+                    <li><a href="{{ route('textDiary.index') }}">{{ label('route.textDiary.index') }}</a></li>
                 </ul>
             </li>
 
             <li class="dropdown {{ Request::is('work*') ? 'active' : null }}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('work') }} <span class="caret"></span>
+                    {{ label('menu.work') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('workDiary.create') }}">{{ label('workDiary.create') }}</a></li>
-                    <li><a href="{{ route('workDiary.index') }}">{{ label('workDiary.index') }}</a></li>
-                    <li><a href="{{ route('workRecord.create') }}">{{ label('workRecord.create') }}</a></li>
-                    <li><a href="{{ route('workRecord.index') }}">{{ label('workRecord.index') }}</a></li>
+                    <li><a href="{{ route('workDiary.create') }}">{{ label('route.workDiary.create') }}</a></li>
+                    <li><a href="{{ route('workDiary.index') }}">{{ label('route.workDiary.index') }}</a></li>
+                    <li><a href="{{ route('workRecord.create') }}">{{ label('route.workRecord.create') }}</a></li>
+                    <li><a href="{{ route('workRecord.index') }}">{{ label('route.workRecord.index') }}</a></li>
                 </ul>
             </li>
 
             <li class="dropdown {{ Request::is('aggregate*') ? 'active' : null }}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('aggregate') }} <span class="caret"></span>
+                    {{ label('menu.aggregate') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('aggregate.field') }}">{{ label('aggregate.field') }}</a></li>
-                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('aggregate.workDiary') }}</a></li>
+                    <li><a href="{{ route('aggregate.workField') }}">{{ label('route.aggregate.workField') }}</a></li>
+                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('route.aggregate.workDiary') }}</a></li>
                 </ul>
             </li>
         </ul>
@@ -55,7 +57,7 @@
                     <span class="caret"></span></a>
                 <ul id="g-account-menu" class="dropdown-menu" role="menu">
                     <li><a href="{{ route('logout') }}">
-                            <i class="glyphicon glyphicon-lock"></i> {{ label('logout') }}</a></li>
+                            <i class="glyphicon glyphicon-lock"></i> {{ label('route.logout') }}</a></li>
                 </ul>
             </li>
         </ul>

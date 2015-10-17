@@ -23,6 +23,7 @@ return [
     'all' => '全て',
     'posted' => 'Posted',
     'created' => 'Created',
+    'information' => 'お知らせ',
 
     // ボタン
     'post' => '投稿',
@@ -33,21 +34,35 @@ return [
     'inputRepeat' => '続けて入力',
 
     // メニュー
-    'login' => 'ログイン',
-    'logout' => 'ログアウト',
-    'menu' => 'メニュー',
-    'home' => 'ホーム',
-    'textDiary' => '日記',
-    'work' => '作業',
-    'information' => 'お知らせ',
-    'aggregate' => '集計',
-    'textDiary.create' => '日記を書く',
-    'textDiary.edit' => '日記を編集',
-    'textDiary.index' => '日記を見る',
-    'workDiary.create' => '作業日誌を作成',
-    'workDiary.index' => '作業日誌を見る',
-    'workRecord.create' => '作業記録を作成',
-    'workRecord.index' => '作業記録を見る',
-    'aggregate.field' => '場所ごとの集計',
-    'aggregate.workDiary' => '作業日誌の集計',
+    'menu' => [
+        'textDiary' => '日記',
+        'work' => '作業',
+        'aggregate' => '集計',
+    ],
+
+    // ルーティング
+    'route' => [
+        'login' => 'ログイン',
+        'logout' => 'ログアウト',
+        'home' => 'ホーム',
+        'textDiary' => [
+            'create' => '日記を書く',
+            'edit' => '日記を編集',
+            'index' => '日記を見る'
+        ],
+        'workDiary' => [
+            'create' => '作業日誌を作成',
+            'edit' => '作業日誌を編集',
+            'index' => '作業日誌を見る'
+        ],
+        'workRecord' => [
+            'create' => '作業記録を作成',
+            'edit' => '作業記録を編集',
+            'index' => '作業記録を見る'
+        ],
+        'aggregate' => [
+            'workField' => '場所ごとの集計',
+            'workDiary' => '作業日誌の集計',
+        ],
+    ],
 ];

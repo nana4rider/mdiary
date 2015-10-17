@@ -1,7 +1,5 @@
 @extends('layouts.auth')
 
-@section('title', label('textDiary.create'))
-
 @section('content')
     @if(Session::has('newEntity'))
         <div data-dialog-onload class="hidden">
