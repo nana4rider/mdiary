@@ -18,13 +18,13 @@
                             ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple()
-                            ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.deletePicture')) !!}
+                            ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.textDiaryEdit.picture')) !!}
 
                     <div class="row form-group" id="flickr-img">
                         @foreach($textDiary->flickrs as $flickr)
                             @if(!Session::hasOldInput('flickrIds') || in_array($flickr->id, Session::getOldInput('flickrIds')))
                                 <div class="col-md-3">
-                                    <a href="#" data-confirm="{{ message('deleteConfirm') }}" class="thumbnail">
+                                    <a href="#" data-confirm="{{ message('confirm.delete') }}" class="thumbnail">
                                         <img src="{{ $flickr->thumbnailUrl }}"
                                              alt="{{ $textDiary->title }}">
                                     </a>

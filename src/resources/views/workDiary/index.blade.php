@@ -10,7 +10,8 @@
                     {!! BootForm::bind($data) !!}
 
                     {!! BootForm::select(label('workField'), 'fieldIds')
-                            ->options($workFieldOptions)->multiple() !!}
+                            ->options($workFieldOptions)->multiple()
+                            ->helpBlock(nl2br(message('help.workDiaryIndex.field')))!!}
 
                     {!! BootForm::checkbox(message('workDiaryWithArchive'), 'archive') !!}
 
@@ -62,7 +63,7 @@
 
                                     {!! BootForm::submit(label('destroy'), 'btn-danger btn-xs')
                                         ->formaction(route('workDiary.destroy', ['id' => $workDiary->id]))
-                                        ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
+                                        ->data('method', 'delete')->data('confirm', message('confirm.delete'))
                                         ->data('dialog-type', 'danger') !!}
 
                                     {!! BootForm::close() !!}

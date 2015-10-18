@@ -46,7 +46,7 @@
 
                         {!! BootForm::submit(label('destroy'), 'btn-danger btn-sm')
                                 ->formaction(route('textDiary.destroy', ['id' => $textDiary->id]))
-                                ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
+                                ->data('method', 'delete')->data('confirm', message('confirm.delete'))
                                 ->data('dialog-type', 'danger') !!}
 
                         {!! BootForm::close() !!}

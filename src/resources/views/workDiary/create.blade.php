@@ -11,7 +11,7 @@
 
                     {!! BootForm::select(label('workField'), 'fieldIds')
                             ->options($workFieldOptions)->multiple()
-                            ->helpBlock(nl2br(message('help.workDiaryField'))) !!}
+                            ->helpBlock(nl2br(message('help.workDiaryCreate.field'))) !!}
 
                     {!! BootForm::textarea(label('remarks'), 'remarks')->rows(config('const.remarks_rows')) !!}
 

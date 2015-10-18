@@ -34,7 +34,7 @@
                     {!! BootForm::checkbox(message('updateArchive'), 'archive')->id('update-archive') !!}
 
                     {!! BootForm::submit(label('update'), 'btn-primary')
-                        ->data('confirm', message('workDiaryArchiveConfirm'))
+                        ->data('confirm', message('confirm.workDiaryArchive'))
                         ->data('dialog-type', 'danger')->id('btn-update') !!}
 
                     {!! BootForm::close() !!}
