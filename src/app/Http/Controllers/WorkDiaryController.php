@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkDiaryStoreRequest;
+use App\Http\Requests\WorkDiaryUpdateRequest;
 use App\Models\Crop;
 use App\Models\WorkDiary;
 use App\Models\WorkField;
@@ -37,7 +38,7 @@ class WorkDiaryController extends Controller
             $builder->where('archive', false);
         }
 
-        $workDiaries = $builder->latest()->paginate(config('const.max_work_diary'));
+        $workDiaries = $builder->orderBy('archive')->latest()->paginate(config('const.max_work_diary'));
 
         // 圃場一覧を取得
         $workFieldOptions = WorkField::orderBy('display_order')->get()->lists('name', 'id');
@@ -46,13 +47,31 @@ class WorkDiaryController extends Controller
     }
 
     /**
-     * 詳細表示
+     * 詳細画面
      * @param WorkDiary $workDiary
      * @return \Illuminate\View\View
      */
     public function show(WorkDiary $workDiary)
     {
         return view('workDiary.show', compact('workDiary'));
+    }
+
+    /**
+     * 編集画面
+     * @param WorkDiary $workDiary
+     * @return \Illuminate\View\View
+     */
+    public function edit(WorkDiary $workDiary)
+    {
+        if ($workDiary->archive) {
+            // アーカイブ済みは編集不可
+            return redirect()->route('workDiary.index');
+        }
+
+        // 作物一覧を取得
+        $cropOptions = Crop::all()->lists('name', 'id');
+
+        return view('workDiary.edit', compact('workDiary', 'cropOptions'));
     }
 
     /**
@@ -100,10 +119,40 @@ class WorkDiaryController extends Controller
             }
         });
 
-        if (empty($errors)) {
-            return redirect()->back()->with('complete', true);
-        } else {
+        if (!empty($errors)) {
             return redirect()->back()->withInput($request->all())->withErrors($errors);
         }
+
+        return redirect()->route('workDiary.index')->with('complete', 'store');
+    }
+
+    /**
+     * 更新処理
+     * @param WorkDiary $workDiary
+     * @param WorkDiaryUpdateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(WorkDiary $workDiary, WorkDiaryUpdateRequest $request)
+    {
+        DB::transaction(function () use ($request, $workDiary) {
+            $workDiary->archive = $request->has('archive');
+            $workDiary->fill($request->all());
+            $workDiary->save();
+        });
+
+        return redirect()->route('workDiary.index')->with('complete', 'update');
+    }
+
+    /**
+     * 削除処理
+     * @param WorkDiary $workDiary
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroy(WorkDiary $workDiary)
+    {
+        $workDiary->archive = true;
+        $workDiary->delete();
+
+        return redirect()->route('workDiary.index')->with('complete', 'destroy');
     }
 }

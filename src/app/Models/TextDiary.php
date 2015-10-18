@@ -14,7 +14,7 @@ class TextDiary extends Model
     use UserInfo;
     use Grouping;
 
-    protected $fillable = ['title', 'body', 'datetime'];
+    protected $fillable = ['title', 'body', 'datetimeText'];
 
     /**
      * カテゴリIDのキャッシュ
@@ -42,22 +42,20 @@ class TextDiary extends Model
 
     /**
      * 日付を整形して取得
-     * @param $value
      * @return string
      */
-    public function getDatetimeAttribute($value)
+    public function getDatetimeTextAttribute()
     {
-        return Carbon::parse($value)->format(config('format.datetime'));
+        return Carbon::parse($this->datetime)->format(config('format.datetime'));
     }
 
     /**
      * 日付をCarbonに変換して設定
      * @param $value
      */
-    public function setDatetimeAttribute($value)
+    public function setDatetimeTextAttribute($value)
     {
-        $this->attributes['datetime'] =
-            Carbon::createFromFormat(config('format.datetime'), $value)->toDateTimeString();
+        $this->datetime = Carbon::createFromFormat(config('format.datetime'), $value);
     }
 
     /**

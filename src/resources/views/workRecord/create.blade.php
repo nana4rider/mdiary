@@ -18,44 +18,45 @@
                     <div class="form-group">
                         <label class="control-label">農薬</label>
 
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>農薬名</th>
-                                <th>
-                                    農薬使用倍率/使用量
-                                </th>
-                                <th>
-                                    操作
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="form-control-static">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>農薬名</th>
+                                    <th>
+                                        農薬使用倍率/使用量
+                                    </th>
+                                    <th>
+                                        操作
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <tr>
-                                <td>アファーム</td>
-                                <td>
-                                    1000
-                                </td>
-                                <td class="text-right">
-                                    <a href="#" id="pesticide-remove" title="農薬を削除"
-                                       class="btn btn-danger btn-xs">削除</a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>アファーム</td>
+                                    <td>
+                                        1000
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="#" id="pesticide-remove" title="農薬を削除"
+                                           class="btn btn-danger btn-xs">削除</a>
+                                    </td>
+                                </tr>
 
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <td class="text-right" colspan="2">
-                                </td>
-                                <td class="text-right" colspan="1">
-                                    <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form"
-                                       class="btn btn-primary btn-xs">追加</a>
-                                </td>
-                            </tr>
-                            </tfoot>
-                        </table>
-
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td class="text-right" colspan="2">
+                                    </td>
+                                    <td class="text-right" colspan="1">
+                                        <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form"
+                                           class="btn btn-primary btn-xs">追加</a>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
 
                     {!! BootForm::submit('作成', 'btn-primary') !!}

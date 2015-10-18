@@ -8,7 +8,8 @@ return [
     'facebook' => 'Facebook',
     'github' => 'GitHub',
 
-    // 入力項目
+    // 入力/表示項目
+    'action' => '操作',
     'datetime' => '日時',
     'email' => 'メールアドレス',
     'title' => 'タイトル',
@@ -17,7 +18,12 @@ return [
     'picture' => '写真',
     'crop' => '作物',
     'workField' => '圃場',
+    'workDiary' => '作業日誌',
+    'workRecord' => '作業記録',
     'remarks' => '備考',
+    'archive' => 'アーカイブ',
+    'archived' => 'アーカイブ済み',
+    'create_date' => '作成日時',
 
     // その他
     'all' => '全て',
@@ -31,7 +37,8 @@ return [
     'edit' => '編集',
     'store' => '作成',
     'update' => '更新',
-    'delete' => '削除',
+    'destroy' => '削除',
+    'search' => '検索',
     'inputRepeat' => '続けて入力',
 
     // メニュー
@@ -49,17 +56,18 @@ return [
         'textDiary' => [
             'create' => '日記を書く',
             'edit' => '日記を編集',
-            'index' => '日記を見る'
+            'index' => '日記を見る',
         ],
         'workDiary' => [
             'create' => '作業日誌を作成',
             'edit' => '作業日誌を編集',
-            'index' => '作業日誌を見る'
+            'index' => '作業日誌を見る',
+            'show' => '作業日誌詳細',
         ],
         'workRecord' => [
             'create' => '作業記録を作成',
             'edit' => '作業記録を編集',
-            'index' => '作業記録を見る'
+            'index' => '作業記録を見る',
         ],
         'aggregate' => [
             'workField' => '場所ごとの集計',

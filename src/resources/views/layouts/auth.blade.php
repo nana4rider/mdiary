@@ -65,6 +65,14 @@
 @endsection
 
 @section('content')
+    @if(Session::has('complete'))
+        <div data-dialog-onload class="hidden">
+            <p>
+                {{ message('complete', ['name' => Session::get('complete')]) }}
+            </p>
+        </div>
+    @endif
+
     <h1 class="page-header">@yield('title')</h1>
 
     @yield('content')

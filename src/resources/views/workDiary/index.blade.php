@@ -12,9 +12,9 @@
                     {!! BootForm::select(label('workField'), 'fieldIds')
                             ->options($workFieldOptions)->multiple() !!}
 
-                    {!! BootForm::checkbox('アーカイブ済みの作業日誌を含む', 'archive') !!}
+                    {!! BootForm::checkbox(message('workDiaryWithArchive'), 'archive') !!}
 
-                    {!! BootForm::submit('検索', 'btn-primary') !!}
+                    {!! BootForm::submit(label('search'), 'btn-primary') !!}
 
                     {!! BootForm::close() !!}
                 </div>
@@ -23,18 +23,18 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title">作業日誌</h4>
+                    <h4 class="panel-title">{{ label('workDiary') }}</h4>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>作成日時</th>
-                            <th>作物</th>
-                            <th>圃場</th>
-                            <th>アーカイブ</th>
-                            <th>操作</th>
+                            <th>{{ label('create_date') }}</th>
+                            <th>{{ label('crop') }}</th>
+                            <th>{{ label('workField') }}</th>
+                            <th>{{ label('archive') }}</th>
+                            <th>{{ label('action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -58,12 +58,12 @@
                                     @if(!$workDiary->archive)
                                         {!! BootForm::submit(label('edit'), 'btn-primary btn-xs')
                                             ->formaction(route('workDiary.edit', ['id' => $workDiary->id])) !!}
-
-                                        {!! BootForm::submit(label('delete'), 'btn-danger btn-xs')
-                                            ->formaction(route('workDiary.destroy', ['id' => $workDiary->id]))
-                                            ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
-                                            ->data('dialog-type', 'danger') !!}
                                     @endif
+
+                                    {!! BootForm::submit(label('destroy'), 'btn-danger btn-xs')
+                                        ->formaction(route('workDiary.destroy', ['id' => $workDiary->id]))
+                                        ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
+                                        ->data('dialog-type', 'danger') !!}
 
                                     {!! BootForm::close() !!}
                                 </td>

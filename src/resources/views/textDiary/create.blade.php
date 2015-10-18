@@ -9,7 +9,7 @@
 
             {!! BootForm::open()->get() !!}
 
-            {!! BootForm::submit(label('textDiary.index'))->formaction(route('textDiary.index')) !!}
+            {!! BootForm::submit(label('route.textDiary.index'))->formaction(route('textDiary.index')) !!}
 
             {!! BootForm::submit(label('edit'))->formaction(route('textDiary.edit', ['id' => Session::get('newEntity')->id])) !!}
 
@@ -25,7 +25,7 @@
                 <div class="panel-body">
                     {!! BootForm::open()->post()->action(route('textDiary.store'))->multipart() !!}
 
-                    {!! BootForm::text(label('datetime'), 'datetime')->data('datetimepicker', 'datetime') !!}
+                    {!! BootForm::text(label('datetime'), 'datetimeText')->data('datetimepicker', 'datetime') !!}
 
                     {!! BootForm::text(label('title'), 'title') !!}
 

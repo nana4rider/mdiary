@@ -12,7 +12,6 @@ class WorkDiaryUpdateRequest extends Request
     public function rules()
     {
         return [
-            'fieldIds' => 'required',
             'remarks' => 'max:1000'
         ];
     }

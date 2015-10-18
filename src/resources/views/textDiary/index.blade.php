@@ -12,7 +12,7 @@
                     <div class="panel-body">
                         <p>
                             <small>
-                                {{ label('posted') }}: {{ $textDiary->datetime }} |
+                                {{ label('posted') }}: {{ $textDiary->datetimeText }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
                                     <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}"
                                        class="no-underline">
@@ -42,9 +42,9 @@
 
                         {!! BootForm::open()->get()->action(route('textDiary.edit', ['id' => $textDiary->id]))->class('form-inline') !!}
 
-                        {!! BootForm::submit(label('edit'), 'btn-primary') !!}
+                        {!! BootForm::submit(label('edit'), 'btn-primary btn-sm') !!}
 
-                        {!! BootForm::submit(label('delete'), 'btn-danger')
+                        {!! BootForm::submit(label('destroy'), 'btn-danger btn-sm')
                                 ->formaction(route('textDiary.destroy', ['id' => $textDiary->id]))
                                 ->data('method', 'delete')->data('confirm', message('deleteConfirm'))
                                 ->data('dialog-type', 'danger') !!}

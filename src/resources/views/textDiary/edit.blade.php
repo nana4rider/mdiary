@@ -9,7 +9,7 @@
 
                     {!! BootForm::bind($textDiary) !!}
 
-                    {!! BootForm::text(label('datetime'), 'datetime')->data('datetimepicker', 'datetime') !!}
+                    {!! BootForm::text(label('datetime'), 'datetimeText')->data('datetimepicker', 'datetime') !!}
 
                     {!! BootForm::text(label('title'), 'title') !!}
 

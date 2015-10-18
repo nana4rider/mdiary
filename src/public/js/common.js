@@ -209,7 +209,7 @@ $(function () {
         var confirm = false;
 
         $element.on('click', function (e) {
-            if (confirm) {
+            if (confirm || $element.data('confirm-disabled') !== undefined) {
                 confirm = false;
                 return;
             }

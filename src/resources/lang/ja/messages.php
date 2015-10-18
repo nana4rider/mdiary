@@ -4,8 +4,12 @@ return [
     'input' => ':nameを入力してください。',
     'sign_in_with' => ':nameアカウントでログイン',
     'complete' => ':nameが完了しました！',
-    'deleteConfirm' => '本当に削除しますか？',
+    'deleteConfirm' => '本当に削除してもよろしいですか？',
     'othersUpdate' => 'ほかの人が更新を行った可能性があります。再度入力して下さい。',
+    'workDiaryWithArchive' => 'アーカイブ済みの作業日誌を含む',
+    'updateArchive' => 'この日誌をアーカイブする',
+    'workDiaryArchiveConfirm' => '作業日誌をアーカイブすると、編集することができなくなります。' . "\n" .
+        '本当にアーカイブしてもよろしいですか？',
 
     'help' => [
         'deletePicture' => '既にアップロードしたファイルを削除する場合は、下記の画像をクリックして下さい。',

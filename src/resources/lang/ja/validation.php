@@ -105,5 +105,6 @@ return [
             'categoryIds' => $label['category'],
             'cropIds' => $label['crop'],
             'fieldIds' => $label['workField'],
+            'datetimeText' => $label['datetime'],
         ],
 ];

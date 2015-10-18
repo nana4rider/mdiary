@@ -119,7 +119,7 @@ class TextDiaryController extends Controller
             $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
         }
 
-        return redirect()->route('textDiary.index');
+        return redirect()->route('textDiary.index')->with('complete', 'update');
     }
 
     /**
@@ -131,6 +131,6 @@ class TextDiaryController extends Controller
     {
         $textDiary->delete();
 
-        return redirect()->route('textDiary.index');
+        return redirect()->route('textDiary.index')->with('complete', 'destroy');
     }
 }
