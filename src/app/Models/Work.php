@@ -11,4 +11,10 @@ class Work extends Model
     use SoftDeletes;
     use UserInfo;
 
+    const PEST_CONTROL = 8;
+
+    public function crops()
+    {
+        return $this->belongsToMany(Crop::class);
+    }
 }

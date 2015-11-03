@@ -16,6 +16,7 @@ class CreateCropsTable extends Migration
         Schema::create('crops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('display_order')->unsigned();
 
             $table->timestamps();
             $table->softDeletes();
@@ -24,9 +25,11 @@ class CreateCropsTable extends Migration
             $table->unsignedInteger('deleted_user_id')->nullable();
         });
 
+        $order = 1;
         foreach (['スイカ', 'ほうれん草', '小松菜'] as $name) {
             $crop = new Crop();
             $crop->name = $name;
+            $crop->display_order = $order++;
             $crop->save();
         }
     }

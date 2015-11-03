@@ -26,12 +26,17 @@ class WorkField extends Model
     /**
      * アクティブな日誌があるか
      * @param Builder $query
+     * @param $cropId
      * @return Builder|static
      */
-    public function scopeHasActiveDiary(Builder $query)
+    public function scopeHasActiveDiary(Builder $query, $cropId = null)
     {
-        return $query->whereHas('workDiaries', function ($query) {
+        return $query->whereHas('workDiaries', function ($query) use ($cropId) {
             $query->where('archive', false);
+
+            if (!is_null($cropId)) {
+                $query->where('crop_id', $cropId);
+            }
         });
     }
 

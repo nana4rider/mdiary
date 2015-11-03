@@ -69,7 +69,7 @@ class WorkDiaryController extends Controller
         }
 
         // 作物一覧を取得
-        $cropOptions = Crop::all()->lists('name', 'id');
+        $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
 
         return view('workDiary.edit', compact('workDiary', 'cropOptions'));
     }
@@ -81,7 +81,7 @@ class WorkDiaryController extends Controller
     public function create()
     {
         // 作物一覧を取得
-        $cropOptions = Crop::all()->lists('name', 'id');
+        $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
         // 編集中の日誌がない圃場一覧を取得
         $workFieldOptions = WorkField::doesntHaveActiveDiary()->orderBy('display_order')->get()->lists('name', 'id');
 
