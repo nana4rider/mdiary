@@ -17,6 +17,7 @@ class CreateFlickrTextDiaryTable extends Migration
             $table->foreign('flickr_id')->references('id')->on('flickrs')->onDelete('restrict');
             $table->integer('text_diary_id')->unsigned();
             $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('restrict');
+            $table->unique(['flickr_id', 'text_diary_id']);
         });
     }
 

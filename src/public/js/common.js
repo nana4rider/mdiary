@@ -164,10 +164,11 @@ $(function () {
     });
 
     var showContentDialog = function (title, $content) {
-        $content = $('<div>').append($content.children().clone());
+        var $temp = $content.children();
+        var $dialogBody = $('<div>').append($temp);
 
         var buttons = [];
-        $content.find('form > .btn').each(function () {
+        $dialogBody.find('form > .btn').each(function () {
             var $button = $(this);
 
             buttons.push({
@@ -181,8 +182,11 @@ $(function () {
 
         BootstrapDialog.show({
             title: title,
-            message: $content,
-            buttons: buttons
+            message: $dialogBody,
+            buttons: buttons,
+            onhide: function () {
+                $content.append($temp);
+            }
         });
     };
 

@@ -2,11 +2,14 @@
 
 return [
     'input' => ':nameを入力してください。',
-    'sign_in_with' => ':nameアカウントでログイン',
+    'inputBetween' => ':a - :bの間で入力してください。',
+    'signInWith' => ':nameアカウントでログイン',
     'complete' => ':nameが完了しました！',
     'othersUpdate' => 'ほかの人が更新を行った可能性があります。再度入力して下さい。',
     'workDiaryWithArchive' => 'アーカイブ済みの作業日誌を含む',
     'updateArchive' => 'この日誌をアーカイブする',
+    'addTo' => ':nameを追加',
+    'deleteTo' => ':nameを削除',
 
     'confirm' => [
         'delete' => '本当に削除してもよろしいですか？',
@@ -24,6 +27,9 @@ return [
         ],
         'workDiaryIndex' => [
             'field' => '未選択の場合、全ての圃場を検索します。',
+        ],
+        'workRecordCreate' => [
+            'field' => 'アーカイブしていない作業日誌が存在する圃場のみ、選択することができます。',
         ],
     ],
 ];

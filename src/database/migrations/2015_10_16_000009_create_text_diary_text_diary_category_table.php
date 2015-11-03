@@ -17,6 +17,7 @@ class CreateTextDiaryTextDiaryCategoryTable extends Migration
             $table->foreign('text_diary_id')->references('id')->on('text_diaries')->onDelete('restrict');
             $table->integer('text_diary_category_id')->unsigned();
             $table->foreign('text_diary_category_id')->references('id')->on('text_diary_categories')->onDelete('restrict');
+            $table->unique(['text_diary_id', 'text_diary_category_id']);
         });
     }
 

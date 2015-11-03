@@ -15,4 +15,14 @@ class Crop extends Model
     {
         return $this->hasMany(Cultivar::class);
     }
+
+    public function works()
+    {
+        return $this->belongsToMany(Work::class);
+    }
+
+    public function pesticides()
+    {
+        return $this->belongsToMany(Pesticide::class);
+    }
 }

@@ -9,21 +9,21 @@
 
             <p>
                 <a href="{{ route('social.authorize', ['provider' => 'google']) }}" class="btn btn-social btn-google">
-                    <span class="fa fa-google-plus"></span> {{ message('sign_in_with', ['name' => 'google']) }}
+                    <span class="fa fa-google-plus"></span> {{ message('signInWith', ['name' => 'google']) }}
                 </a>
             </p>
 
             <p>
                 <a href="{{ route('social.authorize', ['provider' => 'facebook']) }}"
                    class="btn btn-social btn-facebook">
-                    <span class="fa fa-facebook"></span> {{ message('sign_in_with', ['name' => 'facebook']) }}
+                    <span class="fa fa-facebook"></span> {{ message('signInWith', ['name' => 'facebook']) }}
                 </a>
             </p>
 
             <p>
                 <a href="{{ route('social.authorize', ['provider' => 'github']) }}"
                    class="btn btn-social btn-github">
-                    <span class="fa fa-github"></span> {{ message('sign_in_with', ['name' => 'github']) }}
+                    <span class="fa fa-github"></span> {{ message('signInWith', ['name' => 'github']) }}
                 </a>
             </p>
         </div>

@@ -24,6 +24,10 @@ return [
     'archive' => 'アーカイブ',
     'archived' => 'アーカイブ済み',
     'create_date' => '作成日時',
+    'work' => '作業内容',
+    'pesticide' => '農薬',
+    'pesticideUsage' => '倍率/使用量',
+    'workComplete' => '作業完了',
 
     // その他
     'all' => '全て',
@@ -39,6 +43,7 @@ return [
     'update' => '更新',
     'destroy' => '削除',
     'search' => '検索',
+    'add' => '追加',
     'inputRepeat' => '続けて入力',
 
     // メニュー

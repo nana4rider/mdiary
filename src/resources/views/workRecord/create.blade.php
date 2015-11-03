@@ -7,59 +7,73 @@
                 <div class="panel-body">
                     {!! BootForm::open()->post()->action(route('workRecord.store')) !!}
 
-                    {!! BootForm::text('作業日時', 'datetime')->data('datetimepicker', 'datetime') !!}
+                    {!! BootForm::text(label('datetime'), 'datetimeText')->data('datetimepicker', 'datetime') !!}
 
-                    {!! BootForm::select('作物', 'product')->options(['スイカ', 'ほうれん草', '小松菜']) !!}
-                    {!! BootForm::select('場所', 'place')->options(['A1', 'A2', 'A3'])->multiple() !!}
+                    {!! BootForm::select(label('crop'), 'cropId')->options($cropOptions)
+                            ->data('change-form-create', '') !!}
 
-                    {!! BootForm::select('作業内容', 'work')
-                            ->options(['防除', '定植', '整枝', '交配', '収穫']) !!}
+                    {!! BootForm::select(label('workField'), 'fieldIds')
+                            ->options($workFieldOptions)->multiple()
+                            ->helpBlock(nl2br(message('help.workRecordCreate.field'))) !!}
 
-                    <div class="form-group">
-                        <label class="control-label">農薬</label>
+                    {!! BootForm::select(label('work'), 'workId')
+                            ->options($workOptions)
+                            ->data('change-form-create', '') !!}
 
-                        <div class="form-control-static">
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>農薬名</th>
-                                    <th>
-                                        農薬使用倍率/使用量
-                                    </th>
-                                    <th>
-                                        操作
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                    @if($work->use_complete)
+                        {!! BootForm::checkbox(label('workComplete'), 'complete') !!}
+                    @endif
 
-                                <tr>
-                                    <td>アファーム</td>
-                                    <td>
-                                        1000
-                                    </td>
-                                    <td class="text-right">
-                                        <a href="#" id="pesticide-remove" title="農薬を削除"
-                                           class="btn btn-danger btn-xs">削除</a>
-                                    </td>
-                                </tr>
+                    @if($work->id == \App\Models\Work::PEST_CONTROL)
+                        <div class="form-group">
+                            <label class="control-label">{{ label('pesticide') }}</label>
 
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td class="text-right" colspan="2">
-                                    </td>
-                                    <td class="text-right" colspan="1">
-                                        <a href="#" title="農薬を追加" data-dialog-content="#pesticide-form"
-                                           class="btn btn-primary btn-xs">追加</a>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
+                            <div class="form-control-static">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>農薬名</th>
+                                        <th>
+                                            倍率/使用量
+                                        </th>
+                                        <th>
+                                            操作
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td>アファーム</td>
+                                        <td>
+                                            1000
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="#" id="pesticide-remove"
+                                               title="{{ message('deleteTo', ['name' => 'pesticide']) }}"
+                                               class="btn btn-danger btn-xs">{{ label('destroy') }}</a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td class="text-right" colspan="3">
+                                            <a href="#" title="{{ message('addTo', ['name' => 'pesticide']) }}"
+                                               data-dialog-content="#pesticide-section"
+                                               class="btn btn-primary btn-xs">{{ label('add') }}</a>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     {!! BootForm::submit('作成', 'btn-primary') !!}
+
+                    {!! BootForm::submit('changeForm', 'hidden')
+                            ->formaction(route('workRecord.create.changeForm'))->id('change-form-submit') !!}
 
                     {!! BootForm::close() !!}
                 </div>
@@ -67,16 +81,24 @@
         </div>
     </div>
 
-    <div id="pesticide-form" class="hidden">
-        {!! BootForm::open()->post()->action(route('workRecord.store')) !!}
+    <div id="pesticide-section" class="hidden">
+        {!! BootForm::open()->post()->action(route('workRecord.store'))->id('pesticide-form') !!}
 
-        {!! BootForm::select('農薬名', '')
-                ->options(['未選択', 'アファーム', 'カスケード']) !!}
+        {!! BootForm::select(label('pesticide'), 'pesticideId')
+                ->options($pesticideOptions) !!}
 
-        {!! BootForm::text('農薬使用倍率/使用量', '')->value(1000) !!}
+        {!! BootForm::inputGroup(label('pesticideUsage'), 'usage')->value(1000)
+                ->afterAddon('*')->helpBlock('') !!}
 
-        {!! BootForm::submit('追加', 'btn-primary btn-dialog') !!}
+        {!! BootForm::submit(label('add'), 'btn-primary btn-dialog') !!}
 
         {!! BootForm::close() !!}
     </div>
+@endsection
+
+@section('js')
+    <script>
+        var pesticides = {!! $pesticidesJson !!};
+    </script>
+    <script src="{{ url('js/workRecord.create.js') }}"></script>
 @endsection

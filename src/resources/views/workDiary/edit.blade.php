@@ -46,5 +46,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ url('js/workDiary.js') }}"></script>
+    <script src="{{ url('workDiary.edit.js') }}"></script>
 @endsection

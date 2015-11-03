@@ -1,0 +1,22 @@
+$(function () {
+    $('[data-change-form-create]').on('change', function () {
+        $('#change-form-submit').trigger('click');
+    });
+
+    var $pesticideId = $('#pesticideId');
+
+    $pesticideId.on('change', function () {
+        var index = $pesticideId.prop('selectedIndex');
+        var pesticide = window['pesticides'][index];
+        var $usage = $('#usage');
+        var $formGroup = $usage.parents('.form-group');
+
+        $usage.val(pesticide.minimumUsage);
+        $formGroup.find('.input-group-addon').text(pesticide.unitName);
+        $formGroup.find('.help-block').text(pesticide.helpBlock);
+    });
+
+    $pesticideId.trigger('change');
+
+
+});
