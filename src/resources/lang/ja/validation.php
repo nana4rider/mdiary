@@ -22,7 +22,7 @@ return [
     'array' => ':attributeは配列にしてください。',
     'before' => ':attributeは:date以前の日付にしてください。',
     'between' => [
-        'numeric' => ':attributeは:min〜:maxまでにしてください。',
+        'numeric' => ':attributeは:min〜:maxの範囲で入力してください。',
         'file' => ':attributeは:min〜:max KBまでのファイルにしてください。',
         'string' => ':attributeは:min〜:max文字にしてください。',
         'array' => ':attributeは:min〜:max個までにしてください。',

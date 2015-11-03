@@ -26,6 +26,7 @@ return [
     'create_date' => '作成日時',
     'work' => '作業内容',
     'pesticide' => '農薬',
+    'pesticideName' => '農薬名',
     'pesticideUsage' => '倍率/使用量',
     'workComplete' => '作業完了',
 

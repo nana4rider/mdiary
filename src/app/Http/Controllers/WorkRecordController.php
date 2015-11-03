@@ -64,9 +64,14 @@ class WorkRecordController extends Controller
             $minimumUsage = $pesticide->minimum_usage;
             $maximumUsage = $pesticide->maximum_usage;
             $unitName = $pesticide->unit->name;
-            // 使用量の幅がない場合はメッセージ不要
-            $helpBlock = $minimumUsage === $maximumUsage ?
-                '' : trans('messages.inputBetween', ['a' => $minimumUsage . $unitName, 'b' => $maximumUsage . $unitName]);
+
+            if ($minimumUsage === $maximumUsage) {
+                // 使用量の幅がない場合はメッセージ不要
+                $helpBlock = '';
+            } else {
+                $helpBlock = trans('validation.between.numeric',
+                    ['attribute' => label('pesticideUsage'), 'min' => $minimumUsage, 'max' => $maximumUsage]);
+            }
 
             $array[] = compact('name', 'minimumUsage', 'maximumUsage', 'unitName', 'helpBlock');
         }

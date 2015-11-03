@@ -2,7 +2,6 @@
 
 return [
     'input' => ':nameを入力してください。',
-    'inputBetween' => ':a - :bの間で入力してください。',
     'signInWith' => ':nameアカウントでログイン',
     'complete' => ':nameが完了しました！',
     'othersUpdate' => 'ほかの人が更新を行った可能性があります。再度入力して下さい。',

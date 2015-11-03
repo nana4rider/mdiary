@@ -32,12 +32,12 @@
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>農薬名</th>
+                                        <th>{{ label('pesticideName') }}</th>
                                         <th>
-                                            倍率/使用量
+                                            {{ label('pesticideUsage') }}
                                         </th>
                                         <th>
-                                            操作
+                                            {{ label('action') }}
                                         </th>
                                     </tr>
                                     </thead>
@@ -84,7 +84,7 @@
     <div id="pesticide-section" class="hidden">
         {!! BootForm::open()->post()->action(route('workRecord.store'))->id('pesticide-form') !!}
 
-        {!! BootForm::select(label('pesticide'), 'pesticideId')
+        {!! BootForm::select(label('pesticideName'), 'pesticideId')
                 ->options($pesticideOptions) !!}
 
         {!! BootForm::inputGroup(label('pesticideUsage'), 'usage')->value(1000)
