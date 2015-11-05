@@ -17,13 +17,17 @@ $(function () {
  * Laravel Form
  */
 $(function () {
+    var stop = false;
+    var button = null;
     var buttonMethod = null;
 
     $(document).on('submit', 'form', function (e) {
+        var $form = $(this);
+
         if (buttonMethod === 'get'
-            || (buttonMethod === null && $(this).prop('method') === 'get')) {
+            || (buttonMethod === null && $form.prop('method') === 'get')) {
             // トークンとメソッド送信を無効化
-            $(this).children('input[name="_token"]').attr('disabled', true);
+            $form.children('input[name="_token"]').attr('disabled', true);
         }
 
         /*
@@ -31,27 +35,64 @@ $(function () {
          * <button data-method="PUT">Update</button>
          */
         if (buttonMethod === 'post' || buttonMethod === 'get') {
-            $(this).prop('method', buttonMethod.toUpperCase());
-            $(this).children('input[name="_method"]').attr('disabled', true);
+            $form.prop('method', buttonMethod.toUpperCase());
+            $form.children('input[name="_method"]').attr('disabled', true);
         } else if (buttonMethod === 'put' || buttonMethod === 'delete') {
-            $(this).prop('method', 'POST');
-            $_method = $(this).children('input[name="_method"]');
+            $form.prop('method', 'POST');
+            var $_method = $form.children('input[name="_method"]');
 
             if ($_method.length === 0) {
                 $_method = $('<input type="hidden" name="_method">');
-                $(this).append($_method);
+                $form.append($_method);
             }
 
             $_method.val(buttonMethod.toUpperCase());
         }
 
-        $(document).on('submit', 'form', function (e) {
+        // 二重送信防止
+        if (stop) {
             // 送信ボタンを無効化
             e.preventDefault();
+            return;
+        } else {
+            stop = true;
+        }
+
+        if (button.data('ajax') === undefined) {
+            return;
+        }
+
+        $.ajax({
+            type: $form.prop('method'),
+            url: $form.prop('action'),
+            data: $form.serialize(),
+            dataType: 'JSON',
+            timeout: 30000
+        }).done(function (data) {
+            // カスタムイベントを呼び出し
+            button.trigger('ajax.done', data);
+        }).fail(function (xhr) {
+            if (xhr.status === 422) {
+                var data = JSON.parse(xhr.responseText);
+                // バリデーションエラー
+                Object.keys(data).forEach(function (key) {
+                    var $formGroup = $('#' + key).parents('.form-group').addClass('has-error');
+                    $formGroup.find('.help-block').text(data[key]);
+                });
+            }
+            // カスタムイベントを呼び出し
+            button.trigger('ajax.fail', xhr);
+        }).always(function () {
+            // 送信ボタンを有効化
+            stop = false;
         });
+
+        // 送信ボタンを無効化
+        e.preventDefault();
     });
 
     $(document).on('click', 'button[type="submit"]', function (e) {
+        button = $(this);
         var m = $(this).data('method');
 
         if (m === undefined) {

@@ -13,10 +13,12 @@ $(function () {
 
         $usage.val(pesticide.minimumUsage);
         $formGroup.find('.input-group-addon').text(pesticide.unitName);
-        $formGroup.find('.help-block').text(pesticide.helpBlock);
     });
 
     $pesticideId.trigger('change');
 
-
+    // 農薬追加
+    $('#pesticide-form button[type="submit"]').on('ajax.done', function (e, data) {
+        console.log(data);
+    });
 });

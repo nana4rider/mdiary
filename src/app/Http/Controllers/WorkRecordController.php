@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 use App\Models\Crop;
 use App\Models\Work;
 use App\Models\WorkField;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class WorkRecordController extends Controller
@@ -65,15 +66,7 @@ class WorkRecordController extends Controller
             $maximumUsage = $pesticide->maximum_usage;
             $unitName = $pesticide->unit->name;
 
-            if ($minimumUsage === $maximumUsage) {
-                // 使用量の幅がない場合はメッセージ不要
-                $helpBlock = '';
-            } else {
-                $helpBlock = trans('validation.between.numeric',
-                    ['attribute' => label('pesticideUsage'), 'min' => $minimumUsage, 'max' => $maximumUsage]);
-            }
-
-            $array[] = compact('name', 'minimumUsage', 'maximumUsage', 'unitName', 'helpBlock');
+            $array[] = compact('name', 'minimumUsage', 'maximumUsage', 'unitName');
         }
         return json_encode($array);
     }
@@ -87,5 +80,10 @@ class WorkRecordController extends Controller
     public function changeForm(Request $request)
     {
         return redirect()->back()->withInput($request->all());
+    }
+
+    public function store()
+    {
+        return new JsonResponse(['usage' => 'world'], 422);
     }
 }

@@ -90,7 +90,7 @@
         {!! BootForm::inputGroup(label('pesticideUsage'), 'usage')->value(1000)
                 ->afterAddon('*')->helpBlock('') !!}
 
-        {!! BootForm::submit(label('add'), 'btn-primary btn-dialog') !!}
+        {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', '') !!}
 
         {!! BootForm::close() !!}
     </div>
@@ -98,7 +98,7 @@
 
 @section('js')
     <script>
-        var pesticides = {!! $pesticidesJson !!};
+        {!! 'var pesticides = ' . $pesticidesJson . ';' !!}
     </script>
     <script src="{{ url('js/workRecord.create.js') }}"></script>
 @endsection
