@@ -20,16 +20,20 @@
                             ->options($workOptions)
                             ->data('change-form-create', '') !!}
 
-                    @if($work->use_complete)
-                        {!! BootForm::checkbox(label('workComplete'), 'complete') !!}
+                    {{-- 播種、定植 --}}
+                    @if($work->use_seeding)
+                        {!! BootForm::select(label('cultivar'), 'cultivarId')->options($cultivarOptions) !!}
+
+                        {!! BootForm::inputGroup(label('intrarowSpacing'), 'intrarowSpacing')->afterAddon('cm') !!}
                     @endif
 
-                    @if($work->id == \App\Models\Work::PEST_CONTROL)
+                    {{-- 農薬 --}}
+                    @if($work->use_pest_control)
                         <div class="form-group">
                             <label class="control-label">{{ label('pesticide') }}</label>
 
                             <div class="form-control-static">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="pesticide-table">
                                     <thead>
                                     <tr>
                                         <th>{{ label('pesticideName') }}</th>
@@ -42,19 +46,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    <tr>
-                                        <td>アファーム</td>
-                                        <td>
-                                            1000
-                                        </td>
-                                        <td class="text-right">
-                                            <a href="#" id="pesticide-remove"
-                                               title="{{ message('deleteTo', ['name' => 'pesticide']) }}"
-                                               class="btn btn-danger btn-xs">{{ label('destroy') }}</a>
-                                        </td>
-                                    </tr>
-
+                                    @include('workRecord.pesticide')
                                     </tbody>
                                     <tfoot>
                                     <tr>
@@ -70,7 +62,13 @@
                         </div>
                     @endif
 
-                    {!! BootForm::submit('作成', 'btn-primary') !!}
+                    {{-- 完了チェック --}}
+                    @if($work->use_complete)
+                        {!! BootForm::checkbox(label('workComplete'), 'complete')
+                                ->helpBlock(message('help.workRecordCreate.workComplete')) !!}
+                    @endif
+
+                    {!! BootForm::submit(label('store'), 'btn-primary') !!}
 
                     {!! BootForm::submit('changeForm', 'hidden')
                             ->formaction(route('workRecord.create.changeForm'))->id('change-form-submit') !!}
@@ -81,24 +79,27 @@
         </div>
     </div>
 
-    <div id="pesticide-section" class="hidden">
-        {!! BootForm::open()->post()->action(route('workRecord.store'))->id('pesticide-form') !!}
+    @if($work->use_pest_control)
+        <div id="pesticide-section" class="hidden">
+            {!! BootForm::open()->post()->action(route('workRecord.create.addPesticide'))->id('pesticide-form') !!}
 
-        {!! BootForm::select(label('pesticideName'), 'pesticideId')
-                ->options($pesticideOptions) !!}
+            {!! BootForm::select(label('pesticideName'), 'pesticideId')->options($pesticideOptions) !!}
 
-        {!! BootForm::inputGroup(label('pesticideUsage'), 'usage')->value(1000)
-                ->afterAddon('*')->helpBlock('') !!}
+            {!! BootForm::inputGroup(label('pesticideUsage'), 'pesticideUsage')->afterAddon('*') !!}
 
-        {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', '') !!}
+            {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', 'html')
+            ->id('add-pesticide') !!}
 
-        {!! BootForm::close() !!}
-    </div>
+            {!! BootForm::close() !!}
+        </div>
+    @endif
 @endsection
 
 @section('js')
-    <script>
-        {!! 'var pesticides = ' . $pesticidesJson . ';' !!}
-    </script>
+    @if($work->use_pest_control)
+        <script>
+            {!! 'var pesticides = ' . $pesticidesJson . ';' !!}
+        </script>
+    @endif
     <script src="{{ url('js/workRecord.create.js') }}"></script>
 @endsection

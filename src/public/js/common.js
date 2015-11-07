@@ -18,7 +18,7 @@ $(function () {
  */
 $(function () {
     var stop = false;
-    var button = null;
+    var $button = null;
     var buttonMethod = null;
 
     $(document).on('submit', 'form', function (e) {
@@ -58,30 +58,39 @@ $(function () {
             stop = true;
         }
 
-        if (button.data('ajax') === undefined) {
+        var ajaxDataType = $button.data('ajax');
+        if (ajaxDataType === undefined) {
             return;
         }
 
         $.ajax({
             type: $form.prop('method'),
-            url: $form.prop('action'),
+            url: $button.attr('formaction') || $form.prop('action'),
             data: $form.serialize(),
-            dataType: 'JSON',
+            dataType: ajaxDataType,
             timeout: 30000
         }).done(function (data) {
+            // エラーをリセット
+            $form.trigger('ajax.resetError');
             // カスタムイベントを呼び出し
-            button.trigger('ajax.done', data);
+            $button.trigger('ajax.done', data);
         }).fail(function (xhr) {
             if (xhr.status === 422) {
                 var data = JSON.parse(xhr.responseText);
+                // エラーをリセット
+                $form.trigger('ajax.resetError');
                 // バリデーションエラー
                 Object.keys(data).forEach(function (key) {
                     var $formGroup = $('#' + key).parents('.form-group').addClass('has-error');
-                    $formGroup.find('.help-block').text(data[key]);
+                    var $errorBlock = $('<p>').addClass('help-block ajax-error').text(data[key][0]);
+                    // 既存のヘルプを隠す
+                    $formGroup.find('.help-block').addClass('hidden');
+                    // エラーメッセージを追加
+                    $formGroup.append($errorBlock);
                 });
             }
             // カスタムイベントを呼び出し
-            button.trigger('ajax.fail', xhr);
+            $button.trigger('ajax.fail', xhr);
         }).always(function () {
             // 送信ボタンを有効化
             stop = false;
@@ -92,7 +101,7 @@ $(function () {
     });
 
     $(document).on('click', 'button[type="submit"]', function (e) {
-        button = $(this);
+        $button = $(this);
         var m = $(this).data('method');
 
         if (m === undefined) {
@@ -100,6 +109,15 @@ $(function () {
         } else {
             buttonMethod = m.toLowerCase();
         }
+    });
+
+    /**
+     * Ajaxフォームを元の状態に戻す
+     */
+    $(document).on('ajax.resetError', 'form', function () {
+        $(this).find('.form-group.has-error').removeClass('has-error');
+        $(this).find('.help-block.hidden').removeClass('hidden');
+        $(this).find('.help-block.ajax-error').remove();
     });
 });
 
@@ -174,25 +192,6 @@ $(function () {
 
 $(function () {
     /**
-     * トグルメニューのアイコン
-     */
-    $('[data-toggle="collapse"]').on('click', function () {
-        var removeClass;
-        var addClass;
-
-        if ($(this).attr('aria-expanded') === 'true') {
-            removeClass = 'glyphicon-chevron-down';
-            addClass = 'glyphicon-chevron-up';
-        } else {
-            removeClass = 'glyphicon-chevron-up';
-            addClass = 'glyphicon-chevron-down';
-        }
-
-        $(this).parent().find('.' + removeClass)
-            .removeClass(removeClass).addClass(addClass);
-    });
-
-    /**
      * テキスト表示ダイアログ
      */
     $('[data-dialog-message]').on('click', function (e) {
@@ -227,6 +226,7 @@ $(function () {
             buttons: buttons,
             onhide: function () {
                 $content.append($temp);
+                $content.find('form').trigger('ajax.resetError');
             }
         });
     };
@@ -249,6 +249,9 @@ $(function () {
         showContentDialog($(this).attr('title'), $(this));
     });
 
+    /**
+     * 確認ダイアログ
+     */
     $('[data-confirm]').each(function () {
         var $element = $(this);
         var confirm = false;

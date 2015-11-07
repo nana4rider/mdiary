@@ -29,6 +29,8 @@ return [
     'pesticideName' => '農薬名',
     'pesticideUsage' => '倍率/使用量',
     'workComplete' => '作業完了',
+    'intrarowSpacing' => '株間',
+    'cultivar' => '品種',
 
     // その他
     'all' => '全て',

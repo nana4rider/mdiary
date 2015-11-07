@@ -8,9 +8,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\WorkRecordAddPesticideRequest;
 use App\Models\Crop;
+use App\Models\Pesticide;
 use App\Models\Work;
 use App\Models\WorkField;
+use App\Models\WorkPestControl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -27,11 +30,15 @@ class WorkRecordController extends Controller
      */
     public function create(Request $request)
     {
+        if (empty(old('cropId'))) {
+            session()->forget('workRecord.workPestControls');
+        }
+
         // 作物一覧を取得
         $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
-
         // 未選択の場合、先頭の作物を選択
-        $cropId = $request->session()->getOldInput('cropId') ?: (string)$cropOptions->keys()->first();
+        $cropId = old('cropId') ?: (string)$cropOptions->keys()->first();
+
         // 選択中の作物を取得
         $crop = Crop::find($cropId);
 
@@ -42,22 +49,51 @@ class WorkRecordController extends Controller
         $workOptions = $crop->works()->orderBy('works.display_order')->get()->lists('name', 'id');
 
         // 未選択の場合、先頭の作業を選択
-        $workId = $request->session()->getOldInput('workId') ?: (string)$workOptions->keys()->first();
+        $workId = old('workId') ?: (string)$workOptions->keys()->first();
         // 選択中の作業内容を取得
         $work = Work::find($workId);
 
-        // 作物に紐付く農薬情報を取得
-        $pesticides = $crop->pesticides()->with('unit')->get();
-        $pesticidesJson = $this->createPesticidesJson($pesticides);
-        $pesticideOptions = $pesticides->lists('name', 'id');
+        $viewData = compact('cropOptions', 'workFieldOptions', 'workOptions', 'work');
 
-        return view('workRecord.create', compact(
-            'cropOptions', 'workFieldOptions', 'workOptions', 'work',
-            'pesticides', 'pesticideOptions', 'pesticidesJson'
-        ));
+        // 作物に紐付く農薬情報を取得
+        if ($work->use_pest_control) {
+            $pesticides = $crop->pesticides()->with('unit')->get();
+            $pesticidesJson = $this->createPesticidesJson($pesticides);
+            $pesticideOptions = $pesticides->lists('name', 'id');
+
+            $viewData = array_merge($viewData, compact(
+                'pesticides', 'pesticideOptions', 'pesticidesJson'
+            ));
+        }
+
+        // 作物に紐付く品種を取得
+        if ($work->use_seeding) {
+            $cultivars = $crop->cultivars()->get();
+            $cultivarOptions = $cultivars->lists('name', 'id');
+
+            $viewData = array_merge($viewData, compact('cultivarOptions'));
+        }
+
+        return view('workRecord.create', $viewData);
     }
 
-    private function createPesticidesJson($pesticides)
+    /**
+     * フォームの表示内容を変更
+     *
+     * @param Request $request
+     * @return $this
+     */
+    public
+    function changeForm(Request $request)
+    {
+        // 農薬情報をクリア
+        session()->forget('workRecord.workPestControls');
+
+        return redirect()->back()->withInput($request->all());
+    }
+
+    private
+    function createPesticidesJson($pesticides)
     {
         $array = [];
         foreach ($pesticides as $pesticide) {
@@ -72,18 +108,52 @@ class WorkRecordController extends Controller
     }
 
     /**
-     * フォームの表示内容を変更
+     * 農薬を追加
      *
-     * @param Request $request
-     * @return $this
+     * @param WorkRecordAddPesticideRequest $request
+     * @return \Illuminate\View\View
      */
-    public function changeForm(Request $request)
+    public
+    function addPesticide(WorkRecordAddPesticideRequest $request)
     {
-        return redirect()->back()->withInput($request->all());
+        $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
+
+        $pesticideId = $request->input('pesticideId');
+        unset($sessionWorkPestControls[$pesticideId]);
+
+        $workPestControl = new WorkPestControl();
+        $workPestControl->pesticideId = $pesticideId;
+        $workPestControl->pesticide = Pesticide::findOrFail($pesticideId);
+        $workPestControl->usage = $request->input('pesticideUsage');
+
+        $sessionWorkPestControls[$pesticideId] = $workPestControl;
+        session()->put('workRecord.workPestControls', $sessionWorkPestControls);
+
+        return view('workRecord.pesticide');
     }
 
-    public function store()
+    /**
+     * 農薬を削除
+     *
+     * @param $pesticideId
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public
+    function deletePesticide($pesticideId, Request $request)
     {
-        return new JsonResponse(['usage' => 'world'], 422);
+        $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
+
+        unset($sessionWorkPestControls[$pesticideId]);
+
+        session()->put('workRecord.workPestControls', $sessionWorkPestControls);
+
+        return view('workRecord.pesticide');
+    }
+
+    public
+    function store()
+    {
+        return new JsonResponse(['pesticideId' => 'world'], 422);
     }
 }

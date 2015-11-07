@@ -106,5 +106,6 @@ return [
             'cropIds' => $label['crop'],
             'fieldIds' => $label['workField'],
             'datetimeText' => $label['datetime'],
+            'pesticideId' => $label['pesticideName'],
         ],
 ];
