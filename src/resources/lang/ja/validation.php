@@ -102,14 +102,14 @@ return [
     'attributes' => $label +
         [
             // バリデーション固有のラベルを記述
-            'categoryIds' => $label['category'],
-            'cropId' => $label['crop'],
-            'cropIds' => $label['crop'],
-            'fieldIds' => $label['workField'],
-            'workDiaryIds' => $label['workDiary'],
-            'datetimeInput' => $label['datetime'],
-            'pesticideId' => $label['pesticideName'],
-            'workId' => $label['workContent'],
-            'cultivarId' => $label['cultivar'],
+            'category_ids' => $label['category'],
+            'crop_id' => $label['crop'],
+            'crop_ids' => $label['crop'],
+            'field_ids' => $label['work_field'],
+            'work_diary_ids' => $label['work_diary'],
+            'datetime_input' => $label['datetime'],
+            'pesticide_id' => $label['pesticide_name'],
+            'work_id' => $label['work_content'],
+            'cultivar_id' => $label['cultivar'],
         ],
 ];

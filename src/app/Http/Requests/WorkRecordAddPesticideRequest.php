@@ -16,15 +16,15 @@ class WorkRecordAddPesticideRequest extends Request
         $minUsage = 0;
         $maxUsage = 0;
 
-        if (!empty($this->input('pesticideId'))) {
-            $pesticide = Pesticide::findOrFail($this->input('pesticideId'));
+        if (!empty($this->input('pesticide_id'))) {
+            $pesticide = Pesticide::findOrFail($this->input('pesticide_id'));
             $minUsage = $pesticide->minimum_usage;
             $maxUsage = $pesticide->maximum_usage;
         }
 
         return [
-            'pesticideId' => 'required',
-            'pesticideUsage' => 'required|numeric|between:' . $minUsage . ',' . $maxUsage
+            'pesticide_id' => 'required',
+            'pesticide_usage' => 'required|numeric|between:' . $minUsage . ',' . $maxUsage
         ];
     }
 }

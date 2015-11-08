@@ -14,7 +14,7 @@ class TextDiary extends Model
     use UserInfo;
     use Grouping;
 
-    protected $fillable = ['title', 'body', 'datetimeInput'];
+    protected $fillable = ['title', 'body', 'datetime_input'];
 
     /**
      * カテゴリIDのキャッシュ

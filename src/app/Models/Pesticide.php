@@ -15,4 +15,9 @@ class Pesticide extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function crops()
+    {
+        return $this->belongsToMany(Crop::class);
+    }
 }

@@ -31,8 +31,8 @@ class WorkDiaryController extends Controller
         // 日誌一覧を取得
         $builder = WorkDiary::with('crop', 'workField');
 
-        if (!is_null($request->input('fieldIds'))) {
-            $builder->whereIn('work_field_id', (array)$request->input('fieldIds'));
+        if (!is_null($request->input('field_ids'))) {
+            $builder->whereIn('work_field_id', (array)$request->input('field_ids'));
         }
 
         if (is_null($request->input('archive'))) {
@@ -102,12 +102,12 @@ class WorkDiaryController extends Controller
     {
         $errors = [];
         DB::transaction(function () use ($request, &$errors) {
-            $fieldIds = (array)$request->input('fieldIds');
+            $fieldIds = (array)$request->input('field_ids');
             $workFields = WorkField::whereIn('id', $fieldIds)->lockForUpdate()->get();
 
             if (!WorkField::whereIn('id', $fieldIds)->hasActiveDiary()->get()->isEmpty()) {
                 // 編集中日誌のある圃場が選択されている
-                $errors['fieldIds'] = message('othersUpdate');
+                $errors['field_ids'] = message('others_update');
                 DB::rollBack();
                 return;
             }
@@ -116,7 +116,7 @@ class WorkDiaryController extends Controller
             foreach ($workFields as $workField) {
                 // 日誌を作成
                 $workDiary = new WorkDiary();
-                $workDiary->crop_id = $request->get('cropId');
+                $workDiary->crop_id = $request->get('crop_id');
                 $workDiary->work_field_id = $workField->id;
                 $workDiary->archive = false;
                 $workDiary->fill($request->all());

@@ -7,11 +7,11 @@
                 <div class="panel-body">
                     {!! BootForm::open()->post()->action(route('workDiary.store')) !!}
 
-                    {!! BootForm::select(label('crop'), 'cropId')->options($cropOptions) !!}
+                    {!! BootForm::select(label('crop'), 'crop_id')->options($cropOptions) !!}
 
-                    {!! BootForm::select(label('workField'), 'fieldIds')
+                    {!! BootForm::select(label('work_field'), 'field_ids')
                             ->options($workFieldOptions)->multiple()
-                            ->helpBlock(nl2br(message('help.workDiaryCreate.field'))) !!}
+                            ->helpBlock(nl2br(message('help.work_diary_create.field'))) !!}
 
                     {!! BootForm::textarea(label('remarks'), 'remarks')->rows(config('const.remarks_rows')) !!}
 

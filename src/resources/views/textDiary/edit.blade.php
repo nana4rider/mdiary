@@ -9,26 +9,26 @@
 
                     {!! BootForm::bind($textDiary) !!}
 
-                    {!! BootForm::text(label('datetime'), 'datetimeInput')->type('datetime-local') !!}
+                    {!! BootForm::text(label('datetime'), 'datetime_input')->type('datetime-local') !!}
 
                     {!! BootForm::text(label('title'), 'title') !!}
 
                     {!! BootForm::textarea(label('body'), 'body')->rows(config('const.text_diary_body_rows')) !!}
-                    {!! BootForm::select(label('category'), 'categoryIds')
+                    {!! BootForm::select(label('category'), 'category_ids')
                             ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple()
-                            ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.textDiaryEdit.picture')) !!}
+                            ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.text_diary_edit.picture')) !!}
 
                     <div class="row form-group" id="flickr-img">
                         @foreach($textDiary->flickrs as $flickr)
-                            @if(!Session::hasOldInput('flickrIds') || in_array($flickr->id, Session::getOldInput('flickrIds')))
+                            @if(!Session::hasOldInput('flickr_ids') || in_array($flickr->id, Session::getOldInput('flickr_ids')))
                                 <div class="col-md-3">
                                     <a href="#" data-confirm="{{ message('confirm.delete') }}" class="thumbnail">
-                                        <img src="{{ $flickr->thumbnailUrl }}"
+                                        <img src="{{ $flickr->thumbnail_url }}"
                                              alt="{{ $textDiary->title }}">
                                     </a>
-                                    <input type="hidden" name="flickrIds[]" value="{{ $flickr->id }}">
+                                    <input type="hidden" name="flickr_ids[]" value="{{ $flickr->id }}">
                                 </div>
                             @endif
                         @endforeach

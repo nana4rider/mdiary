@@ -21,7 +21,7 @@
 
                     <div class="form-group">
                         <label class="control-label">
-                            {{ label('workField') }}
+                            {{ label('work_field') }}
                         </label>
 
                         <p class="form-control-static">
@@ -31,10 +31,10 @@
 
                     {!! BootForm::textarea(label('remarks'), 'remarks')->rows(config('const.remarks_rows')) !!}
 
-                    {!! BootForm::checkbox(message('updateArchive'), 'archive')->id('update-archive') !!}
+                    {!! BootForm::checkbox(message('update_archive'), 'archive')->id('update-archive') !!}
 
                     {!! BootForm::submit(label('update'), 'btn-primary')
-                        ->data('confirm', message('confirm.workDiaryArchive'))
+                        ->data('confirm', message('confirm.work_diary_archive'))
                         ->data('dialog-type', 'danger')->id('btn-update') !!}
 
                     {!! BootForm::close() !!}
@@ -46,5 +46,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ url('workDiary.edit.js') }}"></script>
+    <script src="{{ url('js/workDiary.edit.js') }}"></script>
 @endsection

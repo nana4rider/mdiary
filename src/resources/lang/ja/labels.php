@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'appName' => 'mDiary',
+    'app_name' => 'mDiary',
+    'copyright' => '&copy; 2015 Shunichiro Aki.',
 
     // 固有名詞
     'google' => 'Google',
@@ -17,19 +18,19 @@ return [
     'category' => 'カテゴリ',
     'picture' => '写真',
     'crop' => '作物',
-    'workField' => '圃場',
-    'workDiary' => '作業日誌',
-    'workRecord' => '作業記録',
+    'work_field' => '圃場',
+    'work_diary' => '作業日誌',
+    'work_record' => '作業記録',
     'remarks' => '備考',
     'archive' => 'アーカイブ',
     'archived' => 'アーカイブ済み',
-    'createDate' => '作成日時',
-    'workContent' => '作業内容',
+    'create_date' => '作成日時',
+    'work_content' => '作業内容',
     'pesticide' => '農薬',
-    'pesticideName' => '農薬名',
-    'pesticideUsage' => '倍率/使用量',
-    'workComplete' => '作業完了',
-    'intrarowSpacing' => '株間',
+    'pesticide_name' => '農薬名',
+    'pesticide_usage' => '倍率/使用量',
+    'work_complete' => '作業完了',
+    'intrarow_spacing' => '株間',
     'cultivar' => '品種',
 
     // その他
@@ -47,11 +48,11 @@ return [
     'destroy' => '削除',
     'search' => '検索',
     'add' => '追加',
-    'inputRepeat' => '続けて入力',
+    'input_repeat' => '続けて入力',
 
     // メニュー
     'menu' => [
-        'textDiary' => '日記',
+        'text_diary' => '日記',
         'work' => '作業',
         'aggregate' => '集計',
     ],
@@ -61,25 +62,25 @@ return [
         'login' => 'ログイン',
         'logout' => 'ログアウト',
         'home' => 'ホーム',
-        'textDiary' => [
+        'text_diary' => [
             'create' => '日記を書く',
             'edit' => '日記を編集',
             'index' => '日記を見る',
         ],
-        'workDiary' => [
+        'work_diary' => [
             'create' => '作業日誌を作成',
             'edit' => '作業日誌を編集',
             'index' => '作業日誌を見る',
             'show' => '作業日誌詳細',
         ],
-        'workRecord' => [
+        'work_record' => [
             'create' => '作業記録を作成',
             'edit' => '作業記録を編集',
             'index' => '作業記録を見る',
         ],
         'aggregate' => [
-            'workField' => '場所ごとの集計',
-            'workDiary' => '作業日誌の集計',
+            'work_field' => '場所ごとの集計',
+            'work_diary' => '作業日誌の集計',
         ],
     ],
 ];

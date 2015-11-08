@@ -70,12 +70,13 @@ class TextDiaryController extends Controller
             $textDiary->save();
 
             // カテゴリ紐付け
-            $textDiary->textDiaryCategories()->attach($request->input('categoryIds'));
+            $textDiary->textDiaryCategories()->attach($request->input('category_ids'));
         });
 
         // Flickerにアップロード
         if (!empty($request->file('picture')[0])) {
-            $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
+            $this->dispatch(new TextDiaryPictureUploader($textDiary->id,
+                $request->file('picture'), $request->input('title')));
         }
 
         return redirect()->route('textDiary.index')->with('complete', 'post');
@@ -109,11 +110,11 @@ class TextDiaryController extends Controller
             $textDiary->save();
 
             // カテゴリ紐付け
-            $textDiary->textDiaryCategories()->sync($request->input('categoryIds'));
+            $textDiary->textDiaryCategories()->sync($request->input('category_ids'));
 
             // Flickr紐付け更新
-            if ($request->has('flickrIds')) {
-                $textDiary->flickrs()->sync($request->input('flickrIds'));
+            if ($request->has('flickr_ids')) {
+                $textDiary->flickrs()->sync($request->input('flickr_ids'));
             } else {
                 $textDiary->flickrs()->detach();
             }
@@ -121,7 +122,8 @@ class TextDiaryController extends Controller
 
         // Flickerにアップロード
         if (!empty($request->file('picture')[0])) {
-            $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
+            $this->dispatch(new TextDiaryPictureUploader($textDiary->id,
+                $request->file('picture'), $request->input('title')));
         }
 
         return redirect()->route('textDiary.index')->with('complete', 'update');

@@ -14,7 +14,7 @@ class WorkRecord extends Model
     use UserInfo;
     use Grouping;
 
-    protected $fillable = ['datetimeInput'];
+    protected $fillable = ['datetime_input'];
 
     protected $dates = ['datetime'];
 

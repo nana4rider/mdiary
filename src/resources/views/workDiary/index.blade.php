@@ -9,11 +9,11 @@
 
                     {!! BootForm::bind($data) !!}
 
-                    {!! BootForm::select(label('workField'), 'fieldIds')
+                    {!! BootForm::select(label('work_field'), 'field_ids')
                             ->options($workFieldOptions)->multiple()
-                            ->helpBlock(nl2br(message('help.workDiaryIndex.field')))!!}
+                            ->helpBlock(nl2br(message('help.work_diary_index.field')))!!}
 
-                    {!! BootForm::checkbox(message('workDiaryWithArchive'), 'archive') !!}
+                    {!! BootForm::checkbox(message('work_diary_with_archive'), 'archive') !!}
 
                     {!! BootForm::submit(label('search'), 'btn-primary') !!}
 
@@ -28,9 +28,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ label('createDate') }}</th>
+                            <th>{{ label('create_date') }}</th>
                             <th>{{ label('crop') }}</th>
-                            <th>{{ label('workField') }}</th>
+                            <th>{{ label('work_field') }}</th>
                             <th>{{ label('archive') }}</th>
                             <th>{{ label('action') }}</th>
                         </tr>
@@ -74,7 +74,7 @@
 
             <nav class="text-center">
                 {!! $workDiaries->appends([
-                    'fieldIds' => Request::get('fieldIds'),
+                    'field_ids' => Request::get('field_ids'),
                     'archive' => Request::get('archive')
                 ])->render() !!}
             </nav>

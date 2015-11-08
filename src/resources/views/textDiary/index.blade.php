@@ -14,7 +14,8 @@
                             <small>
                                 {{ label('posted') }}: {{ $textDiary->datetime->format(config('format.datetime')) }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
-                                    <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}"
+                                    <a href="{{ route('textDiary.index') . '?' .
+                                                http_build_query(['category' => $category->id]) }}"
                                        class="no-underline">
                                         <span class="label label-primary">{{ $category->name }}</span>
                                     </a>
@@ -40,7 +41,8 @@
                             @endforeach
                         </div>
 
-                        {!! BootForm::open()->get()->action(route('textDiary.edit', ['id' => $textDiary->id]))->class('form-inline') !!}
+                        {!! BootForm::open()->get()->action(route('textDiary.edit', ['id' => $textDiary->id]))
+                                ->class('form-inline') !!}
 
                         {!! BootForm::submit(label('edit'), 'btn-primary btn-sm') !!}
 
@@ -74,7 +76,8 @@
                     </a>
                     @foreach($categories as $category)
                         <a class="list-group-item{{ Request::get('category') == $category->id ? ' active' : '' }}"
-                           href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}">
+                           href="{{ route('textDiary.index') . '?' .
+                                    http_build_query(['category' => $category->id]) }}">
                             {{ $category->name }}
                         </a>
                     @endforeach

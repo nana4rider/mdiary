@@ -14,7 +14,7 @@
                     @endif
                     <div class="form-group">
                         <label class="control-label">
-                            {{ label('createDate') }}
+                            {{ label('create_date') }}
                         </label>
 
                         <p class="form-control-static">
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">
-                            {{ label('workField') }}
+                            {{ label('work_field') }}
                         </label>
 
                         <p class="form-control-static">

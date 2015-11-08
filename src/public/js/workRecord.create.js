@@ -3,16 +3,16 @@ $(function () {
         $('#change-form-submit').trigger('click');
     });
 
-    var $pesticideId = $('#pesticideId');
+    var $pesticideId = $('#pesticide_id');
 
     $pesticideId.on('change', function () {
         var index = $pesticideId.prop('selectedIndex');
         var pesticide = window['pesticides'][index];
-        var $pesticideUsage = $('#pesticideUsage');
+        var $pesticideUsage = $('#pesticide_usage');
         var $formGroup = $pesticideUsage.parents('.form-group');
 
-        $pesticideUsage.val(pesticide['minimumUsage']);
-        $formGroup.find('.input-group-addon').text(pesticide['unitName']);
+        $pesticideUsage.val(pesticide['minimum_usage']);
+        $formGroup.find('.input-group-addon').text(pesticide['unit_name']);
     });
 
     $pesticideId.trigger('change');

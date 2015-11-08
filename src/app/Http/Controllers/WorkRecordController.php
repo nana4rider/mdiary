@@ -16,7 +16,6 @@ use App\Models\Work;
 use App\Models\WorkDiary;
 use App\Models\WorkPestControl;
 use App\Models\WorkRecord;
-use App\Models\WorkSeeding;
 use DB;
 use Illuminate\Http\Request;
 
@@ -34,14 +33,14 @@ class WorkRecordController extends Controller
      */
     public function create()
     {
-        if (empty(old('cropId'))) {
-            session()->forget('workRecord.workPestControls');
+        if (empty(old('crop_id'))) {
+            session()->forget('workRecord.pesticides');
         }
 
         // 作物一覧を取得
         $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
         // 未選択の場合、先頭の作物を選択
-        $cropId = old('cropId') ?: (string)$cropOptions->keys()->first();
+        $cropId = old('crop_id') ?: (string)$cropOptions->keys()->first();
 
         // 選択中の作物を取得
         $crop = Crop::findOrFail($cropId);
@@ -54,7 +53,7 @@ class WorkRecordController extends Controller
         $workOptions = $crop->works()->orderBy('works.display_order')->get()->lists('name', 'id');
 
         // 未選択の場合、先頭の作業を選択
-        $workId = old('workId') ?: (string)$workOptions->keys()->first();
+        $workId = old('work_id') ?: (string)$workOptions->keys()->first();
         // 選択中の作業内容を取得
         $work = Work::findOrFail($workId);
 
@@ -88,7 +87,7 @@ class WorkRecordController extends Controller
     public function changeForm(Request $request)
     {
         // 農薬情報をクリア
-        session()->forget('workRecord.workPestControls');
+        session()->forget('workRecord.pesticides');
 
         return redirect()->back()->withInput($request->all());
     }
@@ -97,12 +96,12 @@ class WorkRecordController extends Controller
     {
         $array = [];
         foreach ($pesticides as $pesticide) {
-            $name = $pesticide->name;
-            $minimumUsage = $pesticide->minimum_usage;
-            $maximumUsage = $pesticide->maximum_usage;
-            $unitName = $pesticide->unit->name;
-
-            $array[] = compact('name', 'minimumUsage', 'maximumUsage', 'unitName');
+            $array[] = [
+                'name' => $pesticide->name,
+                'minimum_usage' => $pesticide->minimum_usage,
+                'maximum_usage' => $pesticide->maximum_usage,
+                'unit_name' => $pesticide->unit->name,
+            ];
         }
         return json_encode($array);
     }
@@ -115,18 +114,19 @@ class WorkRecordController extends Controller
      */
     public function addPesticide(WorkRecordAddPesticideRequest $request)
     {
-        $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
+        $sessionPesticides = session()->get('workRecord.pesticides', collect());
 
-        $pesticideId = $request->input('pesticideId');
-        unset($sessionWorkPestControls[$pesticideId]);
+        $pesticideId = $request->input('pesticide_id');
+        $pesticide = Pesticide::findOrFail($pesticideId);
 
-        $workPestControl = new WorkPestControl();
-        $workPestControl->pesticideId = $pesticideId;
-        $workPestControl->pesticide = Pesticide::findOrFail($pesticideId);
-        $workPestControl->usage = $request->input('pesticideUsage');
+        $sessionPesticides->put($pesticideId, collect([
+            'pesticide_id' => $pesticideId,
+            'usage' => $request->input('pesticide_usage'),
+            'pesticide_name' => $pesticide->name,
+            'unit_name' => $pesticide->unit->name
+        ]));
 
-        $sessionWorkPestControls[$pesticideId] = $workPestControl;
-        session()->put('workRecord.workPestControls', $sessionWorkPestControls);
+        session()->put('workRecord.pesticides', $sessionPesticides);
 
         return view('workRecord.pesticide');
     }
@@ -135,16 +135,15 @@ class WorkRecordController extends Controller
      * 農薬削除
      *
      * @param $pesticideId
-     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function deletePesticide($pesticideId, Request $request)
+    public function deletePesticide($pesticideId)
     {
-        $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
+        $sessionPesticides = session()->get('workRecord.pesticides', collect());
 
-        unset($sessionWorkPestControls[$pesticideId]);
+        $sessionPesticides->forget($pesticideId);
 
-        session()->put('workRecord.workPestControls', $sessionWorkPestControls);
+        session()->put('workRecord.pesticides', $sessionPesticides);
 
         return view('workRecord.pesticide');
     }
@@ -159,9 +158,9 @@ class WorkRecordController extends Controller
     {
         $errors = [];
         DB::transaction(function () use ($request, &$errors) {
-            $workId = $request->input('workId');
-            $cropId = $request->input('cropId');
-            $workDiaryIds = (array)$request->input('workDiaryIds');
+            $workId = $request->input('work_id');
+            $cropId = $request->input('crop_id');
+            $workDiaryIds = (array)$request->input('work_diary_ids');
 
             $work = Work::findOrFail($workId);
             $workDiaries = WorkDiary::whereIn('id', $workDiaryIds)->lockForUpdate()->get();
@@ -170,7 +169,7 @@ class WorkRecordController extends Controller
                     ->where('archive', false)->count()
             ) {
                 // 不正な作業日誌が選択されている
-                $errors['workDiaryIds'] = message('othersUpdate');
+                $errors['work_diary_ids'] = message('others_update');
                 DB::rollBack();
                 return;
             }
@@ -187,9 +186,35 @@ class WorkRecordController extends Controller
             if ($work->use_seeding) {
                 $workSeeding = new WorkSeeding();
                 $workSeeding->work_record_id = $workRecord->id;
-                $workSeeding->cultivar_id = $request->input('cultivarId');
+                $workSeeding->cultivar_id = $request->input('cultivar_id');
                 $workSeeding->fill($request->all());
                 $workSeeding->save();
+            }
+
+            // 防除記録
+            if ($work->use_pest_control) {
+                $sessionPesticides = session()->get('workRecord.pesticides');
+
+                $pesticideIds = $sessionPesticides->keys();
+                $pesticides = Pesticide::whereIn('id', $pesticideIds)
+                    ->whereHas('crops', function ($query) use ($cropId) {
+                        $query->where('crop_id', $cropId);
+                    });
+
+                if ($pesticideIds->count() !== $pesticides->count()) {
+                    // 農薬の選択が不正
+                    $errors['pesticide'] = message('others_update');
+                    DB::rollBack();
+                    return;
+                }
+
+                foreach ($sessionPesticides as $sessionPesticide) {
+                    $workPestControl = new WorkPestControl();
+                    $workPestControl->work_record_id = $workRecord->id;
+                    $workPestControl->pesticide_id = $sessionPesticide->get('pesticide_id');
+                    $workPestControl->usage = $sessionPesticide->get('usage');
+                    $workPestControl->save();
+                }
             }
         });
 

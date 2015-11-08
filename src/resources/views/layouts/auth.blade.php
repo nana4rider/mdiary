@@ -1,10 +1,10 @@
 @extends('layouts.master')
 
-@section('title', label('route.' . Route::currentRouteName()))
+@section('title', label('route.' . snake_case(Route::currentRouteName())))
 
 @section('header')
     <div class="navbar-header">
-        <a class="navbar-brand" href="{{ url() }}">{{ label('appName') }}</a>
+        <a class="navbar-brand" href="{{ url() }}">{{ label('app_name') }}</a>
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -19,11 +19,11 @@
 
             <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('menu.textDiary') }} <span class="caret"></span>
+                    {{ label('menu.text_diary') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('textDiary.create') }}">{{ label('route.textDiary.create') }}</a></li>
-                    <li><a href="{{ route('textDiary.index') }}">{{ label('route.textDiary.index') }}</a></li>
+                    <li><a href="{{ route('textDiary.create') }}">{{ label('route.text_diary.create') }}</a></li>
+                    <li><a href="{{ route('textDiary.index') }}">{{ label('route.text_diary.index') }}</a></li>
                 </ul>
             </li>
 
@@ -32,10 +32,10 @@
                     {{ label('menu.work') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('workDiary.create') }}">{{ label('route.workDiary.create') }}</a></li>
-                    <li><a href="{{ route('workDiary.index') }}">{{ label('route.workDiary.index') }}</a></li>
-                    <li><a href="{{ route('workRecord.create') }}">{{ label('route.workRecord.create') }}</a></li>
-                    <li><a href="{{ route('workRecord.index') }}">{{ label('route.workRecord.index') }}</a></li>
+                    <li><a href="{{ route('workDiary.create') }}">{{ label('route.work_diary.create') }}</a></li>
+                    <li><a href="{{ route('workDiary.index') }}">{{ label('route.work_diary.index') }}</a></li>
+                    <li><a href="{{ route('workRecord.create') }}">{{ label('route.work_record.create') }}</a></li>
+                    <li><a href="{{ route('workRecord.index') }}">{{ label('route.work_record.index') }}</a></li>
                 </ul>
             </li>
 
@@ -44,8 +44,8 @@
                     {{ label('menu.aggregate') }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('aggregate.workField') }}">{{ label('route.aggregate.workField') }}</a></li>
-                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('route.aggregate.workDiary') }}</a></li>
+                    <li><a href="{{ route('aggregate.workField') }}">{{ label('route.aggregate.work_field') }}</a></li>
+                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('route.aggregate.work_diary') }}</a></li>
                 </ul>
             </li>
         </ul>

@@ -12,8 +12,8 @@ class WorkDiaryStoreRequest extends Request
     public function rules()
     {
         return [
-            'cropId' => 'required',
-            'fieldIds' => 'required',
+            'crop_id' => 'required',
+            'field_ids' => 'required',
             'remarks' => 'max:1000'
         ];
     }

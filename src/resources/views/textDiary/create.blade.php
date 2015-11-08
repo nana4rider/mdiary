@@ -7,13 +7,13 @@
                 <div class="panel-body">
                     {!! BootForm::open()->post()->action(route('textDiary.store'))->multipart() !!}
 
-                    {!! BootForm::text(label('datetime'), 'datetimeInput')->type('datetime-local') !!}
+                    {!! BootForm::text(label('datetime'), 'datetime_input')->type('datetime-local') !!}
 
                     {!! BootForm::text(label('title'), 'title') !!}
 
                     {!! BootForm::textarea(label('body'), 'body')->rows(config('const.text_diary_body_rows')) !!}
 
-                    {!! BootForm::select(label('category'), 'categoryIds')
+                    {!! BootForm::select(label('category'), 'category_ids')
                             ->options($categoryOptions)->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple() !!}
