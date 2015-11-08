@@ -9,12 +9,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WorkRecordAddPesticideRequest;
+use App\Http\Requests\WorkRecordStoreRequest;
 use App\Models\Crop;
 use App\Models\Pesticide;
 use App\Models\Work;
-use App\Models\WorkField;
+use App\Models\WorkDiary;
 use App\Models\WorkPestControl;
-use Illuminate\Http\JsonResponse;
+use App\Models\WorkRecord;
+use App\Models\WorkSeeding;
+use DB;
 use Illuminate\Http\Request;
 
 class WorkRecordController extends Controller
@@ -25,10 +28,11 @@ class WorkRecordController extends Controller
     }
 
     /**
-     * @param Request $request
+     * 作成画面
+     *
      * @return \Illuminate\View\View
      */
-    public function create(Request $request)
+    public function create()
     {
         if (empty(old('cropId'))) {
             session()->forget('workRecord.workPestControls');
@@ -43,7 +47,8 @@ class WorkRecordController extends Controller
         $crop = Crop::findOrFail($cropId);
 
         // 編集中の日誌がある圃場一覧を取得
-        $workFieldOptions = WorkField::hasActiveDiary($cropId)->orderBy('display_order')->get()->lists('name', 'id');
+        $workDiaryOptions = WorkDiary::with('workField')->where('archive', false)->where('crop_id', $cropId)
+            ->get()->sortBy('workField.display_order')->lists('name', 'id');
 
         // 作物に紐付く作業内容を取得
         $workOptions = $crop->works()->orderBy('works.display_order')->get()->lists('name', 'id');
@@ -53,17 +58,14 @@ class WorkRecordController extends Controller
         // 選択中の作業内容を取得
         $work = Work::findOrFail($workId);
 
-        $viewData = compact('cropOptions', 'workFieldOptions', 'workOptions', 'work');
+        $viewData = compact('cropOptions', 'workDiaryOptions', 'workOptions', 'work');
 
         // 作物に紐付く農薬情報を取得
         if ($work->use_pest_control) {
             $pesticides = $crop->pesticides()->with('unit')->get();
-            $pesticidesJson = $this->createPesticidesJson($pesticides);
-            $pesticideOptions = $pesticides->lists('name', 'id');
-
-            $viewData = array_merge($viewData, compact(
-                'pesticides', 'pesticideOptions', 'pesticidesJson'
-            ));
+            $viewData['pesticides'] = $pesticides;
+            $viewData['pesticidesJson'] = $this->createPesticidesJson($pesticides);
+            $viewData['pesticideOptions'] = $pesticides->lists('name', 'id');
         }
 
         // 作物に紐付く品種を取得
@@ -83,8 +85,7 @@ class WorkRecordController extends Controller
      * @param Request $request
      * @return $this
      */
-    public
-    function changeForm(Request $request)
+    public function changeForm(Request $request)
     {
         // 農薬情報をクリア
         session()->forget('workRecord.workPestControls');
@@ -92,8 +93,7 @@ class WorkRecordController extends Controller
         return redirect()->back()->withInput($request->all());
     }
 
-    private
-    function createPesticidesJson($pesticides)
+    private function createPesticidesJson($pesticides)
     {
         $array = [];
         foreach ($pesticides as $pesticide) {
@@ -108,13 +108,12 @@ class WorkRecordController extends Controller
     }
 
     /**
-     * 農薬を追加
+     * 農薬追加
      *
      * @param WorkRecordAddPesticideRequest $request
      * @return \Illuminate\View\View
      */
-    public
-    function addPesticide(WorkRecordAddPesticideRequest $request)
+    public function addPesticide(WorkRecordAddPesticideRequest $request)
     {
         $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
 
@@ -133,14 +132,13 @@ class WorkRecordController extends Controller
     }
 
     /**
-     * 農薬を削除
+     * 農薬削除
      *
      * @param $pesticideId
      * @param Request $request
      * @return \Illuminate\View\View
      */
-    public
-    function deletePesticide($pesticideId, Request $request)
+    public function deletePesticide($pesticideId, Request $request)
     {
         $sessionWorkPestControls = session()->get('workRecord.workPestControls', []);
 
@@ -151,9 +149,54 @@ class WorkRecordController extends Controller
         return view('workRecord.pesticide');
     }
 
-    public
-    function store()
+    /**
+     * 作成処理
+     *
+     * @param WorkRecordStoreRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(WorkRecordStoreRequest $request)
     {
-        return new JsonResponse(['pesticideId' => 'world'], 422);
+        $errors = [];
+        DB::transaction(function () use ($request, &$errors) {
+            $workId = $request->input('workId');
+            $cropId = $request->input('cropId');
+            $workDiaryIds = (array)$request->input('workDiaryIds');
+
+            $work = Work::findOrFail($workId);
+            $workDiaries = WorkDiary::whereIn('id', $workDiaryIds)->lockForUpdate()->get();
+
+            if ($workDiaries->count() !== $workDiaries->where('crop_id', $cropId)
+                    ->where('archive', false)->count()
+            ) {
+                // 不正な作業日誌が選択されている
+                $errors['workDiaryIds'] = message('othersUpdate');
+                DB::rollBack();
+                return;
+            }
+
+            // 作業記録登録
+            $workRecord = new WorkRecord();
+            $workRecord->fill($request->all());
+            $workRecord->work_id = $workId;
+            // use_complete=falseの場合は常にtrue
+            $workRecord->complete = !$work->use_complete || $request->has('complete');
+            $workRecord->save();
+
+            // 播種/定植記録
+            if ($work->use_seeding) {
+                $workSeeding = new WorkSeeding();
+                $workSeeding->work_record_id = $workRecord->id;
+                $workSeeding->cultivar_id = $request->input('cultivarId');
+                $workSeeding->fill($request->all());
+                $workSeeding->save();
+            }
+        });
+
+        if (!empty($errors)) {
+            return redirect()->back()->withInput($request->all())->withErrors($errors);
+        }
+
+        return redirect()->route('workRecord.index')->with('complete', 'store');
     }
 }

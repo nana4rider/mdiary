@@ -12,11 +12,11 @@
                     {!! BootForm::select(label('crop'), 'cropId')->options($cropOptions)
                             ->data('change-form-create', '') !!}
 
-                    {!! BootForm::select(label('workField'), 'fieldIds')
-                            ->options($workFieldOptions)->multiple()
-                            ->helpBlock(nl2br(message('help.workRecordCreate.field'))) !!}
+                    {!! BootForm::select(label('workDiary'), 'workDiaryIds')
+                            ->options($workDiaryOptions)->multiple()
+                            ->helpBlock(message('help.workRecordCreate.workDiary')) !!}
 
-                    {!! BootForm::select(label('work'), 'workId')
+                    {!! BootForm::select(label('workContent'), 'workId')
                             ->options($workOptions)
                             ->data('change-form-create', '') !!}
 
@@ -30,7 +30,7 @@
 
                     {{-- 農薬 --}}
                     @if($work->use_pest_control)
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('pesticide') ? ' has-error' : '' }}">
                             <label class="control-label">{{ label('pesticide') }}</label>
 
                             <div class="form-control-static">
@@ -60,6 +60,9 @@
                                     </tfoot>
                                 </table>
                             </div>
+                            @if($errors->has('pesticide'))
+                                <p class="help-block">{{ $errors->first('pesticide') }}</p>
+                            @endif
                         </div>
                     @endif
 

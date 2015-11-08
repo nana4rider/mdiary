@@ -46,3 +46,7 @@ footer {
 .no-underline:hover {
     text-decoration: none !important;
 }
+
+.form-control-static > table {
+    margin-bottom: 0;
+}

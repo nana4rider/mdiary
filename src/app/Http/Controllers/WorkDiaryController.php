@@ -20,6 +20,7 @@ class WorkDiaryController extends Controller
 {
     /**
      * 一覧表示
+     *
      * @param Request $request
      * @return \Illuminate\View\View
      */
@@ -48,6 +49,7 @@ class WorkDiaryController extends Controller
 
     /**
      * 詳細画面
+     *
      * @param WorkDiary $workDiary
      * @return \Illuminate\View\View
      */
@@ -58,6 +60,7 @@ class WorkDiaryController extends Controller
 
     /**
      * 編集画面
+     *
      * @param WorkDiary $workDiary
      * @return \Illuminate\View\View
      */
@@ -76,6 +79,7 @@ class WorkDiaryController extends Controller
 
     /**
      * 作成画面
+     *
      * @return \Illuminate\View\View
      */
     public function create()
@@ -90,6 +94,7 @@ class WorkDiaryController extends Controller
 
     /**
      * 作成処理
+     *
      * @param WorkDiaryStoreRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -128,6 +133,7 @@ class WorkDiaryController extends Controller
 
     /**
      * 更新処理
+     *
      * @param WorkDiary $workDiary
      * @param WorkDiaryUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse

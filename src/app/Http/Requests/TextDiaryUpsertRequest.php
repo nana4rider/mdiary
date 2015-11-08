@@ -52,6 +52,6 @@ class TextDiaryUpsertRequest extends Request
 
     protected function getPictureKeys()
     {
-        return array_keys($this->files->all()['picture']);
+        return array_keys((array)$this->files->all()['picture']);
     }
 }

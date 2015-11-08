@@ -19,6 +19,7 @@ class TextDiaryController extends Controller
 {
     /**
      * 一覧表示
+     *
      * @param Request $request
      * @return \Illuminate\View\View
      */
@@ -43,6 +44,7 @@ class TextDiaryController extends Controller
 
     /**
      * 作成画面
+     *
      * @return \Illuminate\View\View
      */
     public function create()
@@ -54,6 +56,7 @@ class TextDiaryController extends Controller
 
     /**
      * 作成処理
+     *
      * @param TextDiaryUpsertRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -75,11 +78,12 @@ class TextDiaryController extends Controller
             $this->dispatch(new TextDiaryPictureUploader($textDiary->id, $request->file('picture'), $request->input('title')));
         }
 
-        return redirect()->back()->with('newEntity', $textDiary);
+        return redirect()->route('textDiary.index')->with('complete', 'post');
     }
 
     /**
      * 編集画面
+     *
      * @param TextDiary $textDiary
      * @return \Illuminate\View\View
      */
@@ -92,6 +96,7 @@ class TextDiaryController extends Controller
 
     /**
      * 更新処理
+     *
      * @param TextDiary $textDiary
      * @param TextDiaryUpsertRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -124,6 +129,7 @@ class TextDiaryController extends Controller
 
     /**
      * 削除処理
+     *
      * @param TextDiary $textDiary
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */

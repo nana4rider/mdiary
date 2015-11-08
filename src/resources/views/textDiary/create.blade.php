@@ -1,24 +1,6 @@
 @extends('layouts.auth')
 
 @section('content')
-    @if(Session::has('newEntity'))
-        <div data-dialog-onload class="hidden">
-            <p>
-                {{ message('complete', ['name' => 'post']) }}
-            </p>
-
-            {!! BootForm::open()->get() !!}
-
-            {!! BootForm::submit(label('route.textDiary.index'))->formaction(route('textDiary.index')) !!}
-
-            {!! BootForm::submit(label('edit'))->formaction(route('textDiary.edit', ['id' => Session::get('newEntity')->id])) !!}
-
-            {!! BootForm::button(label('inputRepeat'), null, 'btn-primary')->data('dismiss', 'modal') !!}
-
-            {!! BootForm::close() !!}
-        </div>
-    @endif
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">

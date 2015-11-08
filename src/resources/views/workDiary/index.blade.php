@@ -28,7 +28,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ label('create_date') }}</th>
+                            <th>{{ label('createDate') }}</th>
                             <th>{{ label('crop') }}</th>
                             <th>{{ label('workField') }}</th>
                             <th>{{ label('archive') }}</th>

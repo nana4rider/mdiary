@@ -15,7 +15,12 @@ class WorkDiary extends Model
 
     protected $fillable = ['remarks'];
 
-    protected $date = ['created_at'];
+    protected $casts = ['archive' => 'boolean'];
+
+    public function getNameAttribute()
+    {
+        return sprintf('%s (%s)', $this->workField->name, $this->created_at->format(config('format.date')));
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

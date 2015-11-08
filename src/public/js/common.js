@@ -28,6 +28,8 @@ $(function () {
             || (buttonMethod === null && $form.prop('method') === 'get')) {
             // トークンとメソッド送信を無効化
             $form.children('input[name="_token"]').attr('disabled', true);
+        } else {
+            $form.children('input[name="_token"]').attr('disabled', false);
         }
 
         /*
@@ -126,7 +128,7 @@ $(function () {
  */
 $(function () {
     if ($.browser.android || $.browser.iphone || $.browser.ipad) {
-        $('select').css('visibility', 'visible');
+        $('select').css('visibility', 'visible').prop('size', 3);
     } else {
         /**
          * セレクトボックスのUI変更
@@ -196,7 +198,12 @@ $(function () {
         $(this).after($send);
 
         $(this).on("dp.change", function () {
-            $send.val(moment($(this).val(), format).format(w3cFormat));
+            var val = $(this).val();
+            if (val === '') {
+                $send.val('');
+            } else {
+                $send.val(moment(val, format).format(w3cFormat));
+            }
         }).trigger('dp.change');
     });
 });

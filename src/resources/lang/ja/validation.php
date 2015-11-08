@@ -30,7 +30,7 @@ return [
     'boolean' => ':attributeはtrueかfalseにしてください。',
     'confirmed' => ':attributeは確認用項目と一致していません。',
     'date' => ':attributeは正しい日付ではありません。',
-    'date_format' => ':attributeは":format"書式と一致していません。',
+    'date_format' => ':attributeが":format"書式と一致していません。',
     'different' => ':attributeは:otherと違うものにしてください。',
     'digits' => ':attributeは:digits桁にしてください',
     'digits_between' => ':attributeは:min〜:max桁にしてください。',
@@ -103,9 +103,13 @@ return [
         [
             // バリデーション固有のラベルを記述
             'categoryIds' => $label['category'],
+            'cropId' => $label['crop'],
             'cropIds' => $label['crop'],
             'fieldIds' => $label['workField'],
+            'workDiaryIds' => $label['workDiary'],
             'datetimeInput' => $label['datetime'],
             'pesticideId' => $label['pesticideName'],
+            'workId' => $label['workContent'],
+            'cultivarId' => $label['cultivar'],
         ],
 ];

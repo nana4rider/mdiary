@@ -13,6 +13,8 @@ class WorkSeeding extends Model
     use UserInfo;
     use Grouping;
 
+    protected $fillable = ['intrarow_spacing'];
+
     public function cultivar()
     {
         return $this->belongsTo(Cultivar::class);
