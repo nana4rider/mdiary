@@ -2,7 +2,7 @@
     <tr id="pesticide-row-{{ $workPestControl->pesticideId }}">
         <td>{{ $workPestControl->pesticide->name }}</td>
         <td>
-            {{ $workPestControl->usage }}
+            {{ $workPestControl->usage }}{{ $workPestControl->pesticide->unit->name }}
         </td>
         <td class="text-right">
             <button type="submit" class="btn btn-danger btn-xs delete-pesticide"

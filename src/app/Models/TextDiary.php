@@ -14,13 +14,15 @@ class TextDiary extends Model
     use UserInfo;
     use Grouping;
 
-    protected $fillable = ['title', 'body', 'datetimeText'];
+    protected $fillable = ['title', 'body', 'datetimeInput'];
 
     /**
      * カテゴリIDのキャッシュ
      * @var
      */
     protected $categoryIds = null;
+
+    protected $dates = ['datetime'];
 
     /**
      * TextDiaryCategory
@@ -44,18 +46,18 @@ class TextDiary extends Model
      * 日付を整形して取得
      * @return string
      */
-    public function getDatetimeTextAttribute()
+    public function getDatetimeInputAttribute()
     {
-        return Carbon::parse($this->datetime)->format(config('format.datetime'));
+        return $this->datetime->format(config('format.input.datetime-local'));
     }
 
     /**
      * 日付をCarbonに変換して設定
      * @param $value
      */
-    public function setDatetimeTextAttribute($value)
+    public function setDatetimeInputAttribute($value)
     {
-        $this->datetime = Carbon::createFromFormat(config('format.datetime'), $value);
+        $this->datetime = Carbon::createFromFormat(config('format.input.datetime-local'), $value);
     }
 
     /**

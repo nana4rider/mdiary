@@ -170,23 +170,34 @@ $(function () {
     /**
      * 日付選択
      */
-    $('input[data-datetimepicker]').each(function () {
-        var format = {datetime: 'YYYY/MM/DD HH:mm', date: 'YYYY/MM/DD', time: 'HH:mm'}
-            [$(this).data('datetimepicker')];
-
-        $(this).wrap('<div class="input-group date"></div>');
-        var $group = $(this).parent();
-
-        $group.append(
-            '<span class="input-group-addon">' +
-            '<span class="glyphicon glyphicon-calendar"></span>' +
-            '</span>');
-
-        $group.datetimepicker({locale: 'ja', format: format, focusOnShow: false, showClose: true});
+    $('input[type="datetime-local"]').each(function () {
+        var format = 'YYYY/MM/DD HH:mm';
+        var w3cFormat = 'YYYY-MM-DD[T]HH:mm';
 
         if ($(this).val() === '') {
-            $(this).val(moment().format(format));
+            // 初期値
+            $(this).val(moment().format(w3cFormat));
         }
+
+        if ($.browser.android || $.browser.iphone || $.browser.ipad) {
+            return;
+        }
+
+        var name = $(this).prop('name');
+
+        // 表示用
+        $(this).prop('type', 'text').removeAttr('name').datetimepicker({
+            locale: 'ja',
+            format: format
+        });
+
+        // 送信用
+        var $send = $('<input type="hidden">').attr('name', name);
+        $(this).after($send);
+
+        $(this).on("dp.change", function () {
+            $send.val(moment($(this).val(), format).format(w3cFormat));
+        }).trigger('dp.change');
     });
 });
 

@@ -7,7 +7,7 @@
                 <div class="panel-body">
                     {!! BootForm::open()->post()->action(route('workRecord.store')) !!}
 
-                    {!! BootForm::text(label('datetime'), 'datetimeText')->data('datetimepicker', 'datetime') !!}
+                    {!! BootForm::text(label('datetime'), 'datetimeInput')->type('datetime-local') !!}
 
                     {!! BootForm::select(label('crop'), 'cropId')->options($cropOptions)
                             ->data('change-form-create', '') !!}
@@ -24,7 +24,8 @@
                     @if($work->use_seeding)
                         {!! BootForm::select(label('cultivar'), 'cultivarId')->options($cultivarOptions) !!}
 
-                        {!! BootForm::inputGroup(label('intrarowSpacing'), 'intrarowSpacing')->afterAddon('cm') !!}
+                        {!! BootForm::inputGroup(label('intrarowSpacing'), 'intrarowSpacing')
+                                ->type('number')->afterAddon('cm') !!}
                     @endif
 
                     {{-- 農薬 --}}
@@ -85,7 +86,7 @@
 
             {!! BootForm::select(label('pesticideName'), 'pesticideId')->options($pesticideOptions) !!}
 
-            {!! BootForm::inputGroup(label('pesticideUsage'), 'pesticideUsage')->afterAddon('*') !!}
+            {!! BootForm::inputGroup(label('pesticideUsage'), 'pesticideUsage')->type('number')->afterAddon('*') !!}
 
             {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', 'html')
             ->id('add-pesticide') !!}

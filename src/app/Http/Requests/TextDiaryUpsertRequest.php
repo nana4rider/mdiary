@@ -12,7 +12,7 @@ class TextDiaryUpsertRequest extends Request
     public function rules()
     {
         return [
-            'datetimeText' => 'required|date_format:"' . config('format.datetime') . '"',
+            'datetimeInput' => 'required|date_format:"' . config('format.input.datetime-local') . '"',
             'title' => 'required|max:100',
             'body' => 'required|max:10000',
             'categoryIds' => 'required',

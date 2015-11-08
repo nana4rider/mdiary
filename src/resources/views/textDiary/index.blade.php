@@ -12,7 +12,7 @@
                     <div class="panel-body">
                         <p>
                             <small>
-                                {{ label('posted') }}: {{ $textDiary->datetimeText }} |
+                                {{ label('posted') }}: {{ $textDiary->datetime->format(config('format.datetime')) }} |
                                 @foreach($textDiary->textDiaryCategories as $category)
                                     <a href="{{ route('textDiary.index') . '?' . http_build_query(['category' => $category->id]) }}"
                                        class="no-underline">

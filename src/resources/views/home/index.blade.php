@@ -13,7 +13,7 @@
                             <a href="#" title="{{ $information->title }}"
                                data-dialog-message="{{ $information->message }}">
                                 <i class="glyphicon glyphicon-info-sign"></i>
-                                <small>{{ $information->datetime }}</small>
+                                <small>{{ $information->datetime->format(config('format.date')) }}</small>
                                 {{ $information->title }}
                             </a>
                         </li>

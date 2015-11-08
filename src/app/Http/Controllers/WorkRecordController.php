@@ -40,7 +40,7 @@ class WorkRecordController extends Controller
         $cropId = old('cropId') ?: (string)$cropOptions->keys()->first();
 
         // 選択中の作物を取得
-        $crop = Crop::find($cropId);
+        $crop = Crop::findOrFail($cropId);
 
         // 編集中の日誌がある圃場一覧を取得
         $workFieldOptions = WorkField::hasActiveDiary($cropId)->orderBy('display_order')->get()->lists('name', 'id');
@@ -51,7 +51,7 @@ class WorkRecordController extends Controller
         // 未選択の場合、先頭の作業を選択
         $workId = old('workId') ?: (string)$workOptions->keys()->first();
         // 選択中の作業内容を取得
-        $work = Work::find($workId);
+        $work = Work::findOrFail($workId);
 
         $viewData = compact('cropOptions', 'workFieldOptions', 'workOptions', 'work');
 
