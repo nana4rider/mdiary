@@ -9,10 +9,9 @@
 
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-social/4.10.1/bootstrap-social.min.css">
+    <link rel="stylesheet" href="{{ url('css/blueimp-gallery.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/bootstrap-social.css') }}">
     <link rel="stylesheet" href="{{ url('css/bootstrap-select.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/bootstrap-image-gallery.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/common.css') }}">
@@ -80,10 +79,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="{{ url('js/jquery.browser.sp.js') }}"></script>
 <script src="{{ url('js/bootstrap.min.js') }}"></script>
-<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.6/js/bootstrap-dialog.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="{{ url('js/jquery.blueimp-gallery.min.js') }}"></script>
+<script src="{{ url('js/bootstrap-dialog.min.js') }}"></script>
+<script src="{{ url('js/moment-with-locales.min.js') }}"></script>
+<script src="{{ url('js/bootstrap-datetimepicker.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-select.ja.js') }}"></script>
 <script src="{{ url('js/bootstrap-image-gallery.min.js') }}"></script>

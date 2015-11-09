@@ -15,6 +15,7 @@ use App\Models\WorkDiary;
 use App\Models\WorkField;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class WorkDiaryController extends Controller
 {
@@ -100,19 +101,18 @@ class WorkDiaryController extends Controller
      */
     public function store(WorkDiaryStoreRequest $request)
     {
-        $errors = [];
+        $errors = new MessageBag();
         DB::transaction(function () use ($request, &$errors) {
             $fieldIds = (array)$request->input('field_ids');
             $workFields = WorkField::whereIn('id', $fieldIds)->lockForUpdate()->get();
 
             if (!WorkField::whereIn('id', $fieldIds)->hasActiveDiary()->get()->isEmpty()) {
                 // 編集中日誌のある圃場が選択されている
-                $errors['field_ids'] = message('others_update');
+                $errors->add('field_ids', message('others_update'));
                 DB::rollBack();
                 return;
             }
 
-            /** @var WorkField $workField */
             foreach ($workFields as $workField) {
                 // 日誌を作成
                 $workDiary = new WorkDiary();
@@ -124,8 +124,8 @@ class WorkDiaryController extends Controller
             }
         });
 
-        if (!empty($errors)) {
-            return redirect()->back()->withInput($request->all())->withErrors($errors);
+        if ($errors->any()) {
+            return $this->buildFailedValidationResponse($request, $errors->toArray());
         }
 
         return redirect()->route('workDiary.index')->with('complete', 'store');

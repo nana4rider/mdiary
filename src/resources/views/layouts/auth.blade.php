@@ -13,41 +13,29 @@
     </div>
     <div class="navbar-collapse collapse" id="navbar-main">
         <ul class="nav navbar-nav">
-            <li class="{{ Request::is('home') ? 'active' : null }}">
-                <a href="{{ route('home') }}">{{ label('route.home') }}</a>
-            </li>
+            @include('layouts.menu', [
+                'pattern' => 'home',
+                'name' => 'home',
+                'menu' => ['home']
+            ])
 
-            <li class="dropdown {{ Request::is('textDiary*') ? 'active' : null }}">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('menu.text_diary') }} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('textDiary.create') }}">{{ label('route.text_diary.create') }}</a></li>
-                    <li><a href="{{ route('textDiary.index') }}">{{ label('route.text_diary.index') }}</a></li>
-                </ul>
-            </li>
+            @include('layouts.menu', [
+                'pattern' => 'textDiary*',
+                'name' => 'textDiary',
+                'menu' => ['textDiary.create', 'textDiary.index']
+            ])
 
-            <li class="dropdown {{ Request::is('work*') ? 'active' : null }}">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('menu.work') }} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('workDiary.create') }}">{{ label('route.work_diary.create') }}</a></li>
-                    <li><a href="{{ route('workDiary.index') }}">{{ label('route.work_diary.index') }}</a></li>
-                    <li><a href="{{ route('workRecord.create') }}">{{ label('route.work_record.create') }}</a></li>
-                    <li><a href="{{ route('workRecord.index') }}">{{ label('route.work_record.index') }}</a></li>
-                </ul>
-            </li>
+            @include('layouts.menu', [
+                'pattern' => 'work*',
+                'name' => 'work',
+                'menu' => ['workDiary.create', 'workDiary.index', 'workRecord.create', 'workRecord.index']
+            ])
 
-            <li class="dropdown {{ Request::is('aggregate*') ? 'active' : null }}">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    {{ label('menu.aggregate') }} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="{{ route('aggregate.workField') }}">{{ label('route.aggregate.work_field') }}</a></li>
-                    <li><a href="{{ route('aggregate.workDiary') }}">{{ label('route.aggregate.work_diary') }}</a></li>
-                </ul>
-            </li>
+            @include('layouts.menu', [
+                'pattern' => 'aggregate*',
+                'name' => 'aggregate',
+                'menu' => ['aggregate.workField', 'aggregate.workDiary']
+            ])
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

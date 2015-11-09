@@ -28,8 +28,8 @@ class CreateWorksTable extends Migration
             $table->unsignedInteger('deleted_user_id')->nullable();
         });
 
-        $this->insert('定植', 1, true, true);
-        $this->insert('播種', 2, true, true);
+        $this->insert('定植', 1, false, true);
+        $this->insert('播種', 2, false, true);
         $this->insert('施肥', 3, true);
         $this->insert('収穫', 8, true);
         $this->insert('収穫(一番果)', 9, true);

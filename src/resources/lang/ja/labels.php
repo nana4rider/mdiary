@@ -12,6 +12,8 @@ return [
     // 入力/表示項目
     'action' => '操作',
     'datetime' => '日時',
+    'work_date' => '作業日時',
+    'create_date' => '作成日時',
     'email' => 'メールアドレス',
     'title' => 'タイトル',
     'body' => '本文',
@@ -24,7 +26,6 @@ return [
     'remarks' => '備考',
     'archive' => 'アーカイブ',
     'archived' => 'アーカイブ済み',
-    'create_date' => '作成日時',
     'work_content' => '作業内容',
     'pesticide' => '農薬',
     'pesticide_name' => '農薬名',

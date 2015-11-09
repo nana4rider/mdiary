@@ -16,8 +16,10 @@ use App\Models\Work;
 use App\Models\WorkDiary;
 use App\Models\WorkPestControl;
 use App\Models\WorkRecord;
+use App\Models\WorkSeeding;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class WorkRecordController extends Controller
 {
@@ -156,7 +158,7 @@ class WorkRecordController extends Controller
      */
     public function store(WorkRecordStoreRequest $request)
     {
-        $errors = [];
+        $errors = new MessageBag();
         DB::transaction(function () use ($request, &$errors) {
             $workId = $request->input('work_id');
             $cropId = $request->input('crop_id');
@@ -169,7 +171,7 @@ class WorkRecordController extends Controller
                     ->where('archive', false)->count()
             ) {
                 // 不正な作業日誌が選択されている
-                $errors['work_diary_ids'] = message('others_update');
+                $errors->add('work_diary_ids', message('others_update'));
                 DB::rollBack();
                 return;
             }
@@ -181,15 +183,6 @@ class WorkRecordController extends Controller
             // use_complete=falseの場合は常にtrue
             $workRecord->complete = !$work->use_complete || $request->has('complete');
             $workRecord->save();
-
-            // 播種/定植記録
-            if ($work->use_seeding) {
-                $workSeeding = new WorkSeeding();
-                $workSeeding->work_record_id = $workRecord->id;
-                $workSeeding->cultivar_id = $request->input('cultivar_id');
-                $workSeeding->fill($request->all());
-                $workSeeding->save();
-            }
 
             // 防除記録
             if ($work->use_pest_control) {
@@ -203,7 +196,7 @@ class WorkRecordController extends Controller
 
                 if ($pesticideIds->count() !== $pesticides->count()) {
                     // 農薬の選択が不正
-                    $errors['pesticide'] = message('others_update');
+                    $errors->add('pesticide', message('others_update'));
                     DB::rollBack();
                     return;
                 }
@@ -216,10 +209,22 @@ class WorkRecordController extends Controller
                     $workPestControl->save();
                 }
             }
+
+            // 播種/定植記録
+            if ($work->use_seeding) {
+                $workSeeding = new WorkSeeding();
+                $workSeeding->work_record_id = $workRecord->id;
+                $workSeeding->cultivar_id = $request->input('cultivar_id');
+                $workSeeding->fill($request->all());
+                $workSeeding->save();
+            }
+
+            // 日誌紐付け
+            $workRecord->workDiaries()->attach($workDiaryIds);
         });
 
-        if (!empty($errors)) {
-            return redirect()->back()->withInput($request->all())->withErrors($errors);
+        if ($errors->any()) {
+            return $this->buildFailedValidationResponse($request, $errors->toArray());
         }
 
         return redirect()->route('workRecord.index')->with('complete', 'store');

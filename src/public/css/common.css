@@ -13,8 +13,8 @@ body {
 footer {
     margin-top: 33px;
     padding: 40px 0;
-    color: #EEEEEE;
-    background-color: #333333;
+    color: #777;
+    background-color: #e7e7e7;
 }
 
 .bootstrap-dialog-title {
@@ -29,7 +29,7 @@ footer {
     display: none;
 }
 
-/* datetimepicker */
+/* datetimepicker
 .bootstrap-datetimepicker-widget table td.today:before {
     border-bottom-color: #2196f3;
 }
@@ -41,6 +41,7 @@ footer {
 .bootstrap-datetimepicker-widget table td span.active {
     background-color: #2196f3;
 }
+*/
 
 .no-underline,
 .no-underline:hover {
