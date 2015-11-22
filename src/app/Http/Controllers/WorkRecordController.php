@@ -14,6 +14,7 @@ use App\Models\Crop;
 use App\Models\Pesticide;
 use App\Models\Work;
 use App\Models\WorkDiary;
+use App\Models\WorkField;
 use App\Models\WorkPestControl;
 use App\Models\WorkRecord;
 use App\Models\WorkSeeding;
@@ -23,89 +24,66 @@ use Illuminate\Support\MessageBag;
 
 class WorkRecordController extends Controller
 {
-    public function index()
+    /**
+     * 一覧表示
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
     {
-        return view('workRecord.index');
+        // 作物一覧を取得
+        $crops = Crop::orderBy('display_order')->get();
+        // 未選択の場合、先頭の作物を選択
+        $crop = Crop::findOrFail($request->input('crop_id') ?: $crops->first()->id);
+
+        // 作物に紐付く作業内容を取得
+        $works = $crop->works()->orderBy('works.display_order')->get();
+
+        // 圃場一覧を取得
+        $workFields = WorkField::orderBy('display_order')->get();
+
+        if ($request->ajax()) {
+            return compact('crops', 'works', 'workFields');
+        } else {
+            return view('workRecord.index', compact('crops', 'works', 'workFields'));
+        }
     }
 
     /**
      * 作成画面
      *
+     * @param Request $request
      * @return \Illuminate\View\View
      */
-    public function create()
-    {
-        if (empty(old('crop_id'))) {
-            session()->forget('workRecord.pesticides');
-        }
-
-        // 作物一覧を取得
-        $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
-        // 未選択の場合、先頭の作物を選択
-        $cropId = old('crop_id') ?: (string)$cropOptions->keys()->first();
-
-        // 選択中の作物を取得
-        $crop = Crop::findOrFail($cropId);
-
-        // 編集中の日誌がある圃場一覧を取得
-        $workDiaryOptions = WorkDiary::with('workField')->where('archive', false)->where('crop_id', $cropId)
-            ->get()->sortBy('workField.display_order')->lists('name', 'id');
-
-        // 作物に紐付く作業内容を取得
-        $workOptions = $crop->works()->orderBy('works.display_order')->get()->lists('name', 'id');
-
-        // 未選択の場合、先頭の作業を選択
-        $workId = old('work_id') ?: (string)$workOptions->keys()->first();
-        // 選択中の作業内容を取得
-        $work = Work::findOrFail($workId);
-
-        $viewData = compact('cropOptions', 'workDiaryOptions', 'workOptions', 'work');
-
-        // 作物に紐付く農薬情報を取得
-        if ($work->use_pest_control) {
-            $pesticides = $crop->pesticides()->with('unit')->get();
-            $viewData['pesticides'] = $pesticides;
-            $viewData['pesticidesJson'] = $this->createPesticidesJson($pesticides);
-            $viewData['pesticideOptions'] = $pesticides->lists('name', 'id');
-        }
-
-        // 作物に紐付く品種を取得
-        if ($work->use_seeding) {
-            $cultivars = $crop->cultivars()->get();
-            $cultivarOptions = $cultivars->lists('name', 'id');
-
-            $viewData = array_merge($viewData, compact('cultivarOptions'));
-        }
-
-        return view('workRecord.create', $viewData);
-    }
-
-    /**
-     * フォームの表示内容を変更
-     *
-     * @param Request $request
-     * @return $this
-     */
-    public function changeForm(Request $request)
+    public function create(Request $request)
     {
         // 農薬情報をクリア
         session()->forget('workRecord.pesticides');
 
-        return redirect()->back()->withInput($request->all());
-    }
+        // 作物一覧を取得
+        $crops = Crop::orderBy('display_order')->get();
+        // 未選択の場合、先頭の作物を選択
+        $crop = Crop::findOrFail($request->input('crop_id') ?: $crops->first()->id);
 
-    private function createPesticidesJson($pesticides)
-    {
-        $array = [];
-        foreach ($pesticides as $pesticide) {
-            $array[] = [
-                'name' => $pesticide->name,
-                'minimum_usage' => $pesticide->minimum_usage,
-                'maximum_usage' => $pesticide->maximum_usage,
-                'unit_name' => $pesticide->unit->name,
-            ];
+        // 編集中の日誌がある作業日誌を取得
+        $workDiaries = WorkDiary::with('workField')->where('archive', false)->where('crop_id', $crop->id)
+            ->get()->sortBy('workField.display_order');
+
+        // 作物に紐付く作業内容を取得
+        $works = $crop->works()->orderBy('works.display_order')->get();
+
+        // 品種を取得
+        $cultivars = $crop->cultivars()->get();
+
+        // 農薬情報を取得
+        $pesticides = $crop->pesticides()->with('unit')->get();
+
+        if ($request->ajax()) {
+            return compact('workDiaries', 'works', 'cultivars', 'pesticides');
+        } else {
+            return view('workRecord.create', compact('crops', 'workDiaries', 'works', 'cultivars', 'pesticides'));
         }
-        return json_encode($array);
     }
 
     /**
@@ -226,6 +204,9 @@ class WorkRecordController extends Controller
         if ($errors->any()) {
             return $this->buildFailedValidationResponse($request, $errors->toArray());
         }
+
+        // 農薬情報をクリア
+        session()->forget('workRecord.pesticides');
 
         return redirect()->route('workRecord.index')->with('complete', 'store');
     }

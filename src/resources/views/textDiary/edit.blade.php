@@ -15,7 +15,7 @@
 
                     {!! BootForm::textarea(label('body'), 'body')->rows(config('const.text_diary_body_rows')) !!}
                     {!! BootForm::select(label('category'), 'category_ids')
-                            ->options($categoryOptions)->multiple() !!}
+                            ->options($categories->lists('name', 'id'))->multiple() !!}
 
                     {!! BootForm::file(label('picture'), 'picture[]')->multiple()
                             ->helpBlock(count($textDiary->flickrs) === 0 ? '' : message('help.text_diary_edit.picture')) !!}
@@ -41,8 +41,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('js')
-    <script src="{{ url('js/textDiary.edit.js') }}"></script>
 @endsection

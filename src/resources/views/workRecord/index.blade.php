@@ -7,15 +7,22 @@
                 <div class="panel-body">
                     {!! BootForm::open()->get() !!}
 
-                    {!! BootForm::select('作物', 'product')->options(['スイカ', 'ほうれん草', '小松菜'])->multiple() !!}
+                    {!! BootForm::bind(Request::all()) !!}
 
-                    {!! BootForm::select('場所', 'place')
-                            ->options(['A1', 'A2', 'A3', 'A4', 'A5'])->multiple() !!}
+                    {!! BootForm::select(label('crop'), 'crop_id')->options($crops->lists('name', 'id')) !!}
 
-                    {!! BootForm::select('作業内容', 'work')
-                            ->options(['防除', '定植', '整枝', '交配', '収穫'])->multiple() !!}
+                    {!! BootForm::select(label('work_content'), 'work_id')
+                            ->options($works->lists('name', 'id'))->multiple()
+                            ->helpBlock(message('unselected_search_all', ['name' => 'work_content'])) !!}
 
-                    {!! BootForm::submit('検索', 'btn-primary') !!}
+                    {!! BootForm::select(label('work_field'), 'field_ids')
+                            ->options($workFields->lists('name', 'id'))->multiple()
+                            ->helpBlock(message('unselected_search_all', ['name' => 'work_field'])) !!}
+
+                    {!! BootForm::submit(label('search'), 'btn-primary')->id('search') !!}
+
+                    {!! BootForm::submit('', 'hidden')->data('ajax', 'json')->data('method', 'get')
+                            ->id('change-form-submit') !!}
 
                     {!! BootForm::close() !!}
                 </div>

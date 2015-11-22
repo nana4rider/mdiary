@@ -9,27 +9,31 @@
 
                     {!! BootForm::text(label('datetime'), 'datetime_input')->type('datetime-local') !!}
 
-                    {!! BootForm::select(label('crop'), 'crop_id')->options($cropOptions)
-                            ->data('change-form-create', '') !!}
+                    {!! BootForm::select(label('crop'), 'crop_id')->options($crops->lists('name', 'id')) !!}
 
                     {!! BootForm::select(label('work_diary'), 'work_diary_ids')
-                            ->options($workDiaryOptions)->multiple()
+                            ->options($workDiaries->lists('name', 'id'))->multiple()
                             ->helpBlock(message('help.work_record_create.work_diary')) !!}
 
                     {!! BootForm::select(label('work_content'), 'work_id')
-                            ->options($workOptions)
-                            ->data('change-form-create', '') !!}
+                            ->options($works->lists('name', 'id')) !!}
+
+                    {{-- 完了チェック --}}
+                    <div id="option-complete" class="hidden">
+                        {!! BootForm::checkbox(label('work_complete'), 'complete')
+                                ->helpBlock(message('help.work_record_create.work_complete')) !!}
+                    </div>
 
                     {{-- 播種、定植 --}}
-                    @if($work->use_seeding)
-                        {!! BootForm::select(label('cultivar'), 'cultivar_id')->options($cultivarOptions) !!}
+                    <div id="option-seeding" class="hidden">
+                        {!! BootForm::select(label('cultivar'), 'cultivar_id')->options($cultivars->lists('name', 'id')) !!}
 
                         {!! BootForm::inputGroup(label('intrarow_spacing'), 'intrarow_spacing')
                                 ->type('number')->afterAddon(label('intrarow_spacing_unit')) !!}
-                    @endif
+                    </div>
 
                     {{-- 農薬 --}}
-                    @if($work->use_pest_control)
+                    <div id="option-pest-control" class="hidden">
                         <div class="form-group{{ $errors->has('pesticide') ? ' has-error' : '' }}">
                             <label class="control-label">{{ label('pesticide') }}</label>
 
@@ -66,18 +70,12 @@
                                 <p class="help-block">{{ $errors->first('pesticide') }}</p>
                             @endif
                         </div>
-                    @endif
-
-                    {{-- 完了チェック --}}
-                    @if($work->use_complete)
-                        {!! BootForm::checkbox(label('work_complete'), 'complete')
-                                ->helpBlock(message('help.work_record_create.work_complete')) !!}
-                    @endif
+                    </div>
 
                     {!! BootForm::submit(label('store'), 'btn-primary') !!}
 
-                    {!! BootForm::submit('changeForm', 'hidden')
-                            ->formaction(route('workRecord.create.changeForm'))->id('change-form-submit') !!}
+                    {!! BootForm::submit('', 'hidden')->data('ajax', 'json')->data('method', 'get')
+                            ->formaction(route('workRecord.create'))->id('change-form-submit') !!}
 
                     {!! BootForm::close() !!}
                 </div>
@@ -85,26 +83,22 @@
         </div>
     </div>
 
-    @if($work->use_pest_control)
-        <div id="pesticide-section" class="hidden">
-            {!! BootForm::open()->post()->action(route('workRecord.create.addPesticide'))->id('pesticide-form') !!}
+    <div id="pesticide-section" class="hidden">
+        {!! BootForm::open()->post()->action(route('workRecord.create.addPesticide'))->id('pesticide-form') !!}
 
-            {!! BootForm::select(label('pesticide_name'), 'pesticide_id')->options($pesticideOptions) !!}
+        {!! BootForm::select(label('pesticide_name'), 'pesticide_id')->options($pesticides->lists('name', 'id')) !!}
 
-            {!! BootForm::inputGroup(label('pesticide_usage'), 'pesticide_usage')->type('number')->afterAddon('*') !!}
+        {!! BootForm::inputGroup(label('pesticide_usage'), 'pesticide_usage')->type('number')->afterAddon('*') !!}
 
-            {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', 'html')->id('add-pesticide') !!}
+        {!! BootForm::submit(label('add'), 'btn-primary btn-dialog')->data('ajax', 'html')->id('add-pesticide') !!}
 
-            {!! BootForm::close() !!}
-        </div>
-    @endif
+        {!! BootForm::close() !!}
+    </div>
 @endsection
 
 @section('js')
-    @if($work->use_pest_control)
-        <script>
-            {!! 'var pesticides = ' . $pesticidesJson . ';' !!}
-        </script>
-    @endif
-    <script src="{{ url('js/workRecord.create.js') }}"></script>
+    <script>
+        {!! 'var pesticides = ' . $pesticides->toJson() . ';' !!}
+        {!! 'var works = ' . $works->toJson() . ';' !!}
+    </script>
 @endsection

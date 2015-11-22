@@ -41,14 +41,14 @@
                             @endforeach
                         </div>
 
-                        {!! BootForm::open()->get()->action(route('textDiary.edit', ['id' => $textDiary->id]))
+                        {!! BootForm::open()->delete()->action(route('textDiary.destroy', ['id' => $textDiary->id]))
                                 ->class('form-inline') !!}
 
-                        {!! BootForm::submit(label('edit'), 'btn-primary btn-sm') !!}
+                        <a href="{{ route('textDiary.edit', ['id' => $textDiary->id]) }}"
+                           class="btn btn-primary btn-sm">{{ label('edit') }}</a>
 
                         {!! BootForm::submit(label('destroy'), 'btn-danger btn-sm')
-                                ->formaction(route('textDiary.destroy', ['id' => $textDiary->id]))
-                                ->data('method', 'delete')->data('confirm', message('confirm.delete'))
+                                ->data('confirm', message('confirm.delete'))
                                 ->data('dialog-type', 'danger') !!}
 
                         {!! BootForm::close() !!}

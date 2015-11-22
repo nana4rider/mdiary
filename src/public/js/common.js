@@ -22,35 +22,6 @@ $(function () {
     var buttonMethod = null;
 
     $(document).on('submit', 'form', function (e) {
-        var $form = $(this);
-
-        if (buttonMethod === 'get'
-            || (buttonMethod === null && $form.prop('method') === 'get')) {
-            // トークンとメソッド送信を無効化
-            $form.children('input[name="_token"]').attr('disabled', true);
-        } else {
-            $form.children('input[name="_token"]').attr('disabled', false);
-        }
-
-        /*
-         * メソッドをボタン毎に切り替え
-         * <button data-method="PUT">Update</button>
-         */
-        if (buttonMethod === 'post' || buttonMethod === 'get') {
-            $form.prop('method', buttonMethod.toUpperCase());
-            $form.children('input[name="_method"]').attr('disabled', true);
-        } else if (buttonMethod === 'put' || buttonMethod === 'delete') {
-            $form.prop('method', 'POST');
-            var $_method = $form.children('input[name="_method"]');
-
-            if ($_method.length === 0) {
-                $_method = $('<input type="hidden" name="_method">');
-                $form.append($_method);
-            }
-
-            $_method.val(buttonMethod.toUpperCase());
-        }
-
         // 二重送信防止
         if (stop) {
             // 送信ボタンを無効化
@@ -60,46 +31,74 @@ $(function () {
             stop = true;
         }
 
+        var $form = $(this);
         var ajaxDataType = $button.data('ajax');
-        if (ajaxDataType === undefined) {
-            return;
-        }
 
-        $.ajax({
-            type: $form.prop('method'),
-            url: $button.attr('formaction') || $form.prop('action'),
-            data: $form.serialize(),
-            dataType: ajaxDataType,
-            timeout: 30000
-        }).done(function (data) {
-            // エラーをリセット
-            $form.trigger('ajax.resetError');
-            // カスタムイベントを呼び出し
-            $button.trigger('ajax.done', data);
-        }).fail(function (xhr) {
-            if (xhr.status === 422) {
-                var data = JSON.parse(xhr.responseText);
+        if (ajaxDataType === undefined) {
+            // 通常のフォーム
+
+            if (buttonMethod === 'get'
+                || (buttonMethod === null && $form.prop('method') === 'get')) {
+                // トークンとメソッド送信を無効化
+                $form.children('input[name="_token"]').attr('disabled', true);
+            } else {
+                $form.children('input[name="_token"]').attr('disabled', false);
+            }
+
+            /*
+             * メソッドをボタン毎に切り替え
+             * <button data-method="PUT">Update</button>
+             */
+            if (buttonMethod === 'post' || buttonMethod === 'get') {
+                $form.prop('method', buttonMethod.toUpperCase());
+                $form.children('input[name="_method"]').attr('disabled', true);
+            } else if (buttonMethod === 'put' || buttonMethod === 'delete') {
+                $form.prop('method', 'POST');
+                var $_method = $form.children('input[name="_method"]');
+
+                if ($_method.length === 0) {
+                    $_method = $('<input type="hidden" name="_method">');
+                    $form.append($_method);
+                }
+
+                $_method.val(buttonMethod.toUpperCase());
+            }
+        } else {
+            // Ajax
+            $.ajax({
+                type: buttonMethod || $form.prop('method'),
+                url: $button.attr('formaction') || $form.prop('action'),
+                data: $form.serialize(),
+                dataType: ajaxDataType,
+                timeout: 30000
+            }).done(function (data) {
                 // エラーをリセット
                 $form.trigger('ajax.resetError');
-                // バリデーションエラー
-                Object.keys(data).forEach(function (key) {
-                    var $formGroup = $('#' + key).parents('.form-group').addClass('has-error');
-                    var $errorBlock = $('<p>').addClass('help-block ajax-error').text(data[key][0]);
-                    // 既存のヘルプを隠す
-                    $formGroup.find('.help-block').addClass('hidden');
-                    // エラーメッセージを追加
-                    $formGroup.append($errorBlock);
-                });
-            }
-            // カスタムイベントを呼び出し
-            $button.trigger('ajax.fail', xhr);
-        }).always(function () {
-            // 送信ボタンを有効化
-            stop = false;
-        });
+                // カスタムイベントを呼び出し
+                $button.trigger('ajax.done', data);
+            }).fail(function (xhr) {
+                if (xhr.status === 422) {
+                    var data = JSON.parse(xhr.responseText);
+                    // エラーをリセット
+                    $form.trigger('ajax.resetError');
+                    // バリデーションエラー
+                    Object.keys(data).forEach(function (key) {
+                        var $formGroup = $('#' + key).parents('.form-group').addClass('has-error');
+                        var $errorBlock = $('<p>').addClass('help-block').text(data[key][0]);
+                        // エラーメッセージを追加
+                        $formGroup.append($errorBlock);
+                    });
+                }
+                // カスタムイベントを呼び出し
+                $button.trigger('ajax.fail', xhr);
+            }).always(function () {
+                // 送信ボタンを有効化
+                stop = false;
+            });
 
-        // 送信ボタンを無効化
-        e.preventDefault();
+            // 送信ボタンを無効化
+            e.preventDefault();
+        }
     });
 
     $(document).on('click', 'button[type="submit"]', function (e) {
@@ -117,9 +116,9 @@ $(function () {
      * Ajaxフォームを元の状態に戻す
      */
     $(document).on('ajax.resetError', 'form', function () {
-        $(this).find('.form-group.has-error').removeClass('has-error');
-        $(this).find('.help-block.hidden').removeClass('hidden');
-        $(this).find('.help-block.ajax-error').remove();
+        var $errorGroup = $(this).find('.form-group.has-error');
+        $errorGroup.removeClass('has-error');
+        $errorGroup.find('.help-block').remove();
     });
 });
 

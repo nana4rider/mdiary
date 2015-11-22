@@ -28,8 +28,6 @@ class WorkDiaryController extends Controller
      */
     public function index(Request $request)
     {
-        $data = $request->all();
-
         // 日誌一覧を取得
         $builder = WorkDiary::with('crop', 'workField');
 
@@ -44,9 +42,9 @@ class WorkDiaryController extends Controller
         $workDiaries = $builder->orderBy('archive')->latest()->paginate(config('const.max_work_diary'));
 
         // 圃場一覧を取得
-        $workFieldOptions = WorkField::orderBy('display_order')->get()->lists('name', 'id');
+        $workFields = WorkField::orderBy('display_order')->get();
 
-        return view('workDiary.index', compact('workFieldOptions', 'data', 'workDiaries'));
+        return view('workDiary.index', compact('workFields', 'data', 'workDiaries'));
     }
 
     /**
@@ -104,10 +102,7 @@ class WorkDiaryController extends Controller
             return redirect()->route('workDiary.index');
         }
 
-        // 作物一覧を取得
-        $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
-
-        return view('workDiary.edit', compact('workDiary', 'cropOptions'));
+        return view('workDiary.edit', compact('workDiary'));
     }
 
     /**
@@ -118,11 +113,11 @@ class WorkDiaryController extends Controller
     public function create()
     {
         // 作物一覧を取得
-        $cropOptions = Crop::orderBy('display_order')->get()->lists('name', 'id');
+        $crops = Crop::orderBy('display_order')->get();
         // 編集中の日誌がない圃場一覧を取得
-        $workFieldOptions = WorkField::doesntHaveActiveDiary()->orderBy('display_order')->get()->lists('name', 'id');
+        $workFields = WorkField::doesntHaveActiveDiary()->orderBy('display_order')->get();
 
-        return view('workDiary.create', compact('cropOptions', 'workFieldOptions'));
+        return view('workDiary.create', compact('crops', 'workFields'));
     }
 
     /**

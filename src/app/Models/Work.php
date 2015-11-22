@@ -11,6 +11,12 @@ class Work extends Model
     use SoftDeletes;
     use UserInfo;
 
+    protected $casts = [
+        'use_complete' => 'boolean',
+        'use_seeding' => 'boolean',
+        'use_pest_control' => 'boolean'
+    ];
+
     public function crops()
     {
         return $this->belongsToMany(Crop::class);

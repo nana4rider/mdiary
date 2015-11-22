@@ -10,6 +10,7 @@ return [
     'add_to' => ':nameを追加',
     'delete_to' => ':nameを削除',
     'max_times' => '最大:value回',
+    'unselected_search_all' => '未選択の場合、全ての:nameを検索します。',
 
     'confirm' => [
         'delete' => '本当に削除してもよろしいですか？',
@@ -31,6 +32,9 @@ return [
         'work_record_create' => [
             'work_diary' => 'アーカイブしていない作業日誌のみ選択することができます。',
             'work_complete' => 'チェックした場合、集計画面の終了日に日付が入ります。',
+        ],
+        'work_record_index' => [
+            'field' => '未選択の場合、全ての圃場を検索します。',
         ],
     ],
 ];

@@ -49,8 +49,6 @@ Route::group(['middleware' => 'auth', 'before' => 'csrf'], function () {
      * 作業記録
      */
     Route::resource('workRecord', 'WorkRecordController');
-    Route::post('workRecord/create/changeForm',
-        ['as' => 'workRecord.create.changeForm', 'uses' => 'WorkRecordController@changeForm']);
     Route::post('workRecord/create/addPesticide',
         ['as' => 'workRecord.create.addPesticide', 'uses' => 'WorkRecordController@addPesticide']);
     Route::post('workRecord/create/deletePesticide/{id}',

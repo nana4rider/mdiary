@@ -16,12 +16,6 @@ class TextDiary extends Model
 
     protected $fillable = ['title', 'body', 'datetime_input'];
 
-    /**
-     * カテゴリIDのキャッシュ
-     * @var
-     */
-    protected $categoryIds = null;
-
     protected $dates = ['datetime'];
 
     /**
@@ -66,10 +60,6 @@ class TextDiary extends Model
      */
     public function getCategoryIdsAttribute()
     {
-        if (is_null($this->categoryIds)) {
-            $this->categoryIds = $this->textDiaryCategories()->lists('id')->all();
-        }
-
-        return $this->categoryIds;
+        return $this->textDiaryCategories()->lists('id')->all();
     }
 }

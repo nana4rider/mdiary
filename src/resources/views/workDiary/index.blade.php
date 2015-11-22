@@ -7,11 +7,11 @@
                 <div class="panel-body">
                     {!! BootForm::open()->get() !!}
 
-                    {!! BootForm::bind($data) !!}
+                    {!! BootForm::bind(Request::all()) !!}
 
                     {!! BootForm::select(label('work_field'), 'field_ids')
-                            ->options($workFieldOptions)->multiple()
-                            ->helpBlock(nl2br(message('help.work_diary_index.field')))!!}
+                            ->options($workFields->lists('name', 'id'))->multiple()
+                            ->helpBlock(message('unselected_search_all', ['name' => 'work_field'])) !!}
 
                     {!! BootForm::checkbox(message('work_diary_with_archive'), 'archive') !!}
 

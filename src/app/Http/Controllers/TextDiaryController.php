@@ -49,9 +49,9 @@ class TextDiaryController extends Controller
      */
     public function create()
     {
-        $categoryOptions = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
+        $categories = TextDiaryCategory::orderBy('display_order');
 
-        return view('textDiary.create', compact('categoryOptions'));
+        return view('textDiary.create', compact('categories'));
     }
 
     /**
@@ -90,9 +90,9 @@ class TextDiaryController extends Controller
      */
     public function edit(TextDiary $textDiary)
     {
-        $categoryOptions = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
+        $categories = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
 
-        return view('textDiary.edit', compact('categoryOptions', 'textDiary'));
+        return view('textDiary.edit', compact('categories', 'textDiary'));
     }
 
     /**

@@ -17,6 +17,8 @@ class WorkDiary extends Model
 
     protected $casts = ['archive' => 'boolean'];
 
+    protected $appends = ['name'];
+
     public function getNameAttribute()
     {
         return sprintf('%s (%s)', $this->workField->name, $this->created_at->format(config('format.date')));
