@@ -25,7 +25,7 @@
                         {!! BootForm::select(label('cultivar'), 'cultivar_id')->options($cultivarOptions) !!}
 
                         {!! BootForm::inputGroup(label('intrarow_spacing'), 'intrarow_spacing')
-                                ->type('number')->afterAddon('cm') !!}
+                                ->type('number')->afterAddon(label('intrarow_spacing_unit')) !!}
                     @endif
 
                     {{-- 農薬 --}}
@@ -37,7 +37,9 @@
                                 <table class="table table-bordered" id="pesticide-table">
                                     <thead>
                                     <tr>
-                                        <th>{{ label('pesticide_name') }}</th>
+                                        <th>
+                                            {{ label('pesticide_name') }}
+                                        </th>
                                         <th>
                                             {{ label('pesticide_usage') }}
                                         </th>

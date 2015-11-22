@@ -52,7 +52,7 @@
 
                     <div class="form-group">
                         <label class="control-label">
-                            作業記録
+                            {{ label('work_record') }}
                         </label>
 
                         <div class="form-control-static">
@@ -61,56 +61,74 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>作業日時</th>
-                                        <th>作業内容</th>
+                                        <th>{{ label('work_date') }}</th>
+                                        <th>{{ label('work_content')  }}</th>
+                                        <th>{{ label('work_complete')  }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>{{ date(config('format.date')) }}</td>
-                                        <td>播種</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>{{ date(config('format.date')) }}</td>
-                                        <td>整枝</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>{{ date(config('format.date')) }}</td>
-                                        <td>
-                                            <a href="#"
-                                               title="防除詳細"
-                                               data-dialog-content="#work-record-99">防除</a>
+                                    @foreach($workRecords as $index => $workRecord)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $workRecord->datetime->format(config('format.datetime')) }}</td>
+                                            <td>
+                                                @if($workRecord->work->use_seeding)
+                                                    {{-- 播種/定植記録 --}}
+                                                    {{ $workRecord->work->name }}
+                                                    ({{ $workRecord->workSeeding->cultivar->name . ', ' .
+                                                        $workRecord->workSeeding->intrarow_spacing .
+                                                       label('intrarow_spacing_unit') }})
+                                                @elseif($workRecord->work->use_pest_control)
+                                                    {{-- 防除記録 --}}
+                                                    <a href="#"
+                                                       title="{{ $workRecord->work->name . label('detail') }}"
+                                                       data-dialog-content="#work-record-{{ $workRecord->id }}">
+                                                        {{ $workRecord->work->name }}</a>
 
-                                            <div id="work-record-99" class="hidden">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>農薬名</th>
-                                                            <th>農薬使用倍率/使用量</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>アファーム</td>
-                                                            <td>1000</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>カスケード</td>
-                                                            <td>1000</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                    <div id="work-record-{{ $workRecord->id }}" class="hidden">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>
+                                                                        {{ label('pesticide_name') }}
+                                                                    </th>
+                                                                    <th>
+                                                                        {{ label('pesticide_usage') }}
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($workRecord->workPestControls as $index => $workPestControl)
+                                                                    <tr>
+                                                                        <td>
+                                                                            {{ $index + 1 }}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $workPestControl->pesticide->name }}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{ $workPestControl->usage .
+                                                                               $workPestControl->pesticide->unit->name }}
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    {{ $workRecord->work->name }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($workRecord->complete)
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -119,7 +137,7 @@
 
                     <div class="form-group">
                         <label class="control-label">
-                            農薬使用記録
+                            {{ label('pesticide_summary') }}
                         </label>
 
                         <div class="form-control-static">
@@ -128,28 +146,33 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>農薬名</th>
-                                        <th>使用回数</th>
-                                        <th>最終使用日</th>
-                                        <th>残効日数</th>
+                                        <th>{{ label('pesticide_name') }}</th>
+                                        <th>{{ label('usage_count') }}</th>
+                                        <th>{{ label('latest_usage_date') }}</th>
+                                        <th>{{ label('reuse_usage_date') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>アファーム</td>
-                                        <td class="warning">4/5</td>
-                                        <td>{{ date(config('format.date')) }}</td>
-                                        <td class="success">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>アルバリン</td>
-                                        <td class="danger">5/5</td>
-                                        <td>{{ date(config('format.date')) }}</td>
-                                        <td class="danger">7</td>
-                                    </tr>
+                                    @foreach($pesticideSummary as $data)
+                                        <tr>
+                                            <td>1</td>
+                                            <td>{{ $data->pesticide_name }}</td>
+                                            <td>
+                                                {{ $data->usage_count }}
+                                                ({{ message('max_times', [], ['value' => $data->max_usage_count]) }})
+                                            </td>
+                                            <td>{{ $data->latest_datetime->format(config('format.date')) }}</td>
+                                            <td>
+                                                @if($data->usage_count < $data->max_usage_count)
+                                                    {{ $data->latest_datetime->addDays($data->aftereffect_dates)
+                                                        ->format(config('format.date')) }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        </tr>
                                     </tbody>
+                                    @endforeach
                                 </table>
                             </div>
                         </div>

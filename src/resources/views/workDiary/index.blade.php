@@ -48,19 +48,19 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {!! BootForm::open()->get() !!}
+                                    {!! BootForm::open()->delete() !!}
 
-                                    {!! BootForm::submit(label('show'), 'btn-primary btn-xs')
-                                        ->formaction(route('workDiary.show', ['id' => $workDiary->id])) !!}
+                                    <a href="{{ route('workDiary.show', ['id' => $workDiary->id]) }}"
+                                       class="btn btn-primary btn-xs">{{ label('show') }}</a>
 
                                     @if(!$workDiary->archive)
-                                        {!! BootForm::submit(label('edit'), 'btn-primary btn-xs')
-                                            ->formaction(route('workDiary.edit', ['id' => $workDiary->id])) !!}
+                                        <a href="{{ route('workDiary.edit', ['id' => $workDiary->id]) }}"
+                                           class="btn btn-primary btn-xs">{{ label('edit') }}</a>
                                     @endif
 
                                     {!! BootForm::submit(label('destroy'), 'btn-danger btn-xs')
                                         ->formaction(route('workDiary.destroy', ['id' => $workDiary->id]))
-                                        ->data('method', 'delete')->data('confirm', message('confirm.delete'))
+                                        ->data('confirm', message('confirm.delete'))
                                         ->data('dialog-type', 'danger') !!}
 
                                     {!! BootForm::close() !!}

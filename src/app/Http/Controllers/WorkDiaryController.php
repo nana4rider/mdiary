@@ -13,6 +13,7 @@ use App\Http\Requests\WorkDiaryUpdateRequest;
 use App\Models\Crop;
 use App\Models\WorkDiary;
 use App\Models\WorkField;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -56,7 +57,38 @@ class WorkDiaryController extends Controller
      */
     public function show(WorkDiary $workDiary)
     {
-        return view('workDiary.show', compact('workDiary'));
+        $workRecords = $workDiary->workRecords()->with([
+            'work',
+            'workSeeding',
+            'workSeeding.cultivar',
+            'workPestControls' => function ($query) {
+                $query->orderBy('id');
+            },
+            'workPestControls.pesticide',
+            'workPestControls.pesticide.unit'
+        ])->orderBy('datetime')->get();
+
+        // 農薬使用記録
+        $pesticideSummary = collect(DB::table('work_diary_work_record')
+            ->join('work_records', 'work_records.id', '=', 'work_diary_work_record.work_record_id')
+            ->join('work_pest_controls', 'work_pest_controls.work_record_id', '=', 'work_records.id')
+            ->join('pesticides', 'pesticides.id', '=', 'work_pest_controls.pesticide_id')
+            ->select(DB::raw(
+                'pesticides.name as pesticide_name,' .
+                'count(pesticides.id) as usage_count,' .
+                'pesticides.usage_count as max_usage_count,' .
+                'max(work_records.datetime) as latest_datetime,' .
+                'pesticides.aftereffect_dates as aftereffect_dates'
+            ))
+            ->where('work_diary_work_record.work_diary_id', $workDiary->id)
+            ->groupBy('pesticides.id')
+            ->get())
+            ->each(function (&$data) {
+                // to carbon
+                $data->latest_datetime = Carbon::createFromFormat('Y-m-d H:i:s', $data->latest_datetime);
+            });
+
+        return view('workDiary.show', compact('workDiary', 'workRecords', 'pesticideSummary'));
     }
 
     /**

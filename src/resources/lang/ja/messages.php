@@ -9,6 +9,7 @@ return [
     'update_archive' => 'この日誌をアーカイブする',
     'add_to' => ':nameを追加',
     'delete_to' => ':nameを削除',
+    'max_times' => '最大:value回',
 
     'confirm' => [
         'delete' => '本当に削除してもよろしいですか？',

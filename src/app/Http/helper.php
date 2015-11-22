@@ -7,14 +7,15 @@
  * Time: 23:19
  */
 
-function message($id, $parameters = [])
+function message($id, $transParameters = [], $rawParameters = [])
 {
-    $transParameters = [];
-    foreach ($parameters as $key => $value) {
-        $transParameters[$key] = label($value);
+    $mergeParameters = [];
+    foreach ($transParameters as $key => $value) {
+        $mergeParameters[$key] = label($value);
     }
+    $mergeParameters += $rawParameters;
 
-    return trans('messages.' . $id, $transParameters);
+    return trans('messages.' . $id, $mergeParameters);
 }
 
 function label($id)
