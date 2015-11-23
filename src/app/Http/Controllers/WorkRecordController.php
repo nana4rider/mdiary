@@ -40,12 +40,12 @@ class WorkRecordController extends Controller
         // 作物に紐付く作業内容を取得
         $works = $crop->works()->orderBy('works.display_order')->get();
 
+        if ($request->ajax()) {
+            return compact('works');
+        }
+
         // 圃場一覧を取得
         $workFields = WorkField::orderBy('display_order')->get();
-
-        if ($request->ajax()) {
-            return compact('crops', 'works', 'workFields');
-        }
 
         // 検索
         $workRecordsQuery = WorkRecord::with([
@@ -63,9 +63,7 @@ class WorkRecordController extends Controller
                 ->from('work_diaries')
                 ->join('work_diary_work_record', 'work_diary_work_record.work_diary_id', '=', 'work_diaries.id')
                 ->whereNull('work_diaries.deleted_at')
-                ->whereRaw('work_diary_work_record.work_record_id = work_records.id')
-                // 作物を絞込
-                ->where('work_diaries.crop_id', $crop->id);
+                ->whereRaw('work_diary_work_record.work_record_id = work_records.id');
 
             if (!$request->has('archive')) {
                 $query->where('archive', false);
@@ -75,7 +73,7 @@ class WorkRecordController extends Controller
                 // 圃場を絞込
                 $query->whereIn('work_diaries.work_field_id', $request->input('field_ids'));
             }
-        });
+        })->where('crop_id', $crop->id);
 
         if ($request->has('work_ids')) {
             // 作業内容を絞込
@@ -173,10 +171,10 @@ class WorkRecordController extends Controller
      */
     public function store(WorkRecordStoreRequest $request)
     {
+        $cropId = $request->input('crop_id');
         $errors = new MessageBag();
-        DB::transaction(function () use ($request, &$errors) {
+        DB::transaction(function () use ($request, $cropId, &$errors) {
             $workId = $request->input('work_id');
-            $cropId = $request->input('crop_id');
             $workDiaryIds = (array)$request->input('work_diary_ids');
 
             $work = Work::findOrFail($workId);
@@ -195,6 +193,7 @@ class WorkRecordController extends Controller
             $workRecord = new WorkRecord();
             $workRecord->fill($request->all());
             $workRecord->work_id = $workId;
+            $workRecord->crop_id = $cropId;
             // use_complete=falseの場合は常にtrue
             $workRecord->complete = !$work->use_complete || $request->has('complete');
             $workRecord->save();
@@ -245,6 +244,19 @@ class WorkRecordController extends Controller
         // 農薬情報をクリア
         session()->forget('workRecord.pesticides');
 
-        return redirect()->route('workRecord.index')->with('complete', 'store');
+        return redirect()->route('workRecord.index', ['crop_id' => $cropId])->with('complete', 'store');
+    }
+
+    /**
+     * 削除処理
+     * @param WorkRecord $workRecord
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public
+    function destroy(WorkRecord $workRecord)
+    {
+        $workRecord->delete();
+
+        return redirect()->route('workRecord.index')->with('complete', 'destroy');
     }
 }

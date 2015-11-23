@@ -18,6 +18,8 @@ class CreateWorkRecordsTable extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('restrict');
             $table->integer('work_id')->unsigned();
             $table->foreign('work_id')->references('id')->on('works')->onDelete('restrict');
+            $table->integer('crop_id')->unsigned();
+            $table->foreign('crop_id')->references('id')->on('crops')->onDelete('restrict');
             $table->dateTime('datetime');
             $table->boolean('complete');
 
