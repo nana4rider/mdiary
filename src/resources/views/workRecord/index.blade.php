@@ -36,10 +36,10 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>{{ label('work_diary_id') }}</th>
-                            <th>{{ label('work_field') }}</th>
                             <th>{{ label('work_date') }}</th>
                             <th>{{ label('work_content') }}</th>
+                            <th>{{ label('work_diary_id') }}</th>
+                            <th>{{ label('work_field') }}</th>
                             <th>{{ label('action') }}</th>
                         </tr>
                         </thead>
@@ -50,6 +50,12 @@
                                     {{-- */$rowspan = $workRecord->workDiaries->count()/* --}}
                                     @if($wdIndex === 0)
                                         <td rowspan="{{ $rowspan }}">{{ $index + 1 }}</td>
+                                        <td rowspan="{{ $rowspan }}">
+                                            {{ $workRecord->datetime->format(config('format.datetime')) }}
+                                        </td>
+                                        <td rowspan="{{ $rowspan }}">
+                                            @include('workRecord.workContent')
+                                        </td>
                                     @endif
                                     <td>
                                         <a href="{{ route('workDiary.show', ['id' => $workDiary->id]) }}"
@@ -57,12 +63,6 @@
                                     </td>
                                     <td>{{ $workDiary->workField->name }}</td>
                                     @if($wdIndex === 0)
-                                        <td rowspan="{{ $rowspan }}">
-                                            {{ $workRecord->datetime->format(config('format.datetime')) }}
-                                        </td>
-                                        <td rowspan="{{ $rowspan }}">
-                                            @include('workRecord.workContent')
-                                        </td>
                                         <td rowspan="{{ $rowspan }}">
                                             {!! BootForm::open()->delete()->action(route('workRecord.destroy', ['id' => $workRecord->id])) !!}
 
