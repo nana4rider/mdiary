@@ -17,26 +17,33 @@ $(function () {
  * Laravel Form
  */
 $(function () {
-    var stop = false;
-    var $button = null;
-    var buttonMethod = null;
+    var stopSubmit = false;
 
     $(document).on('submit', 'form', function (e) {
         // 二重送信防止
-        if (stop) {
+        if (stopSubmit) {
             // 送信ボタンを無効化
             e.preventDefault();
-            return;
         } else {
-            stop = true;
+            stopSubmit = true;
+        }
+    });
+
+    $(document).on('click', 'button[type="submit"]', function (e) {
+        var $button = $(this);
+        var buttonMethod = $(this).data('method');
+
+        if (buttonMethod === undefined) {
+            buttonMethod = null;
+        } else {
+            buttonMethod = buttonMethod.toLowerCase();
         }
 
-        var $form = $(this);
+        var $form = $button.parents('form');
         var ajaxDataType = $button.data('ajax');
 
         if (ajaxDataType === undefined) {
             // 通常のフォーム
-
             if (buttonMethod === 'get'
                 || (buttonMethod === null && $form.prop('method') === 'get')) {
                 // トークンとメソッド送信を無効化
@@ -63,7 +70,11 @@ $(function () {
 
                 $_method.val(buttonMethod.toUpperCase());
             }
+
+            return true;
         } else {
+            stopSubmit = true;
+
             // Ajax
             $.ajax({
                 type: buttonMethod || $form.prop('method'),
@@ -93,22 +104,11 @@ $(function () {
                 $button.trigger('ajax.fail', xhr);
             }).always(function () {
                 // 送信ボタンを有効化
-                stop = false;
+                stopSubmit = false;
             });
 
             // 送信ボタンを無効化
-            e.preventDefault();
-        }
-    });
-
-    $(document).on('click', 'button[type="submit"]', function (e) {
-        $button = $(this);
-        var m = $(this).data('method');
-
-        if (m === undefined) {
-            buttonMethod = null;
-        } else {
-            buttonMethod = m.toLowerCase();
+            return false;
         }
     });
 

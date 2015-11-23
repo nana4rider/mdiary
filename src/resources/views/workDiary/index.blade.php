@@ -28,6 +28,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>{{ label('work_diary_id') }}</th>
                             <th>{{ label('create_date') }}</th>
                             <th>{{ label('crop') }}</th>
                             <th>{{ label('work_field') }}</th>
@@ -39,6 +40,10 @@
                         @foreach($workDiaries as $index => $workDiary)
                             <tr>
                                 <td>{{ $index + 1 }}</td>
+                                <td>
+                                    <a href="{{ route('workDiary.show', ['id' => $workDiary->id]) }}"
+                                       title="{{ label('route.work_diary.show') }}">{{ $workDiary->view_id }}</a>
+                                </td>
                                 <td>{{ $workDiary->created_at->format(config('format.date')) }}</td>
                                 <td>{{ $workDiary->crop->name }}</td>
                                 <td>{{ $workDiary->workField->name }}</td>
@@ -48,10 +53,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {!! BootForm::open()->delete() !!}
-
-                                    <a href="{{ route('workDiary.show', ['id' => $workDiary->id]) }}"
-                                       class="btn btn-primary btn-xs">{{ label('show') }}</a>
+                                    {!! BootForm::open()->delete()->action(route('workDiary.destroy', ['id' => $workDiary->id])) !!}
 
                                     @if(!$workDiary->archive)
                                         <a href="{{ route('workDiary.edit', ['id' => $workDiary->id]) }}"
@@ -59,7 +61,6 @@
                                     @endif
 
                                     {!! BootForm::submit(label('destroy'), 'btn-danger btn-xs')
-                                        ->formaction(route('workDiary.destroy', ['id' => $workDiary->id]))
                                         ->data('confirm', message('confirm.delete'))
                                         ->data('dialog-type', 'danger') !!}
 

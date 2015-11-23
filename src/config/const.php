@@ -18,6 +18,7 @@ return [
     'max_home_information' => 5,
     'max_text_diary' => 10,
     'max_work_diary' => 30,
+    'max_work_record' => 30,
 
     'text_diary_body_rows' => 10,
     'remarks_rows' => 5,

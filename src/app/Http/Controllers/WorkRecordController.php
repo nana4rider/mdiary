@@ -45,9 +45,46 @@ class WorkRecordController extends Controller
 
         if ($request->ajax()) {
             return compact('crops', 'works', 'workFields');
-        } else {
-            return view('workRecord.index', compact('crops', 'works', 'workFields'));
         }
+
+        // 検索
+        $workRecordsQuery = WorkRecord::with([
+            'workSeeding',
+            'workPestControls',
+            'workDiaries' => function ($query) use ($request) {
+                if (!$request->has('archive')) {
+                    $query->where('archive', false);
+                }
+            },
+            'workDiaries.workField',
+            'work'
+        ])->whereExists(function ($query) use ($request, $crop) {
+            $query->select(DB::raw(1))
+                ->from('work_diaries')
+                ->join('work_diary_work_record', 'work_diary_work_record.work_diary_id', '=', 'work_diaries.id')
+                ->whereNull('work_diaries.deleted_at')
+                ->whereRaw('work_diary_work_record.work_record_id = work_records.id')
+                // 作物を絞込
+                ->where('work_diaries.crop_id', $crop->id);
+
+            if (!$request->has('archive')) {
+                $query->where('archive', false);
+            }
+
+            if ($request->has('field_ids')) {
+                // 圃場を絞込
+                $query->whereIn('work_diaries.work_field_id', $request->input('field_ids'));
+            }
+        });
+
+        if ($request->has('work_ids')) {
+            // 作業内容を絞込
+            $workRecordsQuery->whereIn('work_id', $request->input('work_ids'));
+        }
+
+        $workRecords = $workRecordsQuery->latest()->paginate(config('const.max_work_record'));
+
+        return view('workRecord.index', compact('crops', 'works', 'workFields', 'workRecords'));
     }
 
     /**

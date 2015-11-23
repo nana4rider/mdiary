@@ -35,7 +35,7 @@ class WorkDiaryController extends Controller
             $builder->whereIn('work_field_id', (array)$request->input('field_ids'));
         }
 
-        if (is_null($request->input('archive'))) {
+        if (!$request->has('archive')) {
             $builder->where('archive', false);
         }
 

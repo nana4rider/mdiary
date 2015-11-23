@@ -101,6 +101,7 @@
 <script src="{{ url('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ url('js/bootstrap-select.ja.js') }}"></script>
 <script src="{{ url('js/bootstrap-image-gallery.min.js') }}"></script>
+<script src="{{ url('js/jquery.library.js') }}"></script>
 <script src="{{ url('js/common.js') }}"></script>
 @yield('js')
 {{-- 各画面固有のjsファイル --}}

@@ -1,37 +1,18 @@
 $(function () {
-    // 候補値を更新
-    var updateSelection = function ($target, dataArray) {
-        var val = $target.val();
-        $target.children().remove();
-
-        dataArray.forEach(function (data) {
-            $target.append($('<option>').val(data.id).text(data.name));
-        });
-
-        $target.val(val);
-        if ($target.val() === null && !$target.prop('multiple')) {
-            $target.prop('selectedIndex', 0);
-        }
-
-        if (!($.browser.android || $.browser.iphone || $.browser.ipad)) {
-            $target.selectpicker('refresh');
-        }
-    };
-
     // フォーム更新
     $(document).on('ajax.done', '#change-form-submit', function (e, data) {
         // 作業日誌
-        updateSelection($('#work_diary_ids'), data.workDiaries);
+        $('#work_diary_ids').updateSelection(data.workDiaries);
         // 作業内容
         var $workId = $('#work_id');
-        updateSelection($fieldIds, data.works);
+        $workId.updateSelection(data.works);
         window['works'] = data.works;
-        $fieldIds.trigger('change');
+        $workId.trigger('change');
         // 品種
-        updateSelection($('#cultivar_id'), data.cultivars);
+        $('#cultivar_id').updateSelection(data.cultivars);
         // 農薬
         var $pesticideId = $('#pesticide_id');
-        updateSelection($pesticideId, data.pesticides);
+        $pesticideId.updateSelection(data.pesticides);
         $('#pesticide-table').find('tbody > tr').remove();
         window['pesticides'] = data.pesticides;
         $pesticideId.trigger('change');

@@ -11,6 +11,15 @@
 
                     <div class="form-group">
                         <label class="control-label">
+                            {{ label('work_diary_id') }}
+                        </label>
+
+                        <p class="form-control-static">
+                            {{ $workDiary->view_id }}
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">
                             {{ label('crop') }}
                         </label>
 

@@ -21,7 +21,12 @@ class WorkDiary extends Model
 
     public function getNameAttribute()
     {
-        return sprintf('%s (%s)', $this->workField->name, $this->created_at->format(config('format.date')));
+        return sprintf('%s (%s)', $this->view_id, $this->workField->name);
+    }
+
+    public function  getViewIdAttribute()
+    {
+        return sprintf('%s%08d', 'D', $this->id);
     }
 
     /**

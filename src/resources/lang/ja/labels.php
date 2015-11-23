@@ -22,6 +22,7 @@ return [
     'crop' => '作物',
     'work_field' => '圃場',
     'work_diary' => '作業日誌',
+    'work_diary_id' => '作業日誌ID',
     'work_record' => '作業記録',
     'remarks' => '備考',
     'detail' => '詳細',

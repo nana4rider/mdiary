@@ -32,9 +32,9 @@ class CreateWorksTable extends Migration
         $this->insert('播種', 2, false, true);
         $this->insert('施肥', 3, true);
         $this->insert('収穫', 8, true);
-        $this->insert('収穫(一番果)', 9, true);
-        $this->insert('収穫(二番果)', 10, true);
-        $this->insert('収穫(三番果)', 11, true);
+        $this->insert('収穫 (一番果)', 9, true);
+        $this->insert('収穫 (二番果)', 10, true);
+        $this->insert('収穫 (三番果)', 11, true);
         $this->insert('防除', 4, false, false, true);
         $this->insert('水やり', 5);
         $this->insert('整枝', 6);
