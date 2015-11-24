@@ -60,6 +60,6 @@ class TextDiary extends Model
      */
     public function getCategoryIdsAttribute()
     {
-        return $this->textDiaryCategories()->lists('id')->all();
+        return $this->textDiaryCategories->lists('id')->all();
     }
 }

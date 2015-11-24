@@ -90,7 +90,7 @@ class TextDiaryController extends Controller
      */
     public function edit(TextDiary $textDiary)
     {
-        $categories = TextDiaryCategory::orderBy('display_order')->lists('name', 'id');
+        $categories = TextDiaryCategory::orderBy('display_order');
 
         return view('textDiary.edit', compact('categories', 'textDiary'));
     }

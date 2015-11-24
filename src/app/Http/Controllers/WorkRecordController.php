@@ -131,11 +131,10 @@ class WorkRecordController extends Controller
     {
         $sessionPesticides = session()->get('workRecord.pesticides', collect());
 
-        $pesticideId = $request->input('pesticide_id');
-        $pesticide = Pesticide::findOrFail($pesticideId);
+        $pesticide = Pesticide::findOrFail($request->input('pesticide_id'));
 
-        $sessionPesticides->put($pesticideId, collect([
-            'pesticide_id' => $pesticideId,
+        $sessionPesticides->put($pesticide->id, collect([
+            'pesticide_id' => $pesticide->id,
             'usage' => $request->input('pesticide_usage'),
             'pesticide_name' => $pesticide->name,
             'unit_name' => $pesticide->unit->name
@@ -245,6 +244,49 @@ class WorkRecordController extends Controller
         session()->forget('workRecord.pesticides');
 
         return redirect()->route('workRecord.index', ['crop_id' => $cropId])->with('complete', 'store');
+    }
+
+    /**
+     * 編集画面
+     *
+     * @param WorkRecord $workRecord
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function edit(WorkRecord $workRecord, Request $request)
+    {
+        // 農薬情報をクリア
+        session()->forget('workRecord.pesticides');
+
+        $crop = $workRecord->crop;
+
+        // 編集中の日誌がある作業日誌を取得
+        $workDiaries = WorkDiary::with('workField')->where('archive', false)->where('crop_id', $crop->id)
+            ->get()->sortBy('workField.display_order');
+
+        // 品種を取得
+        $cultivars = $crop->cultivars()->get();
+
+        // 農薬情報を取得
+        $pesticides = $crop->pesticides()->with('unit')->get();
+
+        // 既に登録されている農薬情報をセッションに設定
+        $sessionPesticides = session()->get('workRecord.pesticides', collect());
+
+        foreach ($workRecord->workPestControls()->with('pesticide', 'pesticide.unit')->get() as $workPestControl) {
+            $pesticide = $workPestControl->pesticide;
+
+            $sessionPesticides->put($pesticide->id, collect([
+                'pesticide_id' => $pesticide->id,
+                'usage' => $workPestControl->usage,
+                'pesticide_name' => $pesticide->name,
+                'unit_name' => $pesticide->unit->name
+            ]));
+        }
+
+        session()->put('workRecord.pesticides', $sessionPesticides);
+
+        return view('workRecord.edit', compact('workRecord', 'workDiaries', 'cultivars', 'pesticides'));
     }
 
     /**

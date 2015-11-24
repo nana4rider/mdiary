@@ -35,7 +35,7 @@ $(function () {
             } else {
                 $target.addClass('hidden');
             }
-        }
+        };
 
         toggle($('#option-complete'), work.use_complete);
         toggle($('#option-seeding'), work.use_seeding);

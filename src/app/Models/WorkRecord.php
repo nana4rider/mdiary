@@ -55,4 +55,40 @@ class WorkRecord extends Model
     {
         return $this->belongsTo(Work::class);
     }
+
+    public function crop()
+    {
+        return $this->belongsTo(Crop::class);
+    }
+
+    /**
+     * 作業日誌IDを取得
+     * @return mixed
+     */
+    public function getWorkDiaryIdsAttribute()
+    {
+        return $this->workDiaries->lists('id')->all();
+    }
+
+    /**
+     * 株間を取得
+     * @return mixed
+     */
+    public function getIntrarowSpacingAttribute()
+    {
+        if (!$this->workSeeding) {
+            return null;
+        }
+
+        return $this->workSeeding->intrarow_spacing;
+    }
+
+    public function getCultivarIdAttribute()
+    {
+        if (!$this->workSeeding) {
+            return null;
+        }
+
+        return $this->workSeeding->cultivar_id;
+    }
 }

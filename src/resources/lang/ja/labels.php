@@ -38,7 +38,6 @@ return [
     'cultivar' => '品種',
     'usage_count' => '使用回数',
     'latest_usage_date' => '最終使用日',
-    'reuse_usage_date' => '再使用可能日',
     'intrarow_spacing_unit' => 'cm',
 
     // その他

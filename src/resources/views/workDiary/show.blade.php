@@ -110,27 +110,18 @@
                                         <th>{{ label('pesticide_name') }}</th>
                                         <th>{{ label('usage_count') }}</th>
                                         <th>{{ label('latest_usage_date') }}</th>
-                                        <th>{{ label('reuse_usage_date') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($pesticideSummary as $data)
+                                    @foreach($pesticideSummary as $index => $data)
                                         <tr>
-                                            <td>1</td>
+                                            <td>{{ $index + 1 }}</td>
                                             <td>{{ $data->pesticide_name }}</td>
                                             <td>
                                                 {{ $data->usage_count }}
                                                 ({{ message('max_times', [], ['value' => $data->max_usage_count]) }})
                                             </td>
                                             <td>{{ $data->latest_datetime->format(config('format.date')) }}</td>
-                                            <td>
-                                                @if($data->usage_count < $data->max_usage_count)
-                                                    {{ $data->latest_datetime->addDays($data->aftereffect_dates)
-                                                        ->format(config('format.date')) }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
                                         </tr>
                                     </tbody>
                                     @endforeach
