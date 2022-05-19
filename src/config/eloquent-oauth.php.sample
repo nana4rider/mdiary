@@ -1,0 +1,43 @@
+<?php
+
+return [
+    'table' => 'oauth_identities',
+    'providers' => [
+        'google' => [
+            'client_id' => '',
+            'client_secret' => '',
+            'redirect_uri' => env('URL') . '/auth/google/login',
+            'scope' => [],
+        ],
+        'facebook' => [
+            'client_id' => '',
+            'client_secret' => '',
+            'redirect_uri' => env('URL') . '/auth/facebook/login',
+            'scope' => [],
+        ],
+        'github' => [
+            'client_id' => '',
+            'client_secret' => '',
+            'redirect_uri' => env('URL') . '/auth/github/login',
+            'scope' => [],
+        ],
+//        'linkedin' => [
+//            'client_id' => '',
+//            'client_secret' => '',
+//            'redirect_uri' => 'https://example.com/your/linkedin/redirect',
+//            'scope' => [],
+//        ],
+//        'instagram' => [
+//            'client_id' => '',
+//            'client_secret' => '',
+//            'redirect_uri' => 'https://example.com/your/instagram/redirect',
+//            'scope' => [],
+//        ],
+//        'soundcloud' => [
+//            'client_id' => '',
+//            'client_secret' => '',
+//            'redirect_uri' => 'https://example.com/your/soundcloud/redirect',
+//            'scope' => [],
+//        ],
+    ],
+];

@@ -1,0 +1,52 @@
+select[multiple] {
+    height: 34px;
+}
+
+select, input[type="file"] {
+    visibility: hidden;
+}
+
+body {
+    padding-top: 80px;
+}
+
+footer {
+    margin-top: 33px;
+    padding: 40px 0;
+    color: #EEEEEE;
+    background-color: #333333;
+}
+
+.bootstrap-dialog-title {
+    font-size: 19px;
+}
+
+.input-group.file .input-group-addon {
+    cursor: pointer;
+}
+
+.bootstrap-dialog-body form > .btn {
+    display: none;
+}
+
+/* datetimepicker */
+.bootstrap-datetimepicker-widget table td.today:before {
+    border-bottom-color: #2196f3;
+}
+
+.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+    background-color: #2196f3;
+}
+
+.bootstrap-datetimepicker-widget table td span.active {
+    background-color: #2196f3;
+}
+
+.no-underline,
+.no-underline:hover {
+    text-decoration: none !important;
+}
+
+.form-control-static > table {
+    margin-bottom: 0;
+}
